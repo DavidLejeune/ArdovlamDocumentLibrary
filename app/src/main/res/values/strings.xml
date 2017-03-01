@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">Ardovlam  Doc Lib</string>
+    <string name="strTitleLogin">Document Library</string>
+    <string name="lbl_first_name">First Name</string>
+    <string name="lbl_last_name">Last Name</string>
+    <string name="lbl_password">Password</string>
+    <string name="chkbox_show_password">Show password</string>
+    <string name="txt_type_enduser">(type Enduser)</string>
+    <string name="txt_full_name">David Lejeune</string>
+    <string name="txt_title">Welcome</string>
+    <string name="txt_txtresultlistdocs">txtResultListDocs</string>
+    <string name="chk_commercial">Commercial</string>
+    <string name="lbl_department">Department</string>
+    <string name="chk_documents">Documents</string>
+    <string name="btn_show">SHOW</string>
+    <string name="lbl_doc_type">Select the type of document</string>
+    <string name="btn_show_graph">Show Graph</string>
+    <string name="lbl_month">Month :</string>
+    <string name="lbl_year">Year :</string>
+
+
+    <string-array name="monthsArray">
+        <item></item>
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>Augustus</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+
+    <string-array name="yearsArray">
+        <item></item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+        <item>2024</item>
+        <item>2025</item>
+        <item>2026</item>
+        <item>2027</item>
+        <item>2028</item>
+        <item>2029</item>
+        <item>2030</item>
+        <item>2031</item>
+        <item>2032</item>
+        <item>2032</item>
+        <item>2033</item>
+        <item>2034</item>
+        <item>2035</item>
+        <item>2036</item>
+        <item>2037</item>
+        <item>2038</item>
+        <item>2039</item>
+    </string-array>
+
+</resources>

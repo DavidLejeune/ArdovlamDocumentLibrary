@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_graph"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.vives.david.ardovlamdoclib.GraphActivity">
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/barChart"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="41dp"
+        android:id="@+id/spinnerMonth"
+        android:layout_width="125sp" />
+
+    <TextView
+        android:text="@string/lbl_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/lblChooseMoonth" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/lineChart"
+        android:layout_below="@+id/spinnerMonth"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp">
+    </com.github.mikephil.charting.charts.LineChart>
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerYear"
+        android:layout_width="125sp"
+        android:layout_alignBaseline="@+id/spinnerMonth"
+        android:layout_alignBottom="@+id/spinnerMonth"
+        android:layout_toRightOf="@+id/spinnerMonth"
+        android:layout_toEndOf="@+id/spinnerMonth"
+        android:layout_marginLeft="43dp"
+        android:layout_marginStart="43dp" />
+
+    <TextView
+        android:text="@string/lbl_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblChooseYear"
+        android:layout_alignBaseline="@+id/lblChooseMoonth"
+        android:layout_alignBottom="@+id/lblChooseMoonth"
+        android:layout_alignLeft="@+id/spinnerYear"
+        android:layout_alignStart="@+id/spinnerYear" />
+
+</RelativeLayout>
