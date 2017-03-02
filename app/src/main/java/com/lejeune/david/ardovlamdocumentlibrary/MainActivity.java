@@ -66,8 +66,8 @@ public class MainActivity extends Activity {
         //SharedPrefHelper.getInstance().save(MainActivity.this,"1","updatenr");
 
         // Central screen advertisement
-        ImageView imgProfile = (ImageView) findViewById(R.id.imgLogoTitle);
-        imgProfile.setImageDrawable(getResources().getDrawable(R.drawable.logo));
+        ImageView imgLogo = (ImageView) findViewById(R.id.imgLogoTitle);
+        imgLogo.setImageDrawable(getResources().getDrawable(R.drawable.logo));
         tvTitleLogin = (TextView) findViewById(R.id.tvTitleLogin);
         tvTitleLogin.setVisibility(View.VISIBLE);
 

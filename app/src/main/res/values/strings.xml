@@ -17,6 +17,7 @@
     <string name="btn_show_graph">Show Graph</string>
     <string name="lbl_month">Month :</string>
     <string name="lbl_year">Year :</string>
+    <string name="lbl_type">Type :</string>
 
 
     <string-array name="monthsArray">
@@ -63,5 +64,16 @@
         <item>2038</item>
         <item>2039</item>
     </string-array>
+
+
+
+    <string-array name="logTypes">
+        <item>ENTRY</item>
+        <item>SEARCH</item>
+        <item>READ</item>
+        <item>UPDATE</item>
+    </string-array>
+
+
 
 </resources>

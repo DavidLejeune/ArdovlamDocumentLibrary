@@ -28,20 +28,27 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class GraphActivity extends Activity {
 
     BarChart barChart;
     LineChart lineChart;
+    //GraphView graphView;
     String filterGraphMonth;
     public int [] arrMonth;
+    public int [] arrMonthHour;
 
     Spinner spinnerMonth;
     Spinner spinnerYear;
+    Spinner spinnerType;
 
     ArrayAdapter<String> adapterMonth;
     ArrayAdapter<String> adapterYear;
+    ArrayAdapter<String> adapterType;
 
-    String selectedMonth , selectedYear;ProgressDialog pd;
+    String selectedMonth , selectedYear , selectedType;
+    ProgressDialog pd;
 
 
     @Override
@@ -55,7 +62,7 @@ public class GraphActivity extends Activity {
             public void onValueSelected(Entry e, Highlight h) {
                 System.out.println((int) e.getX());
                 System.out.println((int) e.getY());
-                Toast.makeText(GraphActivity.this, "Day : " + (int) e.getX() + "\nValue : " + (int) e.getY(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(GraphActivity.this, "Hour : " + (int) e.getX() + "\nValue : " + (int) e.getY(), Toast.LENGTH_SHORT).show();
             }
 
 
@@ -177,11 +184,20 @@ public class GraphActivity extends Activity {
                         for (int i = 0; i < MyVars.arrJanuary.length; i++) {
                             arrMonth[i] = MyVars.arrJanuary[i] ;
                         }
+                        arrMonthHour = new int[MyVars.arrJanuaryHour.length];
+                        for (int i = 0; i < MyVars.arrJanuaryHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrJanuaryHour[i] ;
+                        }
+
                         break;
                     case "February":
                         arrMonth = new int[MyVars.arrFebruary.length];
                         for (int i = 0; i < MyVars.arrFebruary.length; i++) {
                             arrMonth[i] = MyVars.arrFebruary[i] ;
+                        }
+                        arrMonthHour = new int[MyVars.arrFebruaryHour.length];
+                        for (int i = 0; i < MyVars.arrFebruaryHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrFebruaryHour[i] ;
                         }
                         break;
                     case "March":
@@ -189,11 +205,19 @@ public class GraphActivity extends Activity {
                         for (int i = 0; i < MyVars.arrMarch.length; i++) {
                             arrMonth[i] = MyVars.arrMarch[i] ;
                         }
+                        arrMonthHour = new int[MyVars.arrMarchHour.length];
+                        for (int i = 0; i < MyVars.arrMarchHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrMarchHour[i] ;
+                        }
                         break;
                     case "April":
                         arrMonth = new int[MyVars.arrApril.length];
                         for (int i = 0; i < MyVars.arrApril.length; i++) {
                             arrMonth[i] = MyVars.arrApril[i] ;
+                        }
+                        arrMonthHour = new int[MyVars.arrAprilHour.length];
+                        for (int i = 0; i < MyVars.arrAprilHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrAprilHour[i] ;
                         }
                         break;
                     case "May":
@@ -201,11 +225,19 @@ public class GraphActivity extends Activity {
                         for (int i = 0; i < MyVars.arrMay.length; i++) {
                             arrMonth[i] = MyVars.arrMay[i] ;
                         }
+                        arrMonthHour = new int[MyVars.arrMayHour.length];
+                        for (int i = 0; i < MyVars.arrMayHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrMayHour[i] ;
+                        }
                         break;
                     case "June":
                         arrMonth = new int[MyVars.arrJune.length];
                         for (int i = 0; i < MyVars.arrJune.length; i++) {
                             arrMonth[i] = MyVars.arrJune[i] ;
+                        }
+                        arrMonthHour = new int[MyVars.arrJuneHour.length];
+                        for (int i = 0; i < MyVars.arrJuneHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrJuneHour[i] ;
                         }
                         break;
                     case "July":
@@ -213,11 +245,19 @@ public class GraphActivity extends Activity {
                         for (int i = 0; i < MyVars.arrJuly.length; i++) {
                             arrMonth[i] = MyVars.arrJuly[i] ;
                         }
+                        arrMonthHour = new int[MyVars.arrJulyHour.length];
+                        for (int i = 0; i < MyVars.arrJulyHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrJulyHour[i] ;
+                        }
                         break;
                     case "Augustus":
                         arrMonth = new int[MyVars.arrAugustus.length];
                         for (int i = 0; i < MyVars.arrAugustus.length; i++) {
                             arrMonth[i] = MyVars.arrAugustus[i] ;
+                        }
+                        arrMonthHour = new int[MyVars.arrAugustusHour.length];
+                        for (int i = 0; i < MyVars.arrAugustusHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrAugustusHour[i] ;
                         }
                         break;
                     case "September":
@@ -225,11 +265,19 @@ public class GraphActivity extends Activity {
                         for (int i = 0; i < MyVars.arrSeptember.length; i++) {
                             arrMonth[i] = MyVars.arrSeptember[i] ;
                         }
+                        arrMonthHour = new int[MyVars.arrSeptemberHour.length];
+                        for (int i = 0; i < MyVars.arrSeptemberHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrSeptemberHour[i] ;
+                        }
                         break;
                     case "October":
                         arrMonth = new int[MyVars.arrOctober.length];
                         for (int i = 0; i < MyVars.arrOctober.length; i++) {
                             arrMonth[i] = MyVars.arrOctober[i] ;
+                        }
+                        arrMonthHour = new int[MyVars.arrOctoberHour.length];
+                        for (int i = 0; i < MyVars.arrOctoberHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrOctoberHour[i] ;
                         }
                         break;
                     case "November":
@@ -237,11 +285,19 @@ public class GraphActivity extends Activity {
                         for (int i = 0; i < MyVars.arrNovember.length; i++) {
                             arrMonth[i] = MyVars.arrNovember[i] ;
                         }
+                        arrMonthHour = new int[MyVars.arrNovemberHour.length];
+                        for (int i = 0; i < MyVars.arrNovemberHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrNovemberHour[i] ;
+                        }
                         break;
                     case "December":
                         arrMonth = new int[MyVars.arrDecember.length];
                         for (int i = 0; i < MyVars.arrDecember.length; i++) {
                             arrMonth[i] = MyVars.arrDecember[i] ;
+                        }
+                        arrMonthHour = new int[MyVars.arrDecemberHour.length];
+                        for (int i = 0; i < MyVars.arrDecemberHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrDecemberHour[i] ;
                         }
                         break;
                     case "":
@@ -273,6 +329,15 @@ public class GraphActivity extends Activity {
                             System.out.print( " x : " + x );
 
 //                          }
+
+
+                        arrMonthHour = new int[24];
+                        for (int i = 0; i < arrMonthHour.length; i++) {
+                            arrMonthHour[i] = MyVars.arrJanuaryHour[i] + MyVars.arrFebruaryHour[i] + MyVars.arrMarchHour[i] + MyVars.arrAprilHour[i] + MyVars.arrMayHour[i] + MyVars.arrJuneHour[i] + MyVars.arrJulyHour[i] + MyVars.arrAugustusHour[i] + MyVars.arrSeptemberHour[i] + MyVars.arrOctoberHour[i] +  MyVars.arrNovemberHour[i] + MyVars.arrDecemberHour[i] ;
+                            System.out.println("combine arrayvalue: " + arrMonthHour[i]);
+                        }
+
+
 
                         //MyVars.filterStatType = "Full year";
                         break;
@@ -313,9 +378,6 @@ public class GraphActivity extends Activity {
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerYear.setAdapter(adapterYear);
-//        ArrayAdapter yearAdapter = (ArrayAdapter) spinnerYear.getAdapter()‌​;
-//        spinnerYear.setSelection(yearAdapter.getPosition(MyVars.filterStatYear));
-
 
         //set spinner to current year
         //the value you want the position for
@@ -323,8 +385,6 @@ public class GraphActivity extends Activity {
         int spinnerPosition = myAdap.getPosition(MyVars.filterStatYear);
         //set the default according to value
         spinnerYear.setSelection(spinnerPosition);
-
-
 
         spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -339,6 +399,7 @@ public class GraphActivity extends Activity {
                     pd = ProgressDialog.show(GraphActivity.this, "", "Processing ..",
                             true, false);
                     MyStats.createMonthArrays();
+                    MyStats.createMonthHourArrays();
                     System.out.println("selectedYear " + selectedYear);
                     MyVars.filterStatYear = selectedYear;
                     MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
@@ -357,6 +418,61 @@ public class GraphActivity extends Activity {
             }
         });
 
+
+
+
+
+        String[] types = getResources().getStringArray(R.array.logTypes);
+        spinnerType = (Spinner) findViewById(R.id.spinnerType);
+
+        adapterType = new ArrayAdapter(this, android.R.layout.simple_spinner_item, types);
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerType.setAdapter(adapterType);
+
+        //set spinner to current year
+        //the value you want the position for
+        ArrayAdapter myAdapType = (ArrayAdapter) spinnerType.getAdapter(); //cast to an ArrayAdapter
+        int spinnerPositionType = myAdapType.getPosition(MyVars.filterStatType);
+
+        //set the default according to value
+        spinnerType.setSelection(spinnerPositionType);
+
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedType = parent.getItemAtPosition(position).toString();
+                System.out.println("selectedType " + selectedType);
+                if(selectedType.equalsIgnoreCase(MyVars.filterStatType)){
+
+                }
+                else
+                {
+                    pd = ProgressDialog.show(GraphActivity.this, "", "Processing ..",
+                            true, false);
+                    MyStats.createMonthArrays();
+                    MyStats.createMonthHourArrays();
+                    System.out.println("selectedType " + selectedType);
+                    MyVars.filterStatType = selectedType;
+                    MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
+                    pd.dismiss();
+                    finish();
+                    startActivity(getIntent());
+                }
+
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        System.out.println("type : " + MyVars.filterStatType);
+        System.out.println("year : " + MyVars.filterStatYear);
+        System.out.println("month : " + MyVars.filterStatMonth);
 
 
 
@@ -392,7 +508,7 @@ public class GraphActivity extends Activity {
             entries.add(entry);
 
         }
-        LineDataSet lineDataSet = new LineDataSet(entries, MyVars.filterStatType);
+        LineDataSet lineDataSet = new LineDataSet(entries, MyVars.filterStatType + " / Day");
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
         // use the interface ILineDataSet
@@ -436,10 +552,11 @@ public class GraphActivity extends Activity {
     private void createBarGraph(){
 
         List<BarEntry> entries = new ArrayList<>();
-        for (int i = 0; i < arrMonth.length; i++) {
-            float iFloat = (float) i + 1;
-            float arrFloat = (float) arrMonth[i];
-            System.out.println(arrFloat + " " + arrMonth.length);
+        for (int i = 0; i < arrMonthHour.length; i++) {
+            System.out.println("arrMonthHour.length : " + arrMonthHour.length);
+            float iFloat = (float) i;
+            float arrFloat = (float) arrMonthHour[i];
+            System.out.println(iFloat + " " + arrFloat);
             entries.add(new BarEntry(iFloat, arrFloat));
         }
 
@@ -451,7 +568,7 @@ public class GraphActivity extends Activity {
 //        entries.add(new BarEntry(5f, 70f));
 //        entries.add(new BarEntry(6f, 60f));
 
-        BarDataSet set = new BarDataSet(entries, MyVars.filterStatType);
+        BarDataSet set = new BarDataSet(entries, MyVars.filterStatType + " / Hour");
         set.setDrawValues(false);
 
         BarData data = new BarData(set);
@@ -466,9 +583,9 @@ public class GraphActivity extends Activity {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        float arrLength = (float) arrMonth.length;
+        float arrLength = (float) arrMonthHour.length;
 
-        xAxis.setAxisMaximum(arrLength);
+        xAxis.setAxisMaximum(arrLength + 1);
         //xAxis.setGranularity(5f);
 
 
