@@ -2,6 +2,7 @@ package com.lejeune.david.ardovlamdocumentlibrary;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -41,27 +42,20 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+
         // Start declarations
         cntx = getApplicationContext();
+
+        // Making sure the correct folder structure exists
         myTools= new MyTools();
+        myTools.createFolders();
         myTools.retrieveSharedPref(cntx);
+
 //        String currentTime = myTools.getTime();
 //        String currentDate = myTools.getDate();
 //        System.out.println("Time :" + currentTime);
 //        System.out.println("Date :" + currentDate);
 
-        // Making sure the correct folder structure exists
-        myTools.createFolders();
-
-
-
-        if(MyVars.registereduser.equalsIgnoreCase("1")){
-
-            for(int i=0; i<100 ;i++){
-//            System.out.println(i);
-                MyStats.logEntry("ENTRY" , "");
-            }
-        }
 
 
 
@@ -76,7 +70,6 @@ public class MainActivity extends Activity {
         imgProfile.setImageDrawable(getResources().getDrawable(R.drawable.logo));
         tvTitleLogin = (TextView) findViewById(R.id.tvTitleLogin);
         tvTitleLogin.setVisibility(View.VISIBLE);
-
 
         // automatic redirect to loginactivity
         new Handler().postDelayed(new Runnable() {
@@ -370,6 +363,10 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            System.out.println("Usertype check : " + MyVars.usertype);
+            if(MyVars.usertype.equalsIgnoreCase("1")){
+                new AsyncStatsDownloadDL().execute();
+            }
 
 
         }
@@ -406,6 +403,362 @@ public class MainActivity extends Activity {
             return null;
         }
     }
+
+
+
+
+    public class AsyncStatsDownloadDL extends AsyncTask<String, String, String> {
+
+
+        private FTPfunctions ftpclient = null;
+        ProgressDialog pd;
+
+        //DatabaseHelperStats helper;
+        MyTimer myTimer;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            myTimer = new MyTimer();
+//            pd = ProgressDialog.show(MainActivity.this, "", "Downloading stat files...",
+//                    true, false);
+            System.out.println("downloading stat files");
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+//            helper = new DatabaseHelperStats(cntx);
+//            helper.DATABASE_VERSION = helper.DATABASE_VERSION + 1;
+//            saveStatFiles();
+            //pd.dismiss();
+            myTimer.getElapsedTime();
+            new AsyncBigStatsCreateDL().execute();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            ftpclient = new FTPfunctions();
+            ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
+            boolean status = false;
+            status = ftpclient.downloadStatsFiles(MyVars.FOLDER_STATS);
+            System.out.println(MyVars.FOLDER_STATS + " status : " + status);
+            if (status == true) {
+                System.out.println("Download success");
+//                    handler.sendEmptyMessage(5);
+            } else {
+                System.out.println("Download failed");
+//                    handler.sendEmptyMessage(-1);
+            }
+
+            ftpclient.ftpDisconnect();
+            return null;
+        }
+
+
+
+
+//
+//        private void insertDataSQLite(String user_name , String date, String time, String type, String extra){
+//
+//            boolean isInserted = helper.insertData(user_name , date, time, type, extra);
+//            if (isInserted){
+//                //System.out.println("data inserted");
+//            }
+//            else
+//            {
+//                //System.out.println("data NOT inserted");
+//            }
+//
+//        }
+
+//        private void viewAllDataSQLite(){
+//            Cursor cursor = helper.getAllData();
+//            if(cursor.getCount() == 0){
+//                System.out.println("no results");
+//                //showMessage("Error", "No data in SQLite");
+//                return;
+//            }
+//            else
+//            {
+//                StringBuffer buffer = new StringBuffer();
+//                while(cursor.moveToNext()){
+//                    buffer.append("id : " + cursor.getString(0) + "\n");
+//                    buffer.append("user : " + cursor.getString(1) + "\n");
+//                    buffer.append("date : " + cursor.getString(2) + "\n");
+//                    buffer.append("time : " + cursor.getString(3) + "\n\n");
+//                    buffer.append("type : " + cursor.getString(4) + "\n\n");
+//                    buffer.append("extra : " + cursor.getString(5) + "\n\n");
+//                    System.out.println(buffer);
+//                }
+//
+//                //showMessage("Data", buffer.toString());
+//
+//            }
+//        }
+
+//    public void showMessage(String title, String message){
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setCancelable(true);
+//        builder.setTitle(title);
+//        builder.setMessage(message);
+//        builder.show();
+//
+//    }
+
+
+//        private void saveStatFiles(){
+//            File dir = Environment.getExternalStorageDirectory();
+//            File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
+//            String line = "";
+//            int iCount=0;
+//            if (file.exists()) {
+//
+//                StringBuilder text = new StringBuilder();
+//                try {
+//                    BufferedReader br = new BufferedReader(new FileReader(file));
+//                    while ((line = br.readLine()) != null) {
+//                        if (line.length() > 0) {
+//                            {
+//                                String[] str = line.split(",");
+//                                iCount+=1;
+//                                System.out.println("count entry " + iCount);
+//                                //String strID = str[0].toLowerCase();
+//                                String strUser = str[0].toLowerCase();
+//                                String strDate = str[1].toLowerCase();
+//                                String strTime = str[2].toLowerCase();
+//                                String strType = str[3].toLowerCase();
+//                                String strExtra = str[4].toLowerCase();
+//
+//                                //insertDataSQLite(strUser , strDate, strTime, strType, strExtra);
+//                                if (strUser.equalsIgnoreCase("David Lejeune")){
+//                                    System.out.println("yeah its me");
+//                                }
+//
+//                            }
+//
+//                        }
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                //viewAllDataSQLite();
+//            }
+//            else
+//            {
+//                System.out.println("File documents doc not found");
+//            }
+//
+//
+//        }
+
+
+
+    }
+
+    public class AsyncBigStatsCreateDL extends AsyncTask<String, String, String> {
+
+
+        ProgressDialog pd;
+
+
+        //DatabaseHelperStats helper;
+        MyTimer myTimer;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            myTimer = new MyTimer();
+//            pd = ProgressDialog.show(MainActivity.this, "", "Creating single stat file..",
+//                    true, false);
+            System.out.println("Creating single stat file..");
+            MyStats.createBigLogFile();
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+//            pd.dismiss();
+            myTimer.getElapsedTime();
+            traverseBigStatFiles();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            File dir = Environment.getExternalStorageDirectory();
+            File file = new File(dir, MyVars.FOLDER_STATS );
+            traverse(file);
+            return null;
+        }
+
+        public void traverse (File dir) {
+            if (dir.exists()) {
+                File[] files = dir.listFiles();
+                for (int i = 0; i < files.length; ++i) {
+                    File file = files[i];
+                    if (file.isDirectory()) {
+                        //traverse(file);
+                    } else {
+                        // do something here with the file
+                        System.out.println(file.toString());
+                        addToBigStatFiles(file);
+                    }
+                }
+            }
+        }
+
+        private void addToBigStatFiles(File file){
+            //File dir = Environment.getExternalStorageDirectory();
+            //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
+            //MyTimer myTimer = new MyTimer();
+            String line = "";
+            int iCount=0;
+            if (file.exists()) {
+
+                StringBuilder text = new StringBuilder();
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    while ((line = br.readLine()) != null) {
+                        if (line.length() > 0) {
+                            {
+                                String[] str = line.split(",");
+                                iCount+=1;
+                                //System.out.println(iCount + " " + line);
+
+                                MyStats.logStatEntryToBigLogFile(line + "\n");
+//                                String strID = str[0].toLowerCase();
+//                                String strUser = str[0].toLowerCase();
+//                                String strDate = str[1].toLowerCase();
+//                                String strTime = str[2].toLowerCase();
+//                                String strType = str[3].toLowerCase();
+//                                String strExtra = str[4].toLowerCase();
+//
+//                                String strYear = strDate.substring(0,4);
+//                                String strMonth = strDate.substring(4,6);
+//                                String strDay = strDate.substring(6);
+//
+//                                String strHour = strTime.substring(0,2);
+//                                String strMinute = strTime.substring(3,5);
+
+//                            //insertDataSQLite(strUser , strDate, strTime, strType, strExtra);
+//                            if (strUser.equalsIgnoreCase("David Lejeune")){
+//                                //System.out.println("yeah its me");
+//                                //System.out.println(strYear);
+//                                //System.out.println(strMonth);
+//                                //System.out.println(strDay);
+//                                System.out.println(strHour);
+//                                System.out.println(strMinute);
+//                            }
+
+                            }
+
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //System.out.println("file export");
+                //myTimer.getElapsedTime();
+                //viewAllDataSQLite();
+            }
+            else
+            {
+                System.out.println("File documents doc not found");
+            }
+
+
+        }
+
+        private void traverseBigStatFiles(){
+            File dir = Environment.getExternalStorageDirectory();
+            File file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
+            MyTimer myTimer = new MyTimer();
+            String line = "";
+            int iCount=0;
+            if (file.exists()) {
+
+                StringBuilder text = new StringBuilder();
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    while ((line = br.readLine()) != null) {
+                        if (line.length() > 0) {
+                            {
+                                String[] str = line.split(",");
+                                iCount+=1;
+                                //System.out.println(iCount + " " + line);
+
+                                //String strID = str[0].toLowerCase();
+//                            String strUser = str[0].toLowerCase();
+//                            String strDate = str[1].toLowerCase();
+//                            String strTime = str[2].toLowerCase();
+//                            String strType = str[3].toLowerCase();
+//                            String strExtra = str[4].toLowerCase();
+//
+//                            String strYear = strDate.substring(0,4);
+//                            String strMonth = strDate.substring(4,6);
+//                            String strDay = strDate.substring(6);
+//
+//                            String strHour = strTime.substring(0,2);
+//                            String strMinute = strTime.substring(3,5);
+
+//                            //insertDataSQLite(strUser , strDate, strTime, strType, strExtra);
+//                            if (strUser.equalsIgnoreCase("David Lejeune")){
+//                                //System.out.println("yeah its me");
+//                                //System.out.println(strYear);
+//                                //System.out.println(strMonth);
+//                                //System.out.println(strDay);
+//                                System.out.println(strHour);
+//                                System.out.println(strMinute);
+//                            }
+
+                            }
+
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //System.out.println("file export");
+                myTimer.getElapsedTime();
+                //viewAllDataSQLite();
+            }
+            else
+            {
+                System.out.println("File documents doc not found");
+            }
+
+
+        }
+
+
+
+    }
+
 
 
 }
