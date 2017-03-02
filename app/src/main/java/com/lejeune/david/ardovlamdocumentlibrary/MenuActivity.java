@@ -31,6 +31,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class MenuActivity extends Activity {
 
     private TextView txtUserType, txtFullName, txtTitle;
@@ -619,11 +620,13 @@ public class MenuActivity extends Activity {
 
 
             pd = new ProgressDialog(MenuActivity.this);
-            pd.setTitle("Downloading update documents");
-            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            pd.setMax(listUpdateFiles.size());
-            pd.setProgress(0);
-            pd.show();
+//            pd.setTitle("Downloading update documents");
+//            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//            pd.setMax(listUpdateFiles.size());
+//            pd.setProgress(0);
+//            pd.show();
+            pd = ProgressDialog.show(MenuActivity.this, "", "Getting Document Files...",
+                    true, false);
 
 
         }
@@ -637,7 +640,7 @@ public class MenuActivity extends Activity {
             Toast.makeText(MenuActivity.this, "Updates FINISHED\n" + listUpdateFiles.size() + " updates downloaded\nin " + elapsedTime + " seconds", Toast.LENGTH_LONG).show();
             System.out.println("Time downloading " + listUpdateFiles.size() + " updates : " + elapsedTime + " seconds.");
 
-            pd.setProgress(listUpdateFiles.size());
+            //pd.setProgress(listUpdateFiles.size());
             pd.dismiss();
 
             System.out.println("finished AsyncUpdates download");
@@ -736,7 +739,7 @@ public class MenuActivity extends Activity {
                                 System.out.println(">file : " + name);
 
                                 downloadedFile = name;
-                                publishProgress(iCount);
+                                //publishProgress(iCount);
 
                                 status = ftpDownload(MyVars.FOLDER_DOCUMENTS + name,
                                         Environment.getExternalStorageDirectory() + MyVars.FOLDER_DOCUMENTS + name);
@@ -746,7 +749,7 @@ public class MenuActivity extends Activity {
 
                                 String imgName = name.replace(".pdf", ".PNG");
                                 downloadedFile = imgName;
-                                publishProgress(iCount);
+                                //publishProgress(iCount);
                                 ftpDownload(MyVars.FOLDER_DOCUMENTS + imgName,
                                         Environment.getExternalStorageDirectory() + MyVars.FOLDER_DOCUMENTS + imgName);
 
@@ -858,7 +861,7 @@ public class MenuActivity extends Activity {
                     if (!isImage){
                         iCount +=1;
                         progress = iCount;
-                        publishProgress(progress);
+                        //publishProgress(progress);
                     }
                 }
 
