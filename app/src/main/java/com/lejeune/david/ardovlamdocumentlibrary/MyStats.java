@@ -64,23 +64,23 @@ public class MyStats {
         File file = null;
         file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
         if (file.exists()) {
-                FileOutputStream oFile = null;
-                try {
-                    oFile = new FileOutputStream(file, false);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    String textToWrite = "";
-                    oFile.write(textToWrite.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    oFile.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            FileOutputStream oFile = null;
+            try {
+                oFile = new FileOutputStream(file, false);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                String textToWrite = "";
+                oFile.write(textToWrite.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                oFile.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -179,6 +179,44 @@ public class MyStats {
 
     }
 
+
+    public static void createMonthHourArrays(){
+
+
+        MyTimer myTimer = new MyTimer();
+        MyVars.arrJanuaryHour = new int[24];
+        MyVars.arrFebruaryHour = new int[24];
+        MyVars.arrMarchHour = new int[24];
+        MyVars.arrAprilHour = new int[24];
+        MyVars.arrMayHour = new int[24];
+        MyVars.arrJuneHour = new int[24];
+        MyVars.arrJulyHour = new int[24];
+        MyVars.arrAugustusHour = new int[24];
+        MyVars.arrSeptemberHour = new int[24];
+        MyVars.arrOctoberHour = new int[24];
+        MyVars.arrNovemberHour = new int[24];
+        MyVars.arrDecemberHour = new int[24];
+        for (int i = 0; i < MyVars.arrJanuaryHour.length; i++) {
+            MyVars.arrJanuaryHour[i] = 0 ;
+            MyVars.arrFebruaryHour[i] = 0 ;
+            MyVars.arrMarchHour[i] = 0 ;
+            MyVars.arrAprilHour[i] = 0 ;
+            MyVars.arrMayHour[i] = 0 ;
+            MyVars.arrJuneHour[i] = 0 ;
+            MyVars.arrJulyHour[i] = 0 ;
+            MyVars.arrAugustusHour[i] = 0 ;
+            MyVars.arrSeptemberHour[i] = 0 ;
+            MyVars.arrOctoberHour[i] = 0 ;
+            MyVars.arrNovemberHour[i] = 0 ;
+            MyVars.arrDecemberHour[i] = 0 ;
+        }
+        myTimer.getElapsedTime();
+
+
+    }
+
+
+
     public static void filterBigStatFiles(String filterStatYear , String filterStatType){
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
@@ -213,52 +251,119 @@ public class MyStats {
                             String strHour = strTime.substring(0,2);
                             String strMinute = strTime.substring(3,5);
 
+                            int iHour = Integer.parseInt(strHour);
+                            System.out.println("Hour " + strHour);
+
                             //first check the year
                             if(filterStatYear.equalsIgnoreCase(strYear)){
                                 //then check the stat type
                                 if (filterStatType.length()>0){
-                                    if(filterStatType.equalsIgnoreCase(MyVars.filterStatType))
+                                    if(filterStatType.equalsIgnoreCase(strType))
                                     {
                                         //System.out.println(strUser + " " + iDay);
+
+                                        if(strHour.equalsIgnoreCase("24")){
+                                            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!");
+                                        }
+                                        // logging the days
                                         switch(strMonth) {
                                             case "01":
                                                 MyVars.arrJanuary[iDay - 1] = MyVars.arrJanuary[iDay - 1] +1;
+                                                MyVars.arrJanuaryHour[iHour] = MyVars.arrJanuaryHour[iHour] +1;
                                                 break;
                                             case "02":
                                                 //System.out.println(MyVars.arrFebruary[iDay - 1]);
                                                 MyVars.arrFebruary[iDay - 1] = MyVars.arrFebruary[iDay - 1] +1;
+                                                MyVars.arrFebruaryHour[iHour] = MyVars.arrFebruaryHour[iHour] +1;
                                                 break;
                                             case "03":
                                                 MyVars.arrMarch[iDay - 1] = MyVars.arrMarch[iDay - 1] +1;
+                                                MyVars.arrMarchHour[iHour] = MyVars.arrMarchHour[iHour] +1;
                                                 break;
                                             case "04":
                                                 MyVars.arrApril[iDay - 1] = MyVars.arrApril[iDay - 1] +1;
+                                                MyVars.arrAprilHour[iHour] = MyVars.arrAprilHour[iHour] +1;
                                                 break;
                                             case "05":
                                                 MyVars.arrMay[iDay - 1] = MyVars.arrMay[iDay - 1] +1;
+                                                MyVars.arrMayHour[iHour] = MyVars.arrMayHour[iHour] +1;
                                                 break;
                                             case "06":
                                                 MyVars.arrJune[iDay - 1] = MyVars.arrJune[iDay - 1] +1;
+                                                MyVars.arrJuneHour[iHour] = MyVars.arrJuneHour[iHour] +1;
                                                 break;
                                             case "07":
                                                 MyVars.arrJuly[iDay - 1] = MyVars.arrJuly[iDay - 1] +1;
+                                                MyVars.arrJulyHour[iHour] = MyVars.arrJulyHour[iHour] +1;
                                                 break;
                                             case "08":
                                                 MyVars.arrAugustus[iDay - 1] = MyVars.arrAugustus[iDay - 1] +1;
+                                                MyVars.arrAugustusHour[iHour] = MyVars.arrAugustusHour[iHour] +1;
                                                 break;
                                             case "09":
                                                 MyVars.arrSeptember[iDay - 1] = MyVars.arrSeptember[iDay - 1] +1;
+                                                MyVars.arrSeptemberHour[iHour] = MyVars.arrSeptemberHour[iHour] +1;
                                                 break;
                                             case "10":
                                                 MyVars.arrOctober[iDay - 1] = MyVars.arrOctober[iDay - 1] +1;
+                                                MyVars.arrOctoberHour[iHour] = MyVars.arrOctoberHour[iHour] +1;
                                                 break;
                                             case "11":
                                                 MyVars.arrNovember[iDay - 1] = MyVars.arrNovember[iDay - 1] +1;
+                                                MyVars.arrNovemberHour[iHour] = MyVars.arrNovemberHour[iHour] +1;
                                                 break;
                                             case "12":
                                                 MyVars.arrDecember[iDay - 1] = MyVars.arrDecember[iDay - 1] +1;
+                                                MyVars.arrDecemberHour[iHour] = MyVars.arrDecemberHour[iHour] +1;
                                                 break;
                                         }
+
+
+//
+//                                        // logging the days
+//                                        switch(strHour) {
+//                                            case "01":
+//                                                MyVars.arrJanuary[iHour] = MyVars.arrJanuary[iHour] +1;
+//                                                break;
+//                                            case "02":
+//                                                //System.out.println(MyVars.arrFebruary[iDay - 1]);
+//                                                MyVars.arrFebruary[iHour] = MyVars.arrFebruary[iHour] +1;
+//                                                break;
+//                                            case "03":
+//                                                MyVars.arrMarch[iHour] = MyVars.arrMarch[iHour] +1;
+//                                                break;
+//                                            case "04":
+//                                                MyVars.arrApril[iHour] = MyVars.arrApril[iHour] +1;
+//                                                break;
+//                                            case "05":
+//                                                MyVars.arrMay[iHour] = MyVars.arrMay[iHour] +1;
+//                                                break;
+//                                            case "06":
+//                                                MyVars.arrJune[iHour] = MyVars.arrJune[iHour] +1;
+//                                                break;
+//                                            case "07":
+//                                                MyVars.arrJuly[iHour] = MyVars.arrJuly[iHour] +1;
+//                                                break;
+//                                            case "08":
+//                                                MyVars.arrAugustus[iHour] = MyVars.arrAugustus[iHour] +1;
+//                                                break;
+//                                            case "09":
+//                                                MyVars.arrSeptember[iHour] = MyVars.arrSeptember[iHour] +1;
+//                                                break;
+//                                            case "10":
+//                                                MyVars.arrOctober[iHour] = MyVars.arrOctober[iHour] +1;
+//                                                break;
+//                                            case "11":
+//                                                MyVars.arrNovember[iHour] = MyVars.arrNovember[iHour] +1;
+//                                                break;
+//                                            case "12":
+//                                                MyVars.arrDecember[iHour] = MyVars.arrDecember[iHour] +1;
+//                                                break;
+//                                        }
+//
+//
+
+
                                     }
                                 }
                             }
@@ -297,6 +402,15 @@ public class MyStats {
 
     }
 
+
+
+
+    public static void resetStatVars(){
+
+        MyVars.filterStatType = "";
+        MyVars.filterStatYear = "";
+        MyVars.filterStatMonth = "";
+    }
 
 }
 

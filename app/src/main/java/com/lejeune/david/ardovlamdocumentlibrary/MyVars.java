@@ -4,6 +4,7 @@ package com.lejeune.david.ardovlamdocumentlibrary;
  * Created by Lucian on 2/23/2017.
  */
 
+
 public class MyVars {
 
     public final static String ROOT_FOLDER = "/DocLib/";
@@ -38,9 +39,22 @@ public class MyVars {
     public static int [] arrNovember;
     public static int [] arrDecember;
 
+    public static int [] arrJanuaryHour;
+    public static int [] arrFebruaryHour;
+    public static int [] arrMarchHour;
+    public static int [] arrAprilHour;
+    public static int [] arrMayHour;
+    public static int [] arrJuneHour;
+    public static int [] arrJulyHour;
+    public static int [] arrAugustusHour;
+    public static int [] arrSeptemberHour;
+    public static int [] arrOctoberHour;
+    public static int [] arrNovemberHour;
+    public static int [] arrDecemberHour;
+
 
     public static String filterStatType;
-    public static String filterUser;
+    public static String filterStatUser;
     public static String filterStatYear;
     public static String filterStatMonth;
 
