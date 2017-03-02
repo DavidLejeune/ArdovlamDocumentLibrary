@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class GraphActivity extends Activity {
 
     BarChart barChart;
@@ -502,7 +501,7 @@ public class GraphActivity extends Activity {
         for (int i = 0; i < arrMonth.length; i++) {
             float iFloat = (float) i + 1;
             float arrFloat = (float) arrMonth[i];
-            System.out.println(arrFloat + " " + arrMonth.length);
+            //System.out.println(arrFloat + " " + arrMonth.length);
 
             Entry entry = new Entry(iFloat, arrFloat); // 0 == quarter 1
             entries.add(entry);
@@ -553,10 +552,10 @@ public class GraphActivity extends Activity {
 
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < arrMonthHour.length; i++) {
-            System.out.println("arrMonthHour.length : " + arrMonthHour.length);
+            //System.out.println("arrMonthHour.length : " + arrMonthHour.length);
             float iFloat = (float) i;
             float arrFloat = (float) arrMonthHour[i];
-            System.out.println(iFloat + " " + arrFloat);
+            //System.out.println(iFloat + " " + arrFloat);
             entries.add(new BarEntry(iFloat, arrFloat));
         }
 

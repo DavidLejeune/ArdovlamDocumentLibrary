@@ -26,7 +26,8 @@
         android:layout_centerHorizontal="true"
         android:textStyle="normal|bold"
         android:text="@string/strTitleLogin"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:textColor="@color/colorPrimary" />
 
     <ImageView
         android:layout_width="match_parent"

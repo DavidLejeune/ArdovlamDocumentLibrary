@@ -252,7 +252,7 @@ public class MyStats {
                             String strMinute = strTime.substring(3,5);
 
                             int iHour = Integer.parseInt(strHour);
-                            System.out.println("Hour " + strHour);
+                            //System.out.println("Hour " + strHour);
 
                             //first check the year
                             if(filterStatYear.equalsIgnoreCase(strYear)){
@@ -262,9 +262,9 @@ public class MyStats {
                                     {
                                         //System.out.println(strUser + " " + iDay);
 
-                                        if(strHour.equalsIgnoreCase("24")){
-                                            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!");
-                                        }
+//                                        if(strHour.equalsIgnoreCase("24")){
+//                                            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!");
+//                                        }
                                         // logging the days
                                         switch(strMonth) {
                                             case "01":
