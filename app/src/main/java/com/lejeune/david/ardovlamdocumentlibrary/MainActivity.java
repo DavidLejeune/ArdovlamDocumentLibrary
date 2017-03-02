@@ -49,6 +49,12 @@ public class MainActivity extends Activity {
 //        String currentDate = myTools.getDate();
 //        System.out.println("Time :" + currentTime);
 //        System.out.println("Date :" + currentDate);
+
+        // Making sure the correct folder structure exists
+        myTools.createFolders();
+
+
+
         if(MyVars.registereduser.equalsIgnoreCase("1")){
 
             for(int i=0; i<100 ;i++){
@@ -71,8 +77,6 @@ public class MainActivity extends Activity {
         tvTitleLogin = (TextView) findViewById(R.id.tvTitleLogin);
         tvTitleLogin.setVisibility(View.VISIBLE);
 
-        // Making sure the correct folder structure exists
-        myTools.createFolders();
 
         // automatic redirect to loginactivity
         new Handler().postDelayed(new Runnable() {
