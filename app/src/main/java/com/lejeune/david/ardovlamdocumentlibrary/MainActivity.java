@@ -76,8 +76,18 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                MainActivity.this.startActivity(loginIntent);
-                MainActivity.this.finish();
+                final Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
+
+                if(MyVars.registereduser.equalsIgnoreCase("1")){
+
+                    MainActivity.this.startActivity(menuIntent);
+                    MainActivity.this.finish();
+                }
+                else
+                {
+                    MainActivity.this.startActivity(loginIntent);
+                    MainActivity.this.finish();
+                }
             }
         }, 1977);
 
@@ -257,95 +267,6 @@ public class MainActivity extends Activity {
             return null;
         }
 
-//        private void insertDataSQLite(String folder_name , String document_name, String update_nr){
-//
-//            boolean isInserted = helper.insertData(folder_name , document_name , update_nr);
-//            if (isInserted){
-//                System.out.println("data inserted");
-//            }
-//            else
-//            {
-//                System.out.println("data NOT inserted");
-//            }
-//
-//        }
-//
-//        private void viewAllDataSQLite(){
-//            Cursor cursor = helper.getAllData();
-//            if(cursor.getCount() == 0){
-//                System.out.println("no results");
-//                //showMessage("Error", "No data in SQLite");
-//                return;
-//            }
-//            else
-//            {
-//                StringBuffer buffer = new StringBuffer();
-//                while(cursor.moveToNext()){
-//                    buffer.append("id : " + cursor.getString(0) + "\n");
-//                    buffer.append("folder : " + cursor.getString(1) + "\n");
-//                    buffer.append("document : " + cursor.getString(2) + "\n");
-//                    buffer.append("update : " + cursor.getString(3) + "\n\n");
-//                    System.out.println(buffer);
-//                }
-//
-//                //showMessage("Data", buffer.toString());
-//
-//            }
-//        }
-//
-////    public void showMessage(String title, String message){
-////        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-////        builder.setCancelable(true);
-////        builder.setTitle(title);
-////        builder.setMessage(message);
-////        builder.show();
-////
-////    }
-//
-//
-//        private void saveDocumentsFile(){
-//            File dir = Environment.getExternalStorageDirectory();
-//            File file = new File(dir, MyVars.FOLDER_DATA + "documents.csv");
-//            String line = "";
-//
-//            if (file.exists()) {
-//
-//                StringBuilder text = new StringBuilder();
-//                try {
-//                    BufferedReader br = new BufferedReader(new FileReader(file));
-//                    while ((line = br.readLine()) != null) {
-//                        if (line.length() > 0) {
-//                            {
-//                                String[] str = line.split(",");
-//
-//                                String strID = str[0].toLowerCase();
-//                                String strFolder = str[1].toLowerCase();
-//                                String strDoc = str[2].toLowerCase();
-//                                String strUpdate = str[3].toLowerCase();
-//
-//                                insertDataSQLite(strFolder , strDoc, strUpdate);
-//
-//
-//                            }
-//
-//                        }
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                viewAllDataSQLite();
-//            }
-//            else
-//            {
-//                System.out.println("File documents doc not found");
-//            }
-//
-//
-//        }
-
-
-
     }
 
 
@@ -403,9 +324,6 @@ public class MainActivity extends Activity {
             return null;
         }
     }
-
-
-
 
     public class AsyncStatsDownloadDL extends AsyncTask<String, String, String> {
 
