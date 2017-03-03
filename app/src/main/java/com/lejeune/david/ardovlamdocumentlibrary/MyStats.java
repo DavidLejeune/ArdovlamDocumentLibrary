@@ -218,6 +218,7 @@ public class MyStats {
 
 
     public static void filterBigStatFiles(String filterStatYear , String filterStatType){
+        System.out.println("CALCULCATING STATS ");
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
         MyTimer myTimer = new MyTimer();

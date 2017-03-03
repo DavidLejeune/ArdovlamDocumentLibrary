@@ -3,11 +3,13 @@ package com.lejeune.david.ardovlamdocumentlibrary;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -27,6 +29,8 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//import static com.lejeune.david.ardovlamdocumentlibrary.GraphActivity.restartGraph;
 
 
 public class GraphActivity extends Activity {
@@ -49,11 +53,17 @@ public class GraphActivity extends Activity {
     String selectedMonth , selectedYear , selectedType;
     ProgressDialog pd;
 
+    TextView txtResultGraph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+
+        txtResultGraph = (TextView) findViewById(R.id.txtResultGraph);
+        txtResultGraph.setText("");
+        txtResultGraph.setText("Processing ..");
+        txtResultGraph.setVisibility(View.INVISIBLE);
 
         barChart = (BarChart) findViewById(R.id.barChart);
         barChart.setOnChartValueSelectedListener( new OnChartValueSelectedListener() {
@@ -333,7 +343,7 @@ public class GraphActivity extends Activity {
                         arrMonthHour = new int[24];
                         for (int i = 0; i < arrMonthHour.length; i++) {
                             arrMonthHour[i] = MyVars.arrJanuaryHour[i] + MyVars.arrFebruaryHour[i] + MyVars.arrMarchHour[i] + MyVars.arrAprilHour[i] + MyVars.arrMayHour[i] + MyVars.arrJuneHour[i] + MyVars.arrJulyHour[i] + MyVars.arrAugustusHour[i] + MyVars.arrSeptemberHour[i] + MyVars.arrOctoberHour[i] +  MyVars.arrNovemberHour[i] + MyVars.arrDecemberHour[i] ;
-                            System.out.println("combine arrayvalue: " + arrMonthHour[i]);
+                            //System.out.println("combine arrayvalue: " + arrMonthHour[i]);
                         }
 
 
@@ -395,18 +405,10 @@ public class GraphActivity extends Activity {
                 }
                 else
                 {
-                    pd = ProgressDialog.show(GraphActivity.this, "", "Processing ..",
-                            true, false);
-                    MyStats.createMonthArrays();
-                    MyStats.createMonthHourArrays();
-                    System.out.println("selectedYear " + selectedYear);
+                    txtResultGraph.setVisibility(View.VISIBLE);
                     MyVars.filterStatYear = selectedYear;
-                    MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
-                    pd.dismiss();
-                    finish();
-                    startActivity(getIntent());
+                    new AsyncCreateStatsDL().execute();
                 }
-
 
             }
 
@@ -447,16 +449,10 @@ public class GraphActivity extends Activity {
                 }
                 else
                 {
-                    pd = ProgressDialog.show(GraphActivity.this, "", "Processing ..",
-                            true, false);
-                    MyStats.createMonthArrays();
-                    MyStats.createMonthHourArrays();
-                    System.out.println("selectedType " + selectedType);
+
+                    txtResultGraph.setVisibility(View.VISIBLE);
                     MyVars.filterStatType = selectedType;
-                    MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
-                    pd.dismiss();
-                    finish();
-                    startActivity(getIntent());
+                    new AsyncCreateStatsDL().execute();
                 }
 
 
@@ -625,6 +621,55 @@ public class GraphActivity extends Activity {
         barChart.invalidate(); // refresh
     }
 
+    public void restartGraph(){
+
+        finish();
+        startActivity(getIntent());
+    }
+
+
+
+
+
+    public class AsyncCreateStatsDL extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            MyStats.createMonthArrays();
+            MyStats.createMonthHourArrays();
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            restartGraph();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
+
+            return null;
+        }
+
+
+
+
+
+
+    }
+
+
 
 
 //    private void logDataPoint(){
@@ -633,3 +678,4 @@ public class GraphActivity extends Activity {
 //                }
 //    }
 }
+
