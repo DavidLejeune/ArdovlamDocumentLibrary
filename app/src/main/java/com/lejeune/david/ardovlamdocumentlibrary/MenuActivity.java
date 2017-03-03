@@ -84,8 +84,8 @@ public class MenuActivity extends Activity {
                                     int position, long id) {
 
 
-                Toast.makeText(MenuActivity.this, "Searching ... please wait",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MenuActivity.this, "Searching ... please wait",
+                     //   Toast.LENGTH_SHORT).show();
 
                 switch (position) {
 
@@ -121,8 +121,9 @@ public class MenuActivity extends Activity {
 
                         break;
                 }
-
-                showMe();
+                Toast.makeText(MenuActivity.this, "Please wait ...", Toast.LENGTH_SHORT).show();
+                new AsyncShowMeDL().execute();
+                //showMe();
                 //getFilteredDocuments();
             }
         });
@@ -881,7 +882,6 @@ public class MenuActivity extends Activity {
 
     }
 
-
     public class AsyncCommercialDownloadDL extends AsyncTask<String, String, String> {
 
 
@@ -938,6 +938,38 @@ public class MenuActivity extends Activity {
         }
     }
 
+    class AsyncShowMeDL extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            showMe();
+            return null;
+        }
+
+
+
+
+
+
+    }
 
 
 }
