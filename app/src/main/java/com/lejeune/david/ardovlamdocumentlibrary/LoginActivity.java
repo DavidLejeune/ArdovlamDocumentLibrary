@@ -97,7 +97,8 @@ public class LoginActivity extends Activity {
 //                {
 
                 Toast.makeText(LoginActivity.this,"Verifying user\nPlease wait ...",Toast.LENGTH_SHORT).show();
-                loginProcedure();
+                new AsyncLoginProcedureDL().execute();
+                //loginProcedure();
 
 
 //                }
@@ -504,6 +505,39 @@ public class LoginActivity extends Activity {
         }
     }
 
+
+    class AsyncLoginProcedureDL extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            loginProcedure();
+            return null;
+        }
+
+
+
+
+
+
+    }
 
 
 }
