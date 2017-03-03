@@ -97,8 +97,8 @@ public class LoginActivity extends Activity {
 //                {
 
                 Toast.makeText(LoginActivity.this,"Verifying user\nPlease wait ...",Toast.LENGTH_SHORT).show();
-                new AsyncLoginProcedureDL().execute();
-                //loginProcedure();
+                //new AsyncLoginProcedureDL().execute();
+                loginProcedure();
 
 
 //                }
