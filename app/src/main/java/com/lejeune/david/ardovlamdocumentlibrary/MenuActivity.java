@@ -31,9 +31,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class MenuActivity extends Activity {
 
+    //region Declarations
     private TextView txtUserType, txtFullName, txtTitle;
     public static ImageButton btnStats , btnUpdates;
 
@@ -47,9 +47,7 @@ public class MenuActivity extends Activity {
 
     public static int countUpdates;
 
-
     public static ArrayList<String> listUpdateFiles;
-
 
     public static int iServerUpdate;
 
@@ -63,77 +61,65 @@ public class MenuActivity extends Activity {
     static String updateDocFile  = "Update_documents.txt";
     static String updateComFile  = "Update_commercial.txt";
 
+    ImageView imgProfile;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        init();
 
-        refreshDisplayVariables();
+        //region Initialisations
         listUpdateFiles = new ArrayList<>();
         cntx = getApplicationContext();
         myTools = new MyTools();
+        //endregion
 
-
+        //region Gridview
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this));
-
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-
-
-                //Toast.makeText(MenuActivity.this, "Searching ... please wait",
-                     //   Toast.LENGTH_SHORT).show();
 
                 switch (position) {
 
                     case 0:
                         filterID = "Inbraakdetectie";
-//                        Toast.makeText(MenuActivity.this, filterID + " (pos " + position + ")",
-//                                Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         filterID = "Branddetectie";
-//                        Toast.makeText(MenuActivity.this, filterID + " (pos " + position + ")",
-//                                Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
                         filterID = "Gasdetectie";
-//                        Toast.makeText(MenuActivity.this, filterID + " (pos " + position + ")",
-//                                Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
                         filterID = "Camerabewaking";
-//                        Toast.makeText(MenuActivity.this, filterID + " (pos " + position + ")",
-//                                Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
                         filterID = "Toegangscontrole";
-//                        Toast.makeText(MenuActivity.this, filterID + " (pos " + position + ")",
-//                                Toast.LENGTH_SHORT).show();
                         break;
                     case 5:
                         filterID = "Geintegreerde bewaking";
-//                        Toast.makeText(MenuActivity.this, filterID + " (pos " + position + ")",
-//                                Toast.LENGTH_SHORT).show();
-
                         break;
                 }
+
                 Toast.makeText(MenuActivity.this, "Please wait ...", Toast.LENGTH_SHORT).show();
                 new AsyncShowMeDL().execute();
-                //showMe();
-                //getFilteredDocuments();
+
             }
         });
+        //endregion
 
-
+        //region Textfields
         txtUserType = (TextView) findViewById(R.id.txtUserType);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         txtFullName = (TextView) findViewById(R.id.txtFullName);
+        //endregion
 
-
+        //region Buttons
         btnStats = (ImageButton) findViewById(R.id.btnStats);
         btnStats.setImageDrawable(getResources().getDrawable(R.drawable.stats));
         btnStats.setOnClickListener(new View.OnClickListener() {
@@ -153,14 +139,28 @@ public class MenuActivity extends Activity {
             }
         });
 
+        //endregion
+
+        //region ProfileImage
         myTools.retrieveSharedPref(cntx);
         txtFullName.setText(MyVars.fullname);
 
+        imgProfile = (ImageView) findViewById(R.id.imgProfile);
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            public void onClick(View v) {
+
+                final Intent loginIntent = new Intent(MenuActivity.this, LoginActivity.class);
+                MenuActivity.this.startActivity(loginIntent);
+                MenuActivity.this.finish();
+            }
+        });
 
         getUsertype();
         getProfileImg();
+        //endregion
 
-
+        //region Setting interface based on Usertype
         if (userType.equalsIgnoreCase("1")){
             strUserType = "Admin";
             checkUpdatesAvailable(updateComFile);
@@ -180,13 +180,21 @@ public class MenuActivity extends Activity {
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.INVISIBLE);
         }
+        //endregion
+
+        //region Setting update(s)
         compareUpdateNrsDoc();
         compareUpdateNrsCom();
         myTools.retrieveSharedPref(cntx);
-
+        //endregion
 
     }
 
+    //region Misc
+    private void init(){
+        //checking displayvariables for gridview images sizes
+        refreshDisplayVariables();
+    }
 
     private void refreshDisplayVariables(){
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -208,9 +216,21 @@ public class MenuActivity extends Activity {
             //LoginActivity.this.finish();
         }
     }
+    private void showMe(){
+
+        gotoFilterActivity();
 
 
 
+    }
+    private void gotoFilterActivity(){
+        final Intent filterActivity = new Intent(MenuActivity.this, FilterActivity.class);
+        MenuActivity.this.startActivity(filterActivity);
+
+    }
+    //endregion
+
+    //region User
     private void getUsertype(){
         userType = MyVars.usertype;
 
@@ -224,7 +244,6 @@ public class MenuActivity extends Activity {
         if (length > 1){
             if(file.exists()){
                 Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
                 imgProfile.setImageBitmap(myBitmap);
             }
         }
@@ -235,8 +254,27 @@ public class MenuActivity extends Activity {
 
     }
     private void setDefaultProfileImg(){
-        ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         imgProfile.setImageDrawable(getResources().getDrawable(R.drawable.avatar_1));
+    }
+    //endregion
+
+    //region Update
+    public void updateProcedure(){
+        System.out.println("UpdateProcedure");
+        if (userType.equalsIgnoreCase("1")){
+            strUserType = "Admin";
+            updateDoc();
+            if(!newUpdatesDoc) updateCom();
+        }
+        else if (userType.equalsIgnoreCase("2")){
+            strUserType = "Projectleider";
+            updateCom();
+        }
+        else if (userType.equalsIgnoreCase("0")){
+            strUserType = "Installateur";
+            updateDoc();
+
+        }
     }
 
     private static void checkUpdatesAvailable(String updateDocument) {
@@ -303,8 +341,6 @@ public class MenuActivity extends Activity {
         }
         displayUpdateButton();
     }
-
-
     private static void compareUpdateNrsCom(){
         System.out.println("updatecomlocal : "+ MyVars.updatecomlocal);
         System.out.println("updatecomserver : "+ MyVars.updatecomserver);
@@ -399,25 +435,6 @@ public class MenuActivity extends Activity {
 
     }
 
-
-    public void updateProcedure(){
-        System.out.println("UpdateProcedure");
-        if (userType.equalsIgnoreCase("1")){
-            strUserType = "Admin";
-            updateDoc();
-            if(!newUpdatesDoc) updateCom();
-        }
-        else if (userType.equalsIgnoreCase("2")){
-            strUserType = "Projectleider";
-            updateCom();
-        }
-        else if (userType.equalsIgnoreCase("0")){
-            strUserType = "Installateur";
-            updateDoc();
-
-        }
-    }
-
     public void updateDoc(){
 
         if (newUpdatesDoc)
@@ -441,7 +458,6 @@ public class MenuActivity extends Activity {
             System.out.println("no new updates found");
         }
     }
-
     public void updateCom(){
 
         if (newUpdatesCom)
@@ -466,21 +482,18 @@ public class MenuActivity extends Activity {
         }
     }
 
-
     public void importUpdateCom(){
         System.out.println("getting ready to import updates com");
         AsyncCommercialDownloadDL asyncCommercialDownload = new AsyncCommercialDownloadDL();
         asyncCommercialDownload.execute();
 
     }
-
     public void importUpdateDoc(){
         System.out.println("getting ready to import updates doc");
         AsyncUpdatesDownloadDL asyncUpdateDocuments = new AsyncUpdatesDownloadDL();
         asyncUpdateDocuments.execute();
 
     }
-
 
     private static void setUpdatenrDoc(Context context){
         System.out.println("setting the update nr ..");
@@ -494,7 +507,6 @@ public class MenuActivity extends Activity {
         System.out.println("updatedoclocal in SharedPref : " + MyVars.updatedoclocal);
 //        Toast.makeText(context , "Updates finished" , Toast.LENGTH_LONG).show();
     }
-
     private static void setUpdatenrCom(Context context){
         System.out.println("setting the update nr ..");
         SharedPreferences sharedPref = context.getSharedPreferences("USERINFO", Context.MODE_PRIVATE);
@@ -575,7 +587,6 @@ public class MenuActivity extends Activity {
         }
     }
 
-
     public void showArrayListUpdate(){
 
         System.out.println("looping through the arraylist");
@@ -583,24 +594,10 @@ public class MenuActivity extends Activity {
             System.out.println("list Update entry : " + cu);
         }
     }
+    //endregion
 
-    private void showMe(){
-
-        gotoFilterActivity();
-
-
-
-    }
-
-
-
-    private void gotoFilterActivity(){
-        final Intent filterActivity = new Intent(MenuActivity.this, FilterActivity.class);
-        MenuActivity.this.startActivity(filterActivity);
-
-    }
-
-    public class AsyncUpdatesDownloadDL extends AsyncTask<String, Integer, String> {
+    //region Internal Async tasks
+    class AsyncUpdatesDownloadDL extends AsyncTask<String, Integer, String> {
 
 
 
@@ -882,7 +879,7 @@ public class MenuActivity extends Activity {
 
     }
 
-    public class AsyncCommercialDownloadDL extends AsyncTask<String, String, String> {
+    class AsyncCommercialDownloadDL extends AsyncTask<String, String, String> {
 
 
         private FTPfunctions ftpclient = null;
@@ -970,6 +967,6 @@ public class MenuActivity extends Activity {
 
 
     }
-
+    //endregion
 
 }
