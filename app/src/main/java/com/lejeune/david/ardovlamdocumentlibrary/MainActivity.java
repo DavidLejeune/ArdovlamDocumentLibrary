@@ -23,8 +23,12 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 
 public class MainActivity extends Activity {
 
@@ -78,16 +82,16 @@ public class MainActivity extends Activity {
                 final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                 final Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
 
-                if(MyVars.registereduser.equalsIgnoreCase("1")){
-
-                    MainActivity.this.startActivity(menuIntent);
-                    MainActivity.this.finish();
-                }
-                else
-                {
+//                if(MyVars.registereduser.equalsIgnoreCase("1")){
+//
+//                    MainActivity.this.startActivity(menuIntent);
+//                    MainActivity.this.finish();
+//                }
+//                else
+//                {
                     MainActivity.this.startActivity(loginIntent);
                     MainActivity.this.finish();
-                }
+//                }
             }
         }, 1977);
 
@@ -514,8 +518,9 @@ public class MainActivity extends Activity {
 
 
 //            pd.dismiss();
+            System.out.println("big stat file");
             myTimer.getElapsedTime();
-            traverseBigStatFiles();
+            //traverseBigStatFiles();
         }
 
         @Override
@@ -544,7 +549,49 @@ public class MainActivity extends Activity {
                     } else {
                         // do something here with the file
                         System.out.println(file.toString());
-                        addToBigStatFiles(file);
+
+                        File dirStats = Environment.getExternalStorageDirectory();
+                        //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
+                        //File file = new File(dir, MyVars.FOLDER_STATS + );
+                        File oFile = new File(dirStats, MyVars.FOLDER_STATS + "all_users.txt");
+
+                        FileInputStream is = null;
+                        try {
+                            is = new FileInputStream(file);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        FileOutputStream fos = null;
+                        try {
+                            fos = new FileOutputStream(oFile);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        FileChannel f1 = is.getChannel();
+                        FileChannel f2 = fos.getChannel();
+
+                        try {
+                            f2.transferFrom(f1, 0, f1.size());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            f2.transferFrom(f1, f1.size(), f1.size());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            f2.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            f1.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        //addToBigStatFiles(file);
                     }
                 }
             }
