@@ -493,22 +493,30 @@ public class MainActivity extends Activity {
 
 
         ProgressDialog pd;
+        int iCountStatFiles;
 
 
         //DatabaseHelperStats helper;
         MyTimer myTimer;
 
+        File dir = null;
+        File file = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            dir = Environment.getExternalStorageDirectory();
+            file = new File(dir, MyVars.FOLDER_STATS );
+
 
             myTimer = new MyTimer();
 //            pd = ProgressDialog.show(MainActivity.this, "", "Creating single stat file..",
 //                    true, false);
             System.out.println("Creating single stat file..");
             MyStats.createBigLogFile();
-
+            iCountStatFiles=0;
+            traverseCount(file);
 
         }
 
@@ -533,9 +541,7 @@ public class MainActivity extends Activity {
         protected String doInBackground(String... params) {
 
 
-            File dir = Environment.getExternalStorageDirectory();
-            File file = new File(dir, MyVars.FOLDER_STATS );
-            traverse(file);
+            traverseMerge(file);
             return null;
         }
 
@@ -550,52 +556,191 @@ public class MainActivity extends Activity {
                         // do something here with the file
                         System.out.println(file.toString());
 
-                        File dirStats = Environment.getExternalStorageDirectory();
-                        //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
-                        //File file = new File(dir, MyVars.FOLDER_STATS + );
-                        File oFile = new File(dirStats, MyVars.FOLDER_STATS + "all_users.txt");
+//
+//                        File dirStats = Environment.getExternalStorageDirectory();
+//                        //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
+//                        //File file = new File(dir, MyVars.FOLDER_STATS + );
+//                        File oFile = new File(dirStats, MyVars.FOLDER_STATS + "all_users.txt");
+//
+//                        FileInputStream is = null;
+//                        try {
+//                            is = new FileInputStream(file);
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        }
+//                        FileOutputStream fos = null;
+//                        try {
+//                            fos = new FileOutputStream(oFile);
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        }
+//                        FileChannel f1 = is.getChannel();
+//                        FileChannel f2 = fos.getChannel();
+//
+//                        try {
+//                            f2.transferFrom(f1, 0, f1.size());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        try {
+//                            f2.transferFrom(f1, f1.size(), f1.size());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        try {
+//                            f2.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        try {
+//                            f1.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        //addToBigStatFiles(file);
 
-                        FileInputStream is = null;
-                        try {
-                            is = new FileInputStream(file);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        FileOutputStream fos = null;
-                        try {
-                            fos = new FileOutputStream(oFile);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        FileChannel f1 = is.getChannel();
-                        FileChannel f2 = fos.getChannel();
+                    }
+                }
+            }
+            System.out.println("Total files for stat : " + iCountStatFiles);
+        }
+        public void traverseCount (File dir) {
+            if (dir.exists()) {
+                File[] files = dir.listFiles();
+                for (int i = 0; i < files.length; ++i) {
+                    File file = files[i];
+                    if (file.isDirectory()) {
+                        //traverse(file);
+                    } else {
+                        // do something here with the file
+                        System.out.println(file.toString());
+                        iCountStatFiles+=1;
+//
+//                        File dirStats = Environment.getExternalStorageDirectory();
+//                        //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
+//                        //File file = new File(dir, MyVars.FOLDER_STATS + );
+//                        File oFile = new File(dirStats, MyVars.FOLDER_STATS + "all_users.txt");
+//
+//                        FileInputStream is = null;
+//                        try {
+//                            is = new FileInputStream(file);
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        }
+//                        FileOutputStream fos = null;
+//                        try {
+//                            fos = new FileOutputStream(oFile);
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        }
+//                        FileChannel f1 = is.getChannel();
+//                        FileChannel f2 = fos.getChannel();
+//
+//                        try {
+//                            f2.transferFrom(f1, 0, f1.size());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        try {
+//                            f2.transferFrom(f1, f1.size(), f1.size());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        try {
+//                            f2.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        try {
+//                            f1.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        //addToBigStatFiles(file);
 
-                        try {
-                            f2.transferFrom(f1, 0, f1.size());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            f2.transferFrom(f1, f1.size(), f1.size());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
 
-                        try {
-                            f2.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            f1.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        //addToBigStatFiles(file);
+
                     }
                 }
             }
         }
+
+
+        public void traverseMerge (File dir) {
+
+            int iCountIndex = 0;
+            MergerFiles.files = new File[iCountStatFiles];
+
+            if (dir.exists()) {
+                File[] files = dir.listFiles();
+                for (int i = 0; i < files.length; ++i) {
+                    File file = files[i];
+                    if (file.isDirectory()) {
+                        //traverse(file);
+                    } else {
+                        // do something here with the file
+                        System.out.println(file.toString());
+                        MergerFiles.addFileToList(file.toString(),iCountIndex);
+                        iCountIndex+=1;
+
+//
+//                        File dirStats = Environment.getExternalStorageDirectory();
+//                        //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
+//                        //File file = new File(dir, MyVars.FOLDER_STATS + );
+//                        File oFile = new File(dirStats, MyVars.FOLDER_STATS + "all_users.txt");
+//
+//                        FileInputStream is = null;
+//                        try {
+//                            is = new FileInputStream(file);
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        }
+//                        FileOutputStream fos = null;
+//                        try {
+//                            fos = new FileOutputStream(oFile);
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        }
+//                        FileChannel f1 = is.getChannel();
+//                        FileChannel f2 = fos.getChannel();
+//
+//                        try {
+//                            f2.transferFrom(f1, 0, f1.size());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        try {
+//                            f2.transferFrom(f1, f1.size(), f1.size());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        try {
+//                            f2.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        try {
+//                            f1.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        //addToBigStatFiles(file);
+
+                    }
+                }
+                MergerFiles.createBigLogFile();
+            }
+
+
+
+        }
+
+
+
+
 
         private void addToBigStatFiles(File file){
             //File dir = Environment.getExternalStorageDirectory();

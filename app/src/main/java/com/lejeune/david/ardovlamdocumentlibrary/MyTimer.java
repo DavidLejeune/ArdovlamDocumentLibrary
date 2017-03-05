@@ -15,7 +15,7 @@ public class MyTimer {
 
     public void getElapsedTime(){
         stopTime = System.currentTimeMillis();
-        elapsedTime = (stopTime - startTime) /1000 ;
-        System.out.println("Time elapsed : " + elapsedTime);
+        elapsedTime = (stopTime - startTime)  ;
+        System.out.println("Time elapsed (ms) : " + elapsedTime);
     }
 }
