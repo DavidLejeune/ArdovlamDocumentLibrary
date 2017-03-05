@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
     public static String connectionType ;
     MyTools myTools= null;
     Context cntx;
+    MyTimer timeActivity;
 
 //    SQLiteDatabase mydb;
 
@@ -49,7 +50,7 @@ public class MainActivity extends Activity {
 
         // Start declarations
         cntx = getApplicationContext();
-
+        timeActivity = new MyTimer();
         // Making sure the correct folder structure exists
         myTools= new MyTools();
         myTools.createFolders();
@@ -76,24 +77,24 @@ public class MainActivity extends Activity {
         tvTitleLogin.setVisibility(View.VISIBLE);
 
         // automatic redirect to loginactivity
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                final Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
-
-//                if(MyVars.registereduser.equalsIgnoreCase("1")){
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+//                final Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
 //
-//                    MainActivity.this.startActivity(menuIntent);
+////                if(MyVars.registereduser.equalsIgnoreCase("1")){
+////
+////                    MainActivity.this.startActivity(menuIntent);
+////                    MainActivity.this.finish();
+////                }
+////                else
+////                {
+//                    MainActivity.this.startActivity(loginIntent);
 //                    MainActivity.this.finish();
-//                }
-//                else
-//                {
-                    MainActivity.this.startActivity(loginIntent);
-                    MainActivity.this.finish();
-//                }
-            }
-        }, 1977);
+////                }
+//            }
+//        }, 1977);
 
         // Checknetworkstatus , if on wifi this will allow data folder download
         connectionType = MyTools.checkNetworkStatus(cntx);
@@ -117,6 +118,11 @@ public class MainActivity extends Activity {
         MyVars.screenWidth = displayMetrics.widthPixels;
     }
 
+    private void gotoLogin(){
+                final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    MainActivity.this.startActivity(loginIntent);
+                    MainActivity.this.finish();
+    }
 
 
 //    public void showTable(){
@@ -240,7 +246,6 @@ public class MainActivity extends Activity {
 
 
             new AsyncUploadStatDL().execute();
-
         }
 
         @Override
@@ -258,7 +263,7 @@ public class MainActivity extends Activity {
             ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
             boolean status = false;
             status = ftpclient.downloadDataFiles(MyVars.FOLDER_DATA);
-            System.out.println(MyVars.FOLDER_DATA + " status : " + status);
+            //System.out.println(MyVars.FOLDER_DATA + " status : " + status);
             if (status == true) {
                 System.out.println("Download success");
 //                    handler.sendEmptyMessage(5);
@@ -374,7 +379,7 @@ public class MainActivity extends Activity {
             ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
             boolean status = false;
             status = ftpclient.downloadStatsFiles(MyVars.FOLDER_STATS);
-            System.out.println(MyVars.FOLDER_STATS + " status : " + status);
+            //System.out.println(MyVars.FOLDER_STATS + " status : " + status);
             if (status == true) {
                 System.out.println("Download success");
 //                    handler.sendEmptyMessage(5);
@@ -529,6 +534,10 @@ public class MainActivity extends Activity {
             System.out.println("big stat file");
             myTimer.getElapsedTime();
             //traverseBigStatFiles();
+
+            gotoLogin();
+            System.out.println("Start activity : ");
+            timeActivity.getElapsedTime();
         }
 
         @Override

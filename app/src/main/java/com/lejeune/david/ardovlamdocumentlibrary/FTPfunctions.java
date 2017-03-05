@@ -158,11 +158,11 @@ public class FTPfunctions {
                     Log.i(TAG, "File : " + name);
 
 
-                    System.out.println("function bulk ftpDownload :");
-                    System.out.println(">file : " + name);
+                    //System.out.println("function bulk ftpDownload :");
+                    //System.out.println(">file : " + name);
                     status = ftpDownload(MyVars.FOLDER_DATA + name, Environment.getExternalStorageDirectory()
                             + MyVars.FOLDER_DATA + name);
-                    System.out.println(">Status bulk ftpDownload: " + status);
+                    //System.out.println(">Status bulk ftpDownload: " + status);
 
                 } else {
                     fileList[i] = "Directory :: " + name;
@@ -231,11 +231,11 @@ public class FTPfunctions {
                     Log.i(TAG, "File : " + name);
 
 
-                    System.out.println("function bulk ftpDownload :");
-                    System.out.println(">file : " + name);
+                    //System.out.println("function bulk ftpDownload :");
+                    //System.out.println(">file : " + name);
                     status = ftpDownload(MyVars.FOLDER_STATS + name, Environment.getExternalStorageDirectory()
                             + MyVars.FOLDER_STATS + name);
-                    System.out.println(">Status bulk ftpDownload: " + status);
+                    //System.out.println(">Status bulk ftpDownload: " + status);
 
                 } else {
                     fileList[i] = "Directory :: " + name;
@@ -317,12 +317,12 @@ public class FTPfunctions {
         try {
             FileOutputStream desFileStream = new FileOutputStream(desFilePath);
 
-            System.out.println("function ftpDownload :");
-            System.out.println(">srcFilePath : " + srcFilePath);
-            System.out.println(">desFilePath : " + desFilePath);
+            //System.out.println("function ftpDownload :");
+            //System.out.println(">srcFilePath : " + srcFilePath);
+            //System.out.println(">desFilePath : " + desFilePath);
             status = mFTPClient.retrieveFile(srcFilePath, desFileStream);
             desFileStream.close();
-            System.out.println(">Status ftpDownload: " + status);
+            //System.out.println(">Status ftpDownload: " + status);
 
 
 
@@ -360,12 +360,12 @@ public class FTPfunctions {
 
             // change working directory to the destination directory
             // if (ftpChangeDirectory(desDirectory)) {
-            System.out.println("function ftpUpload :");
-            System.out.println(">desFileName : " + desFileName);
-            System.out.println(">srcFileStream : " + srcFileStream);
+            //System.out.println("function ftpUpload :");
+            //System.out.println(">desFileName : " + desFileName);
+            //System.out.println(">srcFileStream : " + srcFileStream);
             status = mFTPClient.storeFile(desFileName, srcFileStream);
-            System.out.println(">Status ftpUpload: " + status);
-
+            //System.out.println(">Status ftpUpload: " + status);
+//
 
             // }
 

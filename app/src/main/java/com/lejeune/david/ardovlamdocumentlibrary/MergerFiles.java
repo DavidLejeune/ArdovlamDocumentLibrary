@@ -2,6 +2,8 @@ package com.lejeune.david.ardovlamdocumentlibrary;
 
 /**
  * Created by Lucian on 3/6/2017.
+ *
+ * source : http://www.programcreek.com/2012/09/merge-files-in-java/
  */
 
 import android.os.Environment;
