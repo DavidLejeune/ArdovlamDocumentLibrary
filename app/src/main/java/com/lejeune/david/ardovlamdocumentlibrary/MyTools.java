@@ -93,15 +93,15 @@ public class MyTools {
         MyVars.updatecomlocal = SharedPrefHelper.getInstance().getValue(cntx, "updatecomlocal");
         MyVars.updatecomserver = SharedPrefHelper.getInstance().getValue(cntx, "updatecomserver");
 
-        System.out.println("firstname:"+MyVars.firstname);
-        System.out.println("lastname:"+MyVars.lastname);
-        System.out.println("birthdate:"+MyVars.birthdate);
-        System.out.println("registered:"+MyVars.registereduser);
-        System.out.println("usertype:"+MyVars.usertype);
-        System.out.println("updatedoclocal:"+MyVars.updatedoclocal);
-        System.out.println("updatedocserver:"+MyVars.updatedocserver);
-        System.out.println("updatecomlocal:"+MyVars.updatecomlocal);
-        System.out.println("updatecomserver:"+MyVars.updatecomserver);
+//        System.out.println("firstname:"+MyVars.firstname);
+//        System.out.println("lastname:"+MyVars.lastname);
+//        System.out.println("birthdate:"+MyVars.birthdate);
+//        System.out.println("registered:"+MyVars.registereduser);
+//        System.out.println("usertype:"+MyVars.usertype);
+//        System.out.println("updatedoclocal:"+MyVars.updatedoclocal);
+//        System.out.println("updatedocserver:"+MyVars.updatedocserver);
+//        System.out.println("updatecomlocal:"+MyVars.updatecomlocal);
+//        System.out.println("updatecomserver:"+MyVars.updatecomserver);
 
     }
 

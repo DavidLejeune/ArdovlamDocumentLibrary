@@ -689,7 +689,7 @@ public class MainActivity extends Activity {
                         //traverse(file);
                     } else {
                         // do something here with the file
-                        System.out.println(file.toString());
+                        //System.out.println(file.toString());
                         MergerFiles.addFileToList(file.toString(),iCountIndex);
                         iCountIndex+=1;
 

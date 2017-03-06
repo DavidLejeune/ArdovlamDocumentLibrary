@@ -66,7 +66,7 @@ public class MergerFiles {
         }
 
         for (File f : files) {
-            System.out.println("merging: " + f.getName());
+            //System.out.println("merging: " + f.getName());
             FileInputStream fis;
             try {
                 fis = new FileInputStream(f);
