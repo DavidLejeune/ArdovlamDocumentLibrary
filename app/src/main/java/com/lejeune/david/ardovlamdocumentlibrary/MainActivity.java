@@ -278,7 +278,6 @@ public class MainActivity extends Activity {
 
     }
 
-
     public class AsyncUploadStatDL extends AsyncTask<String, String, String> {
 
 

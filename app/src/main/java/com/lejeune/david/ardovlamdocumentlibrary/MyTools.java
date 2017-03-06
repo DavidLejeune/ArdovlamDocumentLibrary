@@ -50,29 +50,31 @@ public class MyTools {
     // creating the folders required on the internal storage
     public void createFolders() {
 
-
+        System.out.println("Creating folders");
+        MyTimer myTimer = new MyTimer();
         String[] foldernames = {MyVars.ROOT_FOLDER,MyVars.FOLDER_DATA , MyVars.FOLDER_DOCUMENTS,MyVars.FOLDER_IMG , MyVars.FOLDER_COMMERCIAL,
                                 MyVars.FOLDER_STATS};
 
         for (String s: foldernames)
         {
-            System.out.println(s);
+            //System.out.println(s);
             File root = new File(Environment.getExternalStorageDirectory(),s);
             if (!root.exists()) {
                 root.mkdirs();
                 if (root.exists()) {
-                    System.out.println("Folder " + s + " created");
+                    //System.out.println("Folder " + s + " created");
                 }
                 else
                 {
-                    System.out.println("Folder " + s + " not created");
+                    //System.out.println("Folder " + s + " not created");
                 }
             }
             else
             {
-                System.out.println("Folder " + s + " exists");
+                //System.out.println("Folder " + s + " exists");
             }
         }
+        myTimer.getElapsedTime();
 
     }
 
