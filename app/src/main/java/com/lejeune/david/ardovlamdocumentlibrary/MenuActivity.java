@@ -47,7 +47,9 @@ public class MenuActivity extends Activity {
 
     public static int countUpdates;
 
-    public static ArrayList<String> listUpdateFiles;
+    public static ArrayList<String> listUpdateFilesDoc;
+    public static ArrayList<String> listUpdateFilesCom;
+    public static ArrayList<String> listUpdateFilesTec;
 
     public static int iServerUpdate;
 
@@ -72,7 +74,7 @@ public class MenuActivity extends Activity {
         init();
 
         //region Initialisations
-        listUpdateFiles = new ArrayList<>();
+        listUpdateFilesDoc = new ArrayList<>();
         cntx = getApplicationContext();
         myTools = new MyTools();
         //endregion
@@ -571,7 +573,7 @@ public class MenuActivity extends Activity {
                             countUpdates +=1;
                             System.out.println("Take action on this file :");
                             System.out.println(line);
-                            listUpdateFiles.add(documentName);
+                            listUpdateFilesDoc.add(documentName);
                             System.out.println("countUpdates = " + countUpdates + " file = " + documentName);
 
                         }
@@ -590,7 +592,7 @@ public class MenuActivity extends Activity {
     public void showArrayListUpdate(){
 
         System.out.println("looping through the arraylist");
-        for (String cu : listUpdateFiles) {
+        for (String cu : listUpdateFilesDoc) {
             System.out.println("list Update entry : " + cu);
         }
     }
@@ -635,8 +637,8 @@ public class MenuActivity extends Activity {
 
             stopTime = System.currentTimeMillis();
             elapsedTime = (stopTime - startTime) /1000  ;
-            Toast.makeText(MenuActivity.this, "Updates FINISHED\n" + listUpdateFiles.size() + " updates downloaded\nin " + elapsedTime + " seconds", Toast.LENGTH_LONG).show();
-            System.out.println("Time downloading " + listUpdateFiles.size() + " updates : " + elapsedTime + " seconds.");
+            Toast.makeText(MenuActivity.this, "Updates FINISHED\n" + listUpdateFilesDoc.size() + " updates downloaded\nin " + elapsedTime + " seconds", Toast.LENGTH_LONG).show();
+            System.out.println("Time downloading " + listUpdateFilesDoc.size() + " updates : " + elapsedTime + " seconds.");
 
             //pd.setProgress(listUpdateFiles.size());
             pd.dismiss();
@@ -724,8 +726,8 @@ public class MenuActivity extends Activity {
 
                         System.out.println("looping through the arraylist");
                         //MenuActivity.AsyncUpdatesDownloadDL.publishProgress();
-                        System.out.println("listUpdateFiles.length : " + listUpdateFiles.size());
-                        for (String cu : listUpdateFiles) {
+                        System.out.println("listUpdateFiles.length : " + listUpdateFilesDoc.size());
+                        for (String cu : listUpdateFilesDoc) {
                             //System.out.println("list Update entry : " + cu);
                             if (cu.equalsIgnoreCase(name)){
                                 //iCount +=1;
