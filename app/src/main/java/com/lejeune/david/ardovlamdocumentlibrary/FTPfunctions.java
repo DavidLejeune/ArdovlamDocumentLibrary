@@ -22,7 +22,7 @@ import java.io.FileOutputStream;
 
 public class FTPfunctions {
 
-    com.lejeune.david.ardovlamdocumentlibrary.MenuActivity.AsyncUpdatesDownloadDL mThreadReference = null;
+    com.lejeune.david.ardovlamdocumentlibrary.MenuActivity.AsyncUpdatesDocumentsDownloadDL mThreadReference = null;
 
     private static final String TEMP_FILENAME = "DiscreteSystemsandSignalProcessing.pdf";
     private static final String FOLDER_DATA = "/DocLib/Data/";
