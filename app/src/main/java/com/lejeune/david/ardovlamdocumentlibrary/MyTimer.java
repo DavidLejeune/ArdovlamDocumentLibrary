@@ -8,14 +8,16 @@ public class MyTimer {
     long startTime ;
     long stopTime ;
     long elapsedTime ;
+    String strTask;
 
-    public MyTimer() {
+    public MyTimer(String strTask) {
+        this.strTask = strTask;
         startTime = System.currentTimeMillis();
     }
 
     public void getElapsedTime(){
         stopTime = System.currentTimeMillis();
         elapsedTime = (stopTime - startTime)  ;
-        System.out.println("Time elapsed (ms) : " + elapsedTime);
+        System.out.println("Time elapsed (ms) for " + strTask + " : " + elapsedTime);
     }
 }

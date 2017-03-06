@@ -50,8 +50,7 @@ public class MyTools {
     // creating the folders required on the internal storage
     public void createFolders() {
 
-        System.out.println("Creating folders");
-        MyTimer myTimer = new MyTimer();
+        MyTimer myTimer = new MyTimer("createFolders");
         String[] foldernames = {MyVars.ROOT_FOLDER,MyVars.FOLDER_DATA , MyVars.FOLDER_DOCUMENTS,MyVars.FOLDER_IMG , MyVars.FOLDER_COMMERCIAL,
                                 MyVars.FOLDER_STATS};
 

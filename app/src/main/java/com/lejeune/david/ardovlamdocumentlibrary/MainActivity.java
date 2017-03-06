@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 
         // Start declarations
         cntx = getApplicationContext();
-        timeActivity = new MyTimer();
+        timeActivity = new MyTimer("MainActivity");
         // Making sure the correct folder structure exists
         myTools= new MyTools();
         myTools.createFolders();
@@ -296,6 +296,11 @@ public class MainActivity extends Activity {
             if(MyVars.usertype.equalsIgnoreCase("1")){
                 new AsyncStatsDownloadDL().execute();
             }
+            else
+            {
+                gotoLogin();
+                timeActivity.getElapsedTime();
+            }
 
 
         }
@@ -347,10 +352,9 @@ public class MainActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            myTimer = new MyTimer();
+            myTimer = new MyTimer("AsyncStatsDownloadDL");
 //            pd = ProgressDialog.show(MainActivity.this, "", "Downloading stat files...",
 //                    true, false);
-            System.out.println("downloading stat files");
         }
 
         @Override
@@ -514,10 +518,9 @@ public class MainActivity extends Activity {
             file = new File(dir, MyVars.FOLDER_STATS );
 
 
-            myTimer = new MyTimer();
+            myTimer = new MyTimer("AsyncBigStatsCreateDL");
 //            pd = ProgressDialog.show(MainActivity.this, "", "Creating single stat file..",
 //                    true, false);
-            System.out.println("Creating single stat file..");
             MyStats.createBigLogFile();
             iCountStatFiles=0;
             traverseCount(file);
@@ -530,12 +533,10 @@ public class MainActivity extends Activity {
 
 
 //            pd.dismiss();
-            System.out.println("big stat file");
             myTimer.getElapsedTime();
             //traverseBigStatFiles();
 
             gotoLogin();
-            System.out.println("Start activity : ");
             timeActivity.getElapsedTime();
         }
 
@@ -815,7 +816,7 @@ public class MainActivity extends Activity {
         private void traverseBigStatFiles(){
             File dir = Environment.getExternalStorageDirectory();
             File file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
-            MyTimer myTimer = new MyTimer();
+            MyTimer myTimer = new MyTimer("traverseBigStatFiles");
             String line = "";
             int iCount=0;
             if (file.exists()) {

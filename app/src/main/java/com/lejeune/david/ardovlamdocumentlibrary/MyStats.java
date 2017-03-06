@@ -114,7 +114,7 @@ public class MyStats {
     public static void createMonthArrays(){
 
 
-        MyTimer myTimer = new MyTimer();
+        MyTimer myTimer = new MyTimer("createMonthArrays");
         MyVars.arrJanuary = new int[31];
         for (int i = 0; i < MyVars.arrJanuary.length; i++) {
             MyVars.arrJanuary[i] = 0 ;
@@ -183,7 +183,7 @@ public class MyStats {
     public static void createMonthHourArrays(){
 
 
-        MyTimer myTimer = new MyTimer();
+        MyTimer myTimer = new MyTimer("createMonthHourArrays");
         MyVars.arrJanuaryHour = new int[24];
         MyVars.arrFebruaryHour = new int[24];
         MyVars.arrMarchHour = new int[24];
@@ -221,7 +221,7 @@ public class MyStats {
         System.out.println("CALCULCATING STATS ");
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
-        MyTimer myTimer = new MyTimer();
+        MyTimer myTimer = new MyTimer("filterBigStatFiles");
         String line = "";
         int iCount=0;
         if (file.exists()) {
