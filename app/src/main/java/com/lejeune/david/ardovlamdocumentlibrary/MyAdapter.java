@@ -62,14 +62,17 @@ class MyAdapter extends ArrayAdapter<String> {
         // We can set a ImageView like this
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir,MyVars.FOLDER_DOCUMENTS + strThumbnail);
-        if(FilterActivity.chkDocuments.isChecked() && !FilterActivity.chkCommercial.isChecked() ){
+        if(FilterActivity.chkDocuments.isChecked() && !FilterActivity.chkCommercial.isChecked()  && !FilterActivity.chkTechnical.isChecked() ){
             file = new File(dir,MyVars.FOLDER_DOCUMENTS + strThumbnail);
         }
 
-        if(FilterActivity.chkCommercial.isChecked() && !FilterActivity.chkDocuments.isChecked() ){
+        if(FilterActivity.chkCommercial.isChecked() && !FilterActivity.chkDocuments.isChecked() && !FilterActivity.chkTechnical.isChecked() ){
             file = new File(dir,MyVars.FOLDER_COMMERCIAL + strThumbnail);
         }
 
+        if(!FilterActivity.chkCommercial.isChecked() && !FilterActivity.chkDocuments.isChecked() && FilterActivity.chkTechnical.isChecked() ){
+            file = new File(dir,MyVars.FOLDER_TECHNICAL + strThumbnail);
+        }
         System.out.println("thumbnail : " + file.toString());
         long length = file.length();
         System.out.println("length:"+length);

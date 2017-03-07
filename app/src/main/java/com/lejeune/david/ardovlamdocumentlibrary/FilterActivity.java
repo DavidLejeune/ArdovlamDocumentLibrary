@@ -312,11 +312,11 @@ public class FilterActivity extends Activity {
     private void showFilteredResult(){
         //if(chkDocuments.isChecked())
         //{
-        if(!chkDocuments.isChecked() && !chkCommercial.isChecked())
+        if(!chkDocuments.isChecked() && !chkCommercial.isChecked() && !chkTechnical.isChecked())
         {
             Toast.makeText(FilterActivity.this , "you need to check which type",Toast.LENGTH_LONG).show();
         }
-        if(chkDocuments.isChecked() || chkCommercial.isChecked())
+        if(chkDocuments.isChecked() || chkCommercial.isChecked() || chkTechnical.isChecked() )
         {
             getFilteredDocuments();
             gotoListDocs();
