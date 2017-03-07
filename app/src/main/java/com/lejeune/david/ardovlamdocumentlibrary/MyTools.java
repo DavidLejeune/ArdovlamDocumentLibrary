@@ -52,7 +52,7 @@ public class MyTools {
 
         MyTimer myTimer = new MyTimer("createFolders");
         String[] foldernames = {MyVars.ROOT_FOLDER,MyVars.FOLDER_DATA , MyVars.FOLDER_DOCUMENTS,MyVars.FOLDER_IMG , MyVars.FOLDER_COMMERCIAL,
-                                MyVars.FOLDER_STATS};
+                                MyVars.FOLDER_STATS , MyVars.FOLDER_TECHNICAL};
 
         for (String s: foldernames)
         {

@@ -9,7 +9,6 @@ public class SharedPrefHelper {
     private static SharedPrefHelper   sharedPreference;
     public static final String PREFS_NAME = "USERINFO";
     public static final String PREFS_KEY = "AOP_PREFS_String";
-    public static String firstname, lastname, birthdate, registereduser, usertype, fullname;
 
 
 
