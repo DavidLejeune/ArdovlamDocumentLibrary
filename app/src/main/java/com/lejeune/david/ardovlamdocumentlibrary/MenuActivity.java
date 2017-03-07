@@ -187,6 +187,11 @@ public class MenuActivity extends Activity {
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.INVISIBLE);
         }
+        else if (userType.equalsIgnoreCase("3")){
+            strUserType = "Technieker";
+            txtUserType.setText(strUserType);
+            btnStats.setVisibility(View.INVISIBLE);
+        }
         //endregion
 
         //region Setting update(s)

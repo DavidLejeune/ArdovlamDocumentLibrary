@@ -25,7 +25,7 @@ import static com.lejeune.david.ardovlamdocumentlibrary.MyFilter.listTypeDocName
 public class FilterActivity extends Activity {
 
     TextView txtResultFilter, txtDepartment;
-    public static CheckBox chkDocuments , chkCommercial;
+    public static CheckBox chkDocuments , chkCommercial , chkTechnical;
     Button btnShowFilteredDocs;
     String departmentTag = "";
     public static ArrayList<String> listFilteredFiles;
@@ -54,42 +54,53 @@ public class FilterActivity extends Activity {
         txtDepartment = (TextView) findViewById(R.id.txtDepartment);
 
         chkDocuments = (CheckBox) findViewById(R.id.chkDocuments);
-        chkCommercial = (CheckBox) findViewById(R.id.chkCommercial);
         chkDocuments.setVisibility(View.INVISIBLE);
-        chkCommercial.setVisibility(View.INVISIBLE);
         chkDocuments.setChecked(false);
+
+        chkCommercial = (CheckBox) findViewById(R.id.chkCommercial);
+        chkCommercial.setVisibility(View.INVISIBLE);
         chkCommercial.setChecked(false);
 
-        chkDocuments.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                        @Override
-                                        public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                                                if(isChecked){
-                                                    if (chkCommercial.isChecked()){
-                                                        chkCommercial.setChecked(false);
-                                                        spinDocType.setVisibility(View.VISIBLE);
-                                                        lblDocType.setVisibility(View.VISIBLE);
-                                                    }
-                                                }
-                                        }
-                                    }
-        );
+        chkTechnical = (CheckBox) findViewById(R.id.chkTechnical);
+        chkTechnical.setVisibility(View.INVISIBLE);
+        chkTechnical.setChecked(false);
 
 
-        chkCommercial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                                    @Override
-                                                    public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                                                        if(isChecked){
-                                                            if (chkDocuments.isChecked()){
-                                                                chkDocuments.setChecked(false);
-                                                                docTypeFilter = "" ;
-                                                                resetTxtResult();
-                                                                spinDocType.setVisibility(View.INVISIBLE);
-                                                                lblDocType.setVisibility(View.INVISIBLE);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-        );
+        lblDocType = (TextView) findViewById(R.id.lblDocType);
+        spinDocType = (Spinner) findViewById(R.id.spinDocType);
+
+        adapterSpinner = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listTypeDocNames);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        if (MyVars.usertype.equalsIgnoreCase("0") || MyVars.usertype.equalsIgnoreCase("1"))
+        {
+
+                spinDocType.setAdapter(adapterSpinner);
+                spinDocType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String selectedDocType = parent.getItemAtPosition(position).toString();
+                    System.out.println("selectedDocType " + selectedDocType);
+                    docTypeFilter = MyFilter.findVariableTypeDoc(selectedDocType);
+                    System.out.println("docTypeFilter " + docTypeFilter);
+                    //if (docTypeFilter.length()>0){
+                    setViewOfFilter();
+                    getFilteredDocuments();
+                    //txtResultFilter.setText(txtResultFilter.getText() +"\nType of doc filter : " + docTypeFilter);
+                    //}
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
+        spinDocType.setVisibility(View.INVISIBLE);
+        lblDocType.setVisibility(View.INVISIBLE);
+
+
 
         btnShowFilteredDocs = (Button) findViewById(R.id.btnShowFilteredDocs);
         btnShowFilteredDocs.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +120,9 @@ public class FilterActivity extends Activity {
             }
         });
 
+
+
+
         setViewOfFilter();
 
 
@@ -118,33 +132,83 @@ public class FilterActivity extends Activity {
 
 
 
-        lblDocType = (TextView) findViewById(R.id.lblDocType);
-        spinDocType = (Spinner) findViewById(R.id.spinDocType);
-        adapterSpinner = new ArrayAdapter(this, android.R.layout.simple_spinner_item,listTypeDocNames);
-        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinDocType.setAdapter(adapterSpinner);
-        spinDocType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedDocType = parent.getItemAtPosition(position).toString();
-                System.out.println("selectedDocType " + selectedDocType);
-                docTypeFilter = MyFilter.findVariableTypeDoc(selectedDocType);
-                System.out.println("docTypeFilter " + docTypeFilter);
-                //if (docTypeFilter.length()>0){
-                    setViewOfFilter();
-                    getFilteredDocuments();
-                    //txtResultFilter.setText(txtResultFilter.getText() +"\nType of doc filter : " + docTypeFilter);
-                //}
+        chkDocuments.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+                                                {
+                                                    @Override
+                                                    public void onCheckedChanged(CompoundButton buttonView,boolean isChecked)
+                                                    {
+                                                        if(isChecked)
+                                                        {
+                                                            if (chkCommercial.isChecked())
+                                                            {
+                                                                chkCommercial.setChecked(false);
+                                                            }
 
-            }
+                                                            if (chkTechnical.isChecked())
+                                                            {
+                                                                chkTechnical.setChecked(false);
+                                                            }
+                                                            spinDocType.setVisibility(View.VISIBLE);
+                                                            lblDocType.setVisibility(View.VISIBLE);
+                                                        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                                                    }
+                                                }
+        );
 
-            }
-        });
-        //spinDocType.setVisibility(View.INVISIBLE);
-        //lblDocType.setVisibility(View.INVISIBLE);
+
+        chkCommercial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                     @Override
+                                                     public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                                                         if(isChecked){
+                                                             if (chkDocuments.isChecked()){
+                                                                 chkDocuments.setChecked(false);
+                                                                 docTypeFilter = "" ;
+                                                                 resetTxtResult();
+                                                                 spinDocType.setVisibility(View.INVISIBLE);
+                                                                 lblDocType.setVisibility(View.INVISIBLE);
+                                                             }
+
+
+                                                             if (chkTechnical.isChecked())
+                                                             {
+                                                                 chkTechnical.setChecked(false);
+                                                             }
+
+
+                                                         }
+                                                     }
+                                                 }
+        );
+
+        chkTechnical.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                    @Override
+                                                    public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                                                        if(isChecked){
+
+                                                            if (chkDocuments.isChecked()){
+                                                                chkDocuments.setChecked(false);
+                                                                docTypeFilter = "" ;
+                                                                resetTxtResult();
+                                                                spinDocType.setVisibility(View.INVISIBLE);
+                                                                lblDocType.setVisibility(View.INVISIBLE);
+                                                            }
+
+
+                                                            if (chkCommercial.isChecked())
+                                                            {
+                                                                chkCommercial.setChecked(false);
+                                                            }
+
+
+                                                        }
+                                                    }
+                                                }
+        );
+
+
+
+
 
 
         showArrayListTempDocType();
@@ -216,10 +280,13 @@ public class FilterActivity extends Activity {
         if(userType.equalsIgnoreCase("1")){
             chkDocuments.setVisibility(View.VISIBLE);
             chkCommercial.setVisibility(View.VISIBLE);
+            chkTechnical.setVisibility(View.VISIBLE);
             chkDocuments.setChecked(true);
             result = "You have admin rights";
         }
         if(userType.equalsIgnoreCase("2")){
+            chkDocuments.setVisibility(View.INVISIBLE);
+            chkTechnical.setVisibility(View.INVISIBLE);
             chkCommercial.setVisibility(View.VISIBLE);
             chkCommercial.setChecked(true);
             getFilteredDocuments();
@@ -227,8 +294,17 @@ public class FilterActivity extends Activity {
         }
         if(userType.equalsIgnoreCase("0")){
             chkDocuments.setVisibility(View.VISIBLE);
+            chkTechnical.setVisibility(View.INVISIBLE);
+            chkCommercial.setVisibility(View.INVISIBLE);
             chkDocuments.setChecked(true);
             result = "You have installer rights";
+        }
+        if(userType.equalsIgnoreCase("3")){
+//            chkDocuments.setVisibility(View.INVISIBLE);
+//            chkCommercial.setVisibility(View.INVISIBLE);
+            chkTechnical.setVisibility(View.VISIBLE);
+            chkTechnical.setChecked(true);
+            result = "You have technician rights";
         }
         txtResultFilter.setText(result);
     }
@@ -255,6 +331,7 @@ public class FilterActivity extends Activity {
         getDepartmentTag();
         if(chkDocuments.isChecked()) getFilteredDocumentList();
         if(chkCommercial.isChecked())  getFilteredCommercialList();
+        if(chkTechnical.isChecked())  getFilteredTechnicalList();
         //showFilteredDocumentList();
     }
     private void getDepartmentTag(){
@@ -262,6 +339,65 @@ public class FilterActivity extends Activity {
         System.out.println("departmentTag : " +departmentTag );
     }
 
+
+    private void getFilteredTechnicalList(){
+        iCountTotalDocs=0;
+        iCountOccurence = 0;
+        int iNot5 = 0;
+
+        listFilteredFiles = new ArrayList<>();
+
+        String path = Environment.getExternalStorageDirectory().toString()+ MyVars.FOLDER_TECHNICAL;
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        System.out.println("#files : "+ files.length);
+        for (int i = 0; i < files.length; i++)
+        {
+            boolean isFile = files[i].isFile();
+
+            if (isFile) {
+                String strFile = files[i].getName();
+                String[] separated = strFile.split("-");
+                String departmentID = separated[0];
+                Boolean isImage = strFile.contains(".PNG");
+                if (!isImage){
+                    iCountTotalDocs += 1 ;
+                }
+
+
+                if (departmentID.equalsIgnoreCase(departmentTag))
+                {
+                    if (!isImage){
+
+                        if( docTypeFilter.length()>0)
+                        {
+                            Boolean docTypeFound = strFile.contains("-" + docTypeFilter);
+                            if(docTypeFound)
+                            {
+                                iCountOccurence += 1 ;
+                                listFilteredFiles.add(strFile);
+                                //System.out.println("Found : " + strFile);
+                            }
+                        }
+                        else
+                        {
+                            iCountOccurence += 1 ;
+                            listFilteredFiles.add(strFile);
+                            //System.out.println("Found : " + strFile);
+                        }
+
+                    }
+                }
+
+
+            }
+        }
+
+        setViewOfFilter();
+        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        System.out.println("Total files in folder : " + iCountTotalDocs);
+        System.out.println("# files with same filter : " + iCountOccurence);
+    }
 
 
     private void getFilteredDocumentList(){

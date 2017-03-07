@@ -13,6 +13,7 @@ public class MyVars {
     public final static String FOLDER_DOCUMENTS = ROOT_FOLDER + "Documents/";
     public final static String FOLDER_IMG = ROOT_FOLDER + "IMG/";
     public final static String FOLDER_COMMERCIAL = ROOT_FOLDER + "Commercial/";
+    public final static String FOLDER_TECHNICAL = ROOT_FOLDER + "Commercial/";
 
 
     public static String firstname, lastname, birthdate, registereduser, usertype, fullname , updatedoclocal , updatedocserver , updatecomlocal, updatecomserver;
