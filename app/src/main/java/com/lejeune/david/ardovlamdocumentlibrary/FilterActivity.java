@@ -78,6 +78,7 @@ public class FilterActivity extends Activity {
                                                                 lblDocType.setVisibility(View.VISIBLE);
                                                             }
                                                         }
+                                                        getFilteredDocuments();
                                                     }
                                                 }
         );
@@ -99,6 +100,7 @@ public class FilterActivity extends Activity {
                                                                  spinDocType.setVisibility(View.INVISIBLE);
                                                                  lblDocType.setVisibility(View.INVISIBLE);
                                                              }
+                                                             getFilteredDocuments();
                                                          }
                                                      }
                                                  }
@@ -180,12 +182,14 @@ public class FilterActivity extends Activity {
                                                             }
 
 
-                                                            if (chkCommercial.isChecked())
-                                                            {
+                                                            if (chkCommercial.isChecked()){
                                                                 chkCommercial.setChecked(false);
+                                                                spinDocType.setVisibility(View.INVISIBLE);
+                                                                lblDocType.setVisibility(View.INVISIBLE);
                                                             }
 
 
+                                                            getFilteredDocuments();
                                                         }
                                                     }
                                                 }
@@ -325,7 +329,7 @@ public class FilterActivity extends Activity {
 
         listFilteredFiles = new ArrayList<>();
 
-        String path = Environment.getExternalStorageDirectory().toString()+ MyVars.FOLDER_COMMERCIAL;
+        String path = Environment.getExternalStorageDirectory().toString()+ MyVars.FOLDER_TECHNICAL;
         File directory = new File(path);
         File[] files = directory.listFiles();
         System.out.println("#files : "+ files.length);
@@ -371,8 +375,9 @@ public class FilterActivity extends Activity {
             }
         }
 
-        setViewOfFilter();
-        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        //setViewOfFilter();
+        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        txtResultFilter.setText("Number of files matching filter(s) : " + iCountOccurence);
 //
 //        setViewOfFilter();
 //        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
@@ -463,8 +468,9 @@ public class FilterActivity extends Activity {
             }
         }
 
-        setViewOfFilter();
-        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        //setViewOfFilter();
+        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        txtResultFilter.setText("Number of files matching filter(s) : " + iCountOccurence);
         System.out.println("Total files in folder : " + iCountTotalDocs);
         System.out.println("# files with same filter : " + iCountOccurence);
     }
@@ -523,8 +529,9 @@ public class FilterActivity extends Activity {
         }
 
 
-        setViewOfFilter();
-        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        //setViewOfFilter();
+        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        txtResultFilter.setText("Number of files matching filter(s) : " + iCountOccurence);
 //
 //        setViewOfFilter();
 //        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
