@@ -32,7 +32,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MenuActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity
             android:name=".ListDocsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
