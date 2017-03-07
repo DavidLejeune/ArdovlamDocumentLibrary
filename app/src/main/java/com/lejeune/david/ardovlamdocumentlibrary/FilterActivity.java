@@ -65,6 +65,13 @@ public class FilterActivity extends Activity {
         chkTechnical.setVisibility(View.INVISIBLE);
         chkTechnical.setChecked(false);
 
+        MyFilter.buildVariableTypeDocList();
+        showArrayListDocType();
+        countOccurencesOnDocType();
+        showArrayListTempDocType();
+
+
+
 
         lblDocType = (TextView) findViewById(R.id.lblDocType);
         spinDocType = (Spinner) findViewById(R.id.spinDocType);
@@ -97,8 +104,8 @@ public class FilterActivity extends Activity {
                 }
             });
         }
-        spinDocType.setVisibility(View.INVISIBLE);
-        lblDocType.setVisibility(View.INVISIBLE);
+        //spinDocType.setVisibility(View.INVISIBLE);
+        //lblDocType.setVisibility(View.INVISIBLE);
 
 
 
@@ -126,9 +133,6 @@ public class FilterActivity extends Activity {
         setViewOfFilter();
 
 
-        MyFilter.buildVariableTypeDocList();
-        showArrayListDocType();
-        countOccurencesOnDocType();
 
 
 
@@ -211,7 +215,6 @@ public class FilterActivity extends Activity {
 
 
 
-        showArrayListTempDocType();
 
         pd.dismiss();
 
@@ -341,13 +344,14 @@ public class FilterActivity extends Activity {
 
 
     private void getFilteredTechnicalList(){
+
         iCountTotalDocs=0;
         iCountOccurence = 0;
         int iNot5 = 0;
 
         listFilteredFiles = new ArrayList<>();
 
-        String path = Environment.getExternalStorageDirectory().toString()+ MyVars.FOLDER_TECHNICAL;
+        String path = Environment.getExternalStorageDirectory().toString()+ MyVars.FOLDER_COMMERCIAL;
         File directory = new File(path);
         File[] files = directory.listFiles();
         System.out.println("#files : "+ files.length);
@@ -392,11 +396,40 @@ public class FilterActivity extends Activity {
 
             }
         }
+//
+//        setViewOfFilter();
+//        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+//        System.out.println("Total files in folder : " + iCountTotalDocs);
+//        System.out.println("# files with same filter : " + iCountOccurence);
 
-        setViewOfFilter();
-        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
-        System.out.println("Total files in folder : " + iCountTotalDocs);
-        System.out.println("# files with same filter : " + iCountOccurence);
+//        iCountTotalDocs=6;
+//        listFilteredFiles = new ArrayList<>();
+//
+//
+//
+
+//        switch (filterID) {
+//
+//            case "Inbraakdetectie":
+//                listFilteredFiles.add("INBRAAKDETECTIE.pdf");
+//                break;
+//            case "Branddetectie":
+//                listFilteredFiles.add("BRANDDETECTIE.pdf");
+//                break;
+//            case "Gasdetectie":
+//                listFilteredFiles.add("GASBLUSSING.pdf");
+//                listFilteredFiles.add("GASDETECTIE.pdf");
+//                break;
+//            case "Camerabewaking":
+//                listFilteredFiles.add("CAMERABEWAKING.pdf");
+//                break;
+//            case "Toegangscontrole":
+//                listFilteredFiles.add("TOEGANGSCONTROLE.pdf");
+//                break;
+//            case "Geintegreerde bewaking":
+//                break;
+//        }
+
     }
 
 
