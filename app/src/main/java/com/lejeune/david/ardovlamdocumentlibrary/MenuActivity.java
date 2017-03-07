@@ -462,7 +462,7 @@ public class MenuActivity extends Activity {
         else
         {
 
-            System.out.println("no new updates found");
+            System.out.println("no new doc updates found");
         }
     }
     public void updateCom(){
@@ -485,7 +485,7 @@ public class MenuActivity extends Activity {
         else
         {
 
-            System.out.println("no new updates found");
+            System.out.println("no new com updates found");
         }
     }
 
