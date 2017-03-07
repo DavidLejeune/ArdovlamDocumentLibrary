@@ -173,7 +173,10 @@ public class MenuActivity extends Activity {
         if (userType.equalsIgnoreCase("1")){
             strUserType = "Admin";
             checkUpdatesAvailable(updateComFile);
+            //System.out.println("CHECKING UPDATES AVAILABLE COM");
             checkUpdatesAvailable(updateDocFile);
+            //System.out.println("CHECKING UPDATES AVAILABLE TEC");
+            checkUpdatesAvailable(updateTecFile);
 
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.VISIBLE);
@@ -282,6 +285,7 @@ public class MenuActivity extends Activity {
             strUserType = "Admin";
             updateDoc();
             if(!newUpdatesDoc) updateCom();
+            if(!newUpdatesCom) updateTec();
         }
         else if (userType.equalsIgnoreCase("2")){
             strUserType = "Projectleider";
@@ -292,7 +296,7 @@ public class MenuActivity extends Activity {
             updateDoc();
         }
         else if (userType.equalsIgnoreCase("3")){
-            strUserType = "echnieker";
+            strUserType = "Technieker";
             updateTec();
         }
     }
@@ -487,7 +491,7 @@ public class MenuActivity extends Activity {
             editor.putString("updatecomserver", updateValue);
             editor.apply();
 
-            MyVars.updatedocserver = sharedPref.getString ("updatecomserver", "0");
+            MyVars.updatecomserver = sharedPref.getString ("updatecomserver", "0");
             System.out.println("updatecomserver in SharedPref : " + MyVars.updatecomserver);
         }
         else
@@ -500,7 +504,7 @@ public class MenuActivity extends Activity {
             editor.apply();
 
             MyVars.updatetecserver = sharedPref.getString ("updatetecserver", "0");
-            System.out.println("updatecomserver in SharedPref : " + MyVars.updatetecserver);
+            System.out.println("updatetecserver in SharedPref : " + MyVars.updatetecserver);
         }
 
 
