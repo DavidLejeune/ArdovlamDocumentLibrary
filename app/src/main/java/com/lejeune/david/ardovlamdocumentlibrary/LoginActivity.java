@@ -1,6 +1,8 @@
 package com.lejeune.david.ardovlamdocumentlibrary;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -418,7 +420,14 @@ public class LoginActivity extends Activity {
 
     }
 
-
+    private void restartApp(){
+        Intent mStartActivity = new Intent(cntx, MainActivity.class);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(cntx, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager)cntx.getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
+    }
 
     private void checkUserType(){
 
@@ -485,10 +494,12 @@ public class LoginActivity extends Activity {
             setProfileImg();
             if (LoginActivity.loginOK)
             {
-                Toast.makeText(LoginActivity.this, "loginProcedure OK", Toast.LENGTH_SHORT).show();
-                final Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
-                LoginActivity.this.startActivity(menuIntent);
-                //LoginActivity.this.finish();
+//                Toast.makeText(LoginActivity.this, "loginProcedure OK", Toast.LENGTH_SHORT).show();
+//                final Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
+//                LoginActivity.this.startActivity(menuIntent);
+//                //LoginActivity.this.finish();
+
+                restartApp();
             }
             else
             {

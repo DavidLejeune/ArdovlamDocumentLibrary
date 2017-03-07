@@ -318,37 +318,98 @@ public class FilterActivity extends Activity {
         }
 
         setViewOfFilter();
-        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
         System.out.println("Total files in folder : " + iCountTotalDocs);
         System.out.println("# files with same filter : " + iCountOccurence);
     }
 
     private void getFilteredCommercialList(){
+        iCountTotalDocs=0;
+        iCountOccurence = 0;
+        int iNot5 = 0;
 
-
-        iCountTotalDocs=6;
         listFilteredFiles = new ArrayList<>();
-        switch (filterID) {
 
-            case "Inbraakdetectie":
-                listFilteredFiles.add("INBRAAKDETECTIE.pdf");
-                break;
-            case "Branddetectie":
-                listFilteredFiles.add("BRANDDETECTIE.pdf");
-                break;
-            case "Gasdetectie":
-                listFilteredFiles.add("GASBLUSSING.pdf");
-                listFilteredFiles.add("GASDETECTIE.pdf");
-                break;
-            case "Camerabewaking":
-                listFilteredFiles.add("CAMERABEWAKING.pdf");
-                break;
-            case "Toegangscontrole":
-                listFilteredFiles.add("TOEGANGSCONTROLE.pdf");
-                break;
-            case "Geintegreerde bewaking":
-                break;
+        String path = Environment.getExternalStorageDirectory().toString()+ MyVars.FOLDER_COMMERCIAL;
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        System.out.println("#files : "+ files.length);
+        for (int i = 0; i < files.length; i++)
+        {
+            boolean isFile = files[i].isFile();
+
+            if (isFile) {
+                String strFile = files[i].getName();
+                String[] separated = strFile.split("-");
+                String departmentID = separated[0];
+                Boolean isImage = strFile.contains(".PNG");
+                if (!isImage){
+                    iCountTotalDocs += 1 ;
+                }
+
+
+                if (departmentID.equalsIgnoreCase(departmentTag))
+                {
+                    if (!isImage){
+
+                        if( docTypeFilter.length()>0)
+                        {
+                            Boolean docTypeFound = strFile.contains("-" + docTypeFilter);
+                            if(docTypeFound)
+                            {
+                                iCountOccurence += 1 ;
+                                listFilteredFiles.add(strFile);
+                                //System.out.println("Found : " + strFile);
+                            }
+                        }
+                        else
+                        {
+                            iCountOccurence += 1 ;
+                            listFilteredFiles.add(strFile);
+                            //System.out.println("Found : " + strFile);
+                        }
+
+                    }
+                }
+
+
+            }
         }
+//
+//        setViewOfFilter();
+//        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+//        System.out.println("Total files in folder : " + iCountTotalDocs);
+//        System.out.println("# files with same filter : " + iCountOccurence);
+
+//        iCountTotalDocs=6;
+//        listFilteredFiles = new ArrayList<>();
+//
+//
+//
+
+//        switch (filterID) {
+//
+//            case "Inbraakdetectie":
+//                listFilteredFiles.add("INBRAAKDETECTIE.pdf");
+//                break;
+//            case "Branddetectie":
+//                listFilteredFiles.add("BRANDDETECTIE.pdf");
+//                break;
+//            case "Gasdetectie":
+//                listFilteredFiles.add("GASBLUSSING.pdf");
+//                listFilteredFiles.add("GASDETECTIE.pdf");
+//                break;
+//            case "Camerabewaking":
+//                listFilteredFiles.add("CAMERABEWAKING.pdf");
+//                break;
+//            case "Toegangscontrole":
+//                listFilteredFiles.add("TOEGANGSCONTROLE.pdf");
+//                break;
+//            case "Geintegreerde bewaking":
+//                break;
+//        }
+
+
     }
 
 
