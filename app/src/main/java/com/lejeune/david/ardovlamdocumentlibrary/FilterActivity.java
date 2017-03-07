@@ -54,60 +54,55 @@ public class FilterActivity extends Activity {
         txtDepartment = (TextView) findViewById(R.id.txtDepartment);
 
         chkDocuments = (CheckBox) findViewById(R.id.chkDocuments);
-        chkDocuments.setVisibility(View.INVISIBLE);
-        chkDocuments.setChecked(false);
-
         chkCommercial = (CheckBox) findViewById(R.id.chkCommercial);
+        chkDocuments.setVisibility(View.INVISIBLE);
         chkCommercial.setVisibility(View.INVISIBLE);
+        chkDocuments.setChecked(false);
         chkCommercial.setChecked(false);
-
         chkTechnical = (CheckBox) findViewById(R.id.chkTechnical);
         chkTechnical.setVisibility(View.INVISIBLE);
         chkTechnical.setChecked(false);
 
-        MyFilter.buildVariableTypeDocList();
-        showArrayListDocType();
-        countOccurencesOnDocType();
-        showArrayListTempDocType();
+        chkDocuments.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                    @Override
+                                                    public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                                                        if(isChecked){
+                                                            if (chkCommercial.isChecked()){
+                                                                chkCommercial.setChecked(false);
+                                                                spinDocType.setVisibility(View.VISIBLE);
+                                                                lblDocType.setVisibility(View.VISIBLE);
+                                                            }
+                                                            if (chkTechnical.isChecked()){
+                                                                chkTechnical.setChecked(false);
+                                                                spinDocType.setVisibility(View.VISIBLE);
+                                                                lblDocType.setVisibility(View.VISIBLE);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+        );
 
 
-
-
-        lblDocType = (TextView) findViewById(R.id.lblDocType);
-        spinDocType = (Spinner) findViewById(R.id.spinDocType);
-
-        adapterSpinner = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listTypeDocNames);
-        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        if (MyVars.usertype.equalsIgnoreCase("0") || MyVars.usertype.equalsIgnoreCase("1"))
-        {
-
-                spinDocType.setAdapter(adapterSpinner);
-                spinDocType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String selectedDocType = parent.getItemAtPosition(position).toString();
-                    System.out.println("selectedDocType " + selectedDocType);
-                    docTypeFilter = MyFilter.findVariableTypeDoc(selectedDocType);
-                    System.out.println("docTypeFilter " + docTypeFilter);
-                    //if (docTypeFilter.length()>0){
-                    setViewOfFilter();
-                    getFilteredDocuments();
-                    //txtResultFilter.setText(txtResultFilter.getText() +"\nType of doc filter : " + docTypeFilter);
-                    //}
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-        }
-        //spinDocType.setVisibility(View.INVISIBLE);
-        //lblDocType.setVisibility(View.INVISIBLE);
-
-
+        chkCommercial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                     @Override
+                                                     public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                                                         if(isChecked){
+                                                             if (chkDocuments.isChecked()){
+                                                                 chkDocuments.setChecked(false);
+                                                                 docTypeFilter = "" ;
+                                                                 resetTxtResult();
+                                                                 spinDocType.setVisibility(View.INVISIBLE);
+                                                                 lblDocType.setVisibility(View.INVISIBLE);
+                                                             }
+                                                             if (chkTechnical.isChecked()){
+                                                                 chkTechnical.setChecked(false);
+                                                                 spinDocType.setVisibility(View.INVISIBLE);
+                                                                 lblDocType.setVisibility(View.INVISIBLE);
+                                                             }
+                                                         }
+                                                     }
+                                                 }
+        );
 
         btnShowFilteredDocs = (Button) findViewById(R.id.btnShowFilteredDocs);
         btnShowFilteredDocs.setOnClickListener(new View.OnClickListener() {
@@ -127,63 +122,49 @@ public class FilterActivity extends Activity {
             }
         });
 
-
-
-
         setViewOfFilter();
 
 
+        MyFilter.buildVariableTypeDocList();
+        showArrayListDocType();
+        countOccurencesOnDocType();
 
 
 
-        chkDocuments.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-                                                {
-                                                    @Override
-                                                    public void onCheckedChanged(CompoundButton buttonView,boolean isChecked)
-                                                    {
-                                                        if(isChecked)
-                                                        {
-                                                            if (chkCommercial.isChecked())
-                                                            {
-                                                                chkCommercial.setChecked(false);
-                                                            }
+        lblDocType = (TextView) findViewById(R.id.lblDocType);
+        spinDocType = (Spinner) findViewById(R.id.spinDocType);
+        adapterSpinner = new ArrayAdapter(this, android.R.layout.simple_spinner_item,listTypeDocNames);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinDocType.setAdapter(adapterSpinner);
+        spinDocType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedDocType = parent.getItemAtPosition(position).toString();
+                System.out.println("selectedDocType " + selectedDocType);
+                docTypeFilter = MyFilter.findVariableTypeDoc(selectedDocType);
+                System.out.println("docTypeFilter " + docTypeFilter);
+                //if (docTypeFilter.length()>0){
+                setViewOfFilter();
+                getFilteredDocuments();
+                //txtResultFilter.setText(txtResultFilter.getText() +"\nType of doc filter : " + docTypeFilter);
+                //}
 
-                                                            if (chkTechnical.isChecked())
-                                                            {
-                                                                chkTechnical.setChecked(false);
-                                                            }
-                                                            spinDocType.setVisibility(View.VISIBLE);
-                                                            lblDocType.setVisibility(View.VISIBLE);
-                                                        }
+            }
 
-                                                    }
-                                                }
-        );
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-
-        chkCommercial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                                     @Override
-                                                     public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                                                         if(isChecked){
-                                                             if (chkDocuments.isChecked()){
-                                                                 chkDocuments.setChecked(false);
-                                                                 docTypeFilter = "" ;
-                                                                 resetTxtResult();
-                                                                 spinDocType.setVisibility(View.INVISIBLE);
-                                                                 lblDocType.setVisibility(View.INVISIBLE);
-                                                             }
+            }
+        });
+        //spinDocType.setVisibility(View.INVISIBLE);
+        //lblDocType.setVisibility(View.INVISIBLE);
 
 
-                                                             if (chkTechnical.isChecked())
-                                                             {
-                                                                 chkTechnical.setChecked(false);
-                                                             }
+        showArrayListTempDocType();
+
+        pd.dismiss();
 
 
-                                                         }
-                                                     }
-                                                 }
-        );
 
         chkTechnical.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                     @Override
@@ -210,15 +191,8 @@ public class FilterActivity extends Activity {
                                                 }
         );
 
-
-
-
-
-
-
-        pd.dismiss();
-
     }
+
 
     private void countOccurencesOnDocType(){
 
