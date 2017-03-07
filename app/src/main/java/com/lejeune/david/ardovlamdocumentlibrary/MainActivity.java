@@ -32,7 +32,7 @@ import java.nio.channels.FileChannel;
 
 public class MainActivity extends Activity {
 
-    public TextView tvTitleLogin ;
+    public TextView tvTitleLogin ,txtResultMain ;
 
     public static String connectionType ;
     MyTools myTools= null;
@@ -52,7 +52,14 @@ public class MainActivity extends Activity {
         cntx = getApplicationContext();
         timeActivity = new MyTimer("MainActivity");
         // Making sure the correct folder structure exists
+
+        txtResultMain = (TextView) findViewById(R.id.txtResultMain);
+        txtResultMain.setVisibility(View.VISIBLE);
+        txtResultMain.setText("");
+
         myTools= new MyTools();
+
+        txtResultMain.setText(txtResultMain.getText() + "Checking folders \n");
         myTools.createFolders();
         myTools.retrieveSharedPref(cntx);
 
@@ -75,6 +82,8 @@ public class MainActivity extends Activity {
         imgLogo.setImageDrawable(getResources().getDrawable(R.drawable.logo));
         tvTitleLogin = (TextView) findViewById(R.id.tvTitleLogin);
         tvTitleLogin.setVisibility(View.VISIBLE);
+
+
 
         // automatic redirect to loginactivity
 //        new Handler().postDelayed(new Runnable() {
@@ -100,8 +109,15 @@ public class MainActivity extends Activity {
         connectionType = MyTools.checkNetworkStatus(cntx);
         System.out.println("connectionType : " + connectionType);
         if (connectionType.equalsIgnoreCase("wifi")){
+            txtResultMain.setText(txtResultMain.getText() + "WiFi detected \n");
             System.out.println("on wifi , so downloading data folder");
+            txtResultMain.setText(txtResultMain.getText() + "Downloading data folder \n");
             new AsyncDataDownloadDL().execute();
+        }
+        else
+        {
+            txtResultMain.setText(txtResultMain.getText() + "NO WiFi detected \n");
+            gotoLogin();
         }
 
 
@@ -119,6 +135,8 @@ public class MainActivity extends Activity {
     }
 
     private void gotoLogin(){
+
+        txtResultMain.setText(txtResultMain.getText() + "Launching login \n");
                 final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     MainActivity.this.startActivity(loginIntent);
                     MainActivity.this.finish();
@@ -287,6 +305,7 @@ public class MainActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
 
+            txtResultMain.setText(txtResultMain.getText() + "Uploading user stat file \n");
         }
 
         @Override
@@ -352,6 +371,7 @@ public class MainActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
 
+            txtResultMain.setText(txtResultMain.getText() + "Downloading all user stat files \n");
             myTimer = new MyTimer("AsyncStatsDownloadDL");
 //            pd = ProgressDialog.show(MainActivity.this, "", "Downloading stat files...",
 //                    true, false);
@@ -517,6 +537,7 @@ public class MainActivity extends Activity {
             dir = Environment.getExternalStorageDirectory();
             file = new File(dir, MyVars.FOLDER_STATS );
 
+            txtResultMain.setText(txtResultMain.getText() + "Creating big stat file (all users) \n");
 
             myTimer = new MyTimer("AsyncBigStatsCreateDL");
 //            pd = ProgressDialog.show(MainActivity.this, "", "Creating single stat file..",
