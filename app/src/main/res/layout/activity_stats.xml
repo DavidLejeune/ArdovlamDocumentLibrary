@@ -15,9 +15,8 @@
         android:text="@string/btn_show_graph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="132dp"
-        android:id="@+id/btnShowGraph" />
+        android:id="@+id/btnShowGraph"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

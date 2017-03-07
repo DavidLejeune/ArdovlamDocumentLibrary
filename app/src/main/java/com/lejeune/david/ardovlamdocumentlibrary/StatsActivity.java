@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -58,18 +59,20 @@ public class StatsActivity extends Activity {
 
 
         btnShowGrap = (Button) findViewById(R.id.btnShowGraph);
-        btnShowGrap.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        btnShowGrap.setVisibility(View.INVISIBLE);
+//        btnShowGrap.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
                 System.out.println("Showing a graph");
-
-                myStats.createMonthArrays();
-                myStats.createMonthHourArrays();
+//
+//                myStats.createMonthArrays();
+//                myStats.createMonthHourArrays();
                 //MyVars.filterStatType = "ENTRY";
-                MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
-                gotoGraph();
-
-            }
-        });
+//        MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
+//
+//        gotoGraph();
+//
+//            }
+//        });
 
 //        btnUpdatesStat = (ImageButton) findViewById(R.id.btnUpdatesStat);
 //        btnUpdatesStat.setImageDrawable(getResources().getDrawable(R.drawable.update));
@@ -80,15 +83,65 @@ public class StatsActivity extends Activity {
 //            }
 //        });
 
-
+        new AsyncCreateStatForYearDL().execute();
 
     }
 
     private void gotoGraph(){
         final Intent graphIntent = new Intent(StatsActivity.this, GraphActivity.class);
         StatsActivity.this.startActivity(graphIntent);
+        StatsActivity.this.finish();
     }
 
+
+
+    public class AsyncCreateStatForYearDL extends AsyncTask<String, String, String> {
+
+
+        ProgressDialog pd;
+
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
+            pd = ProgressDialog.show(StatsActivity.this, "", "Creating single stat for this year..",
+                    true, false);
+
+            myStats.createMonthArrays();
+            myStats.createMonthHourArrays();
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            pd.dismiss();
+            gotoGraph();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
+
+            return null;
+        }
+
+
+
+    }
 
 
 

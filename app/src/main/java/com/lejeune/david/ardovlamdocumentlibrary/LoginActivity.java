@@ -425,7 +425,7 @@ public class LoginActivity extends Activity {
         int mPendingIntentId = 123456;
         PendingIntent mPendingIntent = PendingIntent.getActivity(cntx, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager mgr = (AlarmManager)cntx.getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 300, mPendingIntent);
         System.exit(0);
     }
 
