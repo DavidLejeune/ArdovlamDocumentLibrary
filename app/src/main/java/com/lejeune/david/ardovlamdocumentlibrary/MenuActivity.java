@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -705,7 +706,7 @@ public class MenuActivity extends Activity {
 //            pd.show();
             pd = ProgressDialog.show(MenuActivity.this, "", "Getting Document Files...",
                     true, false);
-
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         }
 
@@ -719,6 +720,7 @@ public class MenuActivity extends Activity {
             System.out.println("Time downloading " + listUpdateFilesDoc.size() + " updates : " + elapsedTime + " seconds.");
 
             //pd.setProgress(listUpdateFiles.size());
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             pd.dismiss();
 
             System.out.println("finished AsyncUpdates download");
