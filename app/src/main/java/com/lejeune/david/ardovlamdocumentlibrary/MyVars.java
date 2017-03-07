@@ -16,7 +16,7 @@ public class MyVars {
     public final static String FOLDER_TECHNICAL = ROOT_FOLDER + "Technical/";
 
 
-    public static String firstname, lastname, birthdate, registereduser, usertype, fullname , updatedoclocal , updatedocserver , updatecomlocal, updatecomserver;
+    public static String firstname, lastname, birthdate, registereduser, usertype, fullname , updatedoclocal , updatedocserver , updatecomlocal, updatecomserver , updateteclocal, updatetecserver;
 
 
     public final static String HOST = "ftp.ardovlam.be";

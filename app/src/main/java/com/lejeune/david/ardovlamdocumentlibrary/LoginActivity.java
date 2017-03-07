@@ -212,6 +212,7 @@ public class LoginActivity extends Activity {
         System.out.println("reset updatenr to 0");
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatendoclocal");
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatencomlocal");
+        SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatenteclocal");
     }
 
     private void setDefaultProfileImg(){
@@ -382,6 +383,7 @@ public class LoginActivity extends Activity {
                         SharedPrefHelper.getInstance().save(LoginActivity.this,type,"usertype");
                         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatedoclocal");
                         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatecomlocal");
+                        SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updateteclocal");
                         System.out.println("saved the shared pref");
                         foundUser = true;
                         userValidity = true;

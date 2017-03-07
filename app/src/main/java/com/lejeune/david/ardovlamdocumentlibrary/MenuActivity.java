@@ -40,6 +40,7 @@ public class MenuActivity extends Activity {
 
     public static Boolean newUpdatesDoc = false;
     public static Boolean newUpdatesCom = false;
+    public static Boolean newUpdatesTec = false;
     public static Boolean updateValueFound = false;
 
     public static String filterID = "";
@@ -63,6 +64,7 @@ public class MenuActivity extends Activity {
     static String strUserType ;
     static String updateDocFile  = "Update_documents.txt";
     static String updateComFile  = "Update_commercial.txt";
+    static String updateTecFile  = "Update_technical.txt";
 
     ImageView imgProfile;
     //endregion
@@ -184,11 +186,13 @@ public class MenuActivity extends Activity {
         }
         else if (userType.equalsIgnoreCase("0")){
             strUserType = "Installateur";
+            checkUpdatesAvailable(updateDocFile);
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.INVISIBLE);
         }
         else if (userType.equalsIgnoreCase("3")){
             strUserType = "Technieker";
+            checkUpdatesAvailable(updateTecFile);
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.INVISIBLE);
         }
@@ -197,6 +201,7 @@ public class MenuActivity extends Activity {
         //region Setting update(s)
         compareUpdateNrsDoc();
         compareUpdateNrsCom();
+        compareUpdateNrsTec();
         myTools.retrieveSharedPref(cntx);
         //endregion
 
@@ -285,7 +290,10 @@ public class MenuActivity extends Activity {
         else if (userType.equalsIgnoreCase("0")){
             strUserType = "Installateur";
             updateDoc();
-
+        }
+        else if (userType.equalsIgnoreCase("3")){
+            strUserType = "echnieker";
+            updateTec();
         }
     }
 
@@ -326,6 +334,7 @@ public class MenuActivity extends Activity {
             System.out.println("File Update not found");
         }
     }
+
     private static void compareUpdateNrsDoc(){
         System.out.println("updatedoclocal : "+ MyVars.updatedoclocal);
         System.out.println("updatedocserver : "+ MyVars.updatedocserver);
@@ -369,14 +378,41 @@ public class MenuActivity extends Activity {
             System.out.println("Could not parse " + nfe);
         }
         if (nrUpdateLocal < nrUpdateServer){
-            System.out.println("local update com lower (or equal) : need to update");
+            System.out.println("local update doc lower (or equal) : need to update");
             newUpdatesCom = true;
             buildDownloadListCom();
         }
         else
         {
             newUpdatesCom = false;
-            System.out.println("local update com equal to server update : NO need to update");
+            System.out.println("local update doc equal to server update : NO need to update");
+        }
+        displayUpdateButton();
+    }
+    private static void compareUpdateNrsTec(){
+        System.out.println("updateteclocal : "+ MyVars.updateteclocal);
+        System.out.println("updatetecserver : "+ MyVars.updatetecserver);
+        int nrUpdateLocal = 0;
+        int nrUpdateServer = 0;
+        try {
+            nrUpdateLocal = Integer.parseInt(MyVars.updateteclocal);
+        } catch(NumberFormatException nfe) {
+            System.out.println("Could not parse " + nfe);
+        }
+        try {
+            nrUpdateServer = Integer.parseInt(MyVars.updatetecserver);
+        } catch(NumberFormatException nfe) {
+            System.out.println("Could not parse " + nfe);
+        }
+        if (nrUpdateLocal < nrUpdateServer){
+            System.out.println("local update tec lower (or equal) : need to update");
+            newUpdatesTec = true;
+            buildDownloadListTec();
+        }
+        else
+        {
+            newUpdatesTec = false;
+            System.out.println("local update tec equal to server update : NO need to update");
         }
         displayUpdateButton();
     }
@@ -394,7 +430,7 @@ public class MenuActivity extends Activity {
         }
         if(MyVars.usertype.equalsIgnoreCase("1")){
 
-            if (newUpdatesDoc || newUpdatesCom){
+            if (newUpdatesDoc || newUpdatesCom || newUpdatesTec){
                 System.out.println(newUpdatesDoc + " " + newUpdatesCom);
                 btnUpdates.setVisibility(View.VISIBLE);
             }
@@ -415,6 +451,17 @@ public class MenuActivity extends Activity {
             }
         }
 
+        if(MyVars.usertype.equalsIgnoreCase("3")){
+
+            if (newUpdatesTec){
+                System.out.println(newUpdatesDoc + " " + newUpdatesCom);
+                btnUpdates.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                btnUpdates.setVisibility(View.INVISIBLE);
+            }
+        }
 
     }
 
@@ -442,6 +489,18 @@ public class MenuActivity extends Activity {
 
             MyVars.updatedocserver = sharedPref.getString ("updatecomserver", "0");
             System.out.println("updatecomserver in SharedPref : " + MyVars.updatecomserver);
+        }
+        else
+        if (updateDocument.equalsIgnoreCase(updateTecFile)){
+            System.out.println("updatetecserver : " + updateValue);
+            System.out.println("setting the update nr ..");
+            SharedPreferences sharedPref = context.getSharedPreferences("USERINFO", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("updatetecserver", updateValue);
+            editor.apply();
+
+            MyVars.updatetecserver = sharedPref.getString ("updatetecserver", "0");
+            System.out.println("updatecomserver in SharedPref : " + MyVars.updatetecserver);
         }
 
 
@@ -494,6 +553,29 @@ public class MenuActivity extends Activity {
             System.out.println("no new com updates found");
         }
     }
+    public void updateTec(){
+
+        if (newUpdatesTec)
+        {
+            System.out.println("new updates found so action must be taken");
+            connectionType = MyTools.checkNetworkStatus(getApplicationContext());
+            if (connectionType.equalsIgnoreCase("wifi"))
+            {
+                System.out.println("newUpdate (true) + wifi connection >> executing updates");
+                showArrayListUpdateTec();
+                importUpdateTec();
+            }
+            else
+            {
+                System.out.println("no wifi connection so updates not executed");
+            }
+        }
+        else
+        {
+
+            System.out.println("no new com updates found");
+        }
+    }
 
     public void importUpdateCom(){
         System.out.println("getting ready to import updates com");
@@ -505,6 +587,12 @@ public class MenuActivity extends Activity {
         System.out.println("getting ready to import updates doc");
         AsyncUpdatesDocumentsDownloadDL asyncUpdateDocuments = new AsyncUpdatesDocumentsDownloadDL();
         asyncUpdateDocuments.execute();
+
+    }
+    public void importUpdateTec(){
+        System.out.println("getting ready to import updates tec");
+        AsyncUpdatesTechnicalDownloadDL asyncUpdateTec = new AsyncUpdatesTechnicalDownloadDL();
+        asyncUpdateTec.execute();
 
     }
 
@@ -530,6 +618,18 @@ public class MenuActivity extends Activity {
         editor.apply();
         MyVars.updatecomlocal = sharedPref.getString ("updatecomlocal", "0");
         System.out.println("updatecomlocal in SharedPref : " + MyVars.updatecomlocal);
+//        Toast.makeText(context , "Updates finished" , Toast.LENGTH_LONG).show();
+    }
+    private static void setUpdatenrTec(Context context){
+        System.out.println("setting the update nr ..");
+        SharedPreferences sharedPref = context.getSharedPreferences("USERINFO", Context.MODE_PRIVATE);
+        String updateTemp = sharedPref.getString ("updatetecserver", "0");
+        System.out.println("updateValue = " + updateTemp);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("updateteclocal", updateTemp);
+        editor.apply();
+        MyVars.updateteclocal = sharedPref.getString ("updateteclocal", "0");
+        System.out.println("updateteclocal in SharedPref : " + MyVars.updateteclocal);
 //        Toast.makeText(context , "Updates finished" , Toast.LENGTH_LONG).show();
     }
 
@@ -665,19 +765,92 @@ public class MenuActivity extends Activity {
 
         }
     }
+    public static void buildDownloadListTec(){
+        System.out.println("buildDownloadListTec");
+
+        File dir = Environment.getExternalStorageDirectory();
+        File file = new File(dir, MyVars.FOLDER_DATA + "Technical.csv");
+        String line = "" ;
+
+        if (file.exists()) {
+            countUpdates = 0;
+
+            StringBuilder text = new StringBuilder();
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                while ((line = br.readLine()) != null) {
+                    if (line.length()>0)
+                    {
+                        String[] str = line.split(",");
+                        String id = str[0].toUpperCase();
+                        String folderName = str[1].toUpperCase();
+                        String documentName = str[2];
+                        String updateNr = str[3].toUpperCase();
+
+                        text.append("ID : " + id);
+                        text.append('\n');
+                        text.append("folderName : " + folderName);
+                        text.append('\n');
+                        text.append("documentName : " + documentName);
+                        text.append('\n');
+                        text.append("updateNr : " + updateNr + "update value : " + updateValue);
+                        text.append('\n');
+
+
+                        int nrValue = 0;
+                        int nrUpdate = 0;
+
+                        try {
+                            nrValue = Integer.parseInt(updateNr);
+                        } catch(NumberFormatException nfe) {
+                            System.out.println("Could not parse " + nfe);
+                        }
+                        try {
+                            nrUpdate = Integer.parseInt(MyVars.updateteclocal);
+                        } catch(NumberFormatException nfe) {
+                            System.out.println("Could not parse " + nfe);
+                        }
+
+                        if (nrValue > nrUpdate)
+                        {
+                            countUpdates +=1;
+                            System.out.println("Take action on this file :");
+                            System.out.println(line);
+                            listUpdateFilesTec.add(documentName);
+                            System.out.println("countUpdates = " + countUpdates + " file = " + documentName);
+
+                        }
+
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+    }
 
     public void showArrayListUpdateDoc(){
 
         System.out.println("looping through the arraylist");
         for (String cu : listUpdateFilesDoc) {
-            System.out.println("list Update entry : " + cu);
+            System.out.println("list Update DOC entry : " + cu);
         }
     }
     public void showArrayListUpdateCom(){
 
         System.out.println("looping through the arraylist");
         for (String cu : listUpdateFilesCom) {
-            System.out.println("list Update entry : " + cu);
+            System.out.println("list Update COM entry : " + cu);
+        }
+    }
+    public void showArrayListUpdateTec(){
+
+        System.out.println("looping through the arraylist");
+        for (String cu : listUpdateFilesTec) {
+            System.out.println("list Update TEC entry : " + cu);
         }
     }
     //endregion
@@ -687,6 +860,7 @@ public class MenuActivity extends Activity {
 
 
 
+        boolean status = false;
         long startTime ;
         long stopTime ;
         long elapsedTime ;
@@ -729,8 +903,6 @@ public class MenuActivity extends Activity {
             pd.dismiss();
 
             System.out.println("finished AsyncUpdates download");
-            setUpdatenrDoc(cntx);
-            compareUpdateNrsDoc();
 
             for(int i=0; i<100 ;i++) {
                 MyStats.logEntry("UPDATE", "DOC-" + MyVars.updatedocserver);
@@ -739,6 +911,12 @@ public class MenuActivity extends Activity {
             if (userType.equalsIgnoreCase("1")){
                 strUserType = "Admin";
                 updateCom();
+            }
+
+            if (status == true) {
+
+                setUpdatenrDoc(cntx);
+                compareUpdateNrsDoc();
             }
 
 
@@ -758,7 +936,6 @@ public class MenuActivity extends Activity {
 
 
             ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
-            boolean status = false;
 
             status = downloadUpdateFiles(FOLDER_UPDATE_DOCUMENTS);
             System.out.println(FOLDER_UPDATE_DOCUMENTS + " status : " + status);
@@ -974,6 +1151,7 @@ public class MenuActivity extends Activity {
         ProgressDialog pd;
 
 
+        boolean status = false;
 
         long startTime ;
         long stopTime ;
@@ -990,6 +1168,7 @@ public class MenuActivity extends Activity {
             pd = ProgressDialog.show(MenuActivity.this, "", "Getting Commercial Files...",
                     true, false);
 
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         }
 
@@ -997,14 +1176,22 @@ public class MenuActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             pd.dismiss();
             for(int i=0; i<100 ;i++) {
                 MyStats.logEntry("UPDATE", "COM-" + MyVars.updatecomserver);
             }
-            setUpdatenrCom(cntx);
-            compareUpdateNrsCom();
 
+            if (userType.equalsIgnoreCase("1")){
+                strUserType = "Admin";
+                updateTec();
+            }
 
+            if (status == true) {
+
+                setUpdatenrCom(cntx);
+                compareUpdateNrsCom();
+            }
         }
 
 
@@ -1013,7 +1200,6 @@ public class MenuActivity extends Activity {
 
 
             ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
-            boolean status = false;
 
             status = downloadUpdateFilesCom(MyVars.FOLDER_COMMERCIAL);
             System.out.println(MyVars.FOLDER_COMMERCIAL + " status : " + status);
@@ -1092,6 +1278,265 @@ public class MenuActivity extends Activity {
                                 //publishProgress(iCount);
                                 ftpDownload(MyVars.FOLDER_COMMERCIAL + imgName,
                                         Environment.getExternalStorageDirectory() + MyVars.FOLDER_COMMERCIAL + imgName);
+
+
+
+
+
+                                String CurrentString = cu;
+                                String[] separated = CurrentString.split("-");
+                                int iSplit = 0;
+                                for (String split : separated){
+                                    iSplit += 1;
+                                    System.out.println("split " + iSplit + " : " + split);
+                                }
+                                if(iSplit != 5){
+                                    iNot5 +=1;
+                                    System.out.println("WARNING iNot5 !!!!!!!!!!!!!!!!!!!!");
+                                }
+
+
+                            }
+                        }
+//                    System.out.println("function bulk ftpDownload updates :");
+//                    System.out.println(">file : " + name);
+//                    status = ftpDownload(FOLDER_DATA_DOCUMENTS_ALL + name,
+//                            Environment.getExternalStorageDirectory() + FOLDER_DATA_DOCUMENTS_ALL + name);
+
+
+                        System.out.println(">Status bulk ftpDownload: " + status);
+
+                    } else {
+                        fileList[i] = "Directory :: " + name;
+                    }
+
+                }
+
+                System.out.println("iNot5 : " + iNot5);
+
+
+                return status;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return status;
+            }
+        }
+
+
+        // Method to connect to FTP server:
+        public boolean ftpConnect(String host, String username, String password,
+                                  int port) {
+            try {
+                mFTPClient = new FTPClient();
+                // connecting to the host
+                mFTPClient.connect(host, port);
+
+                // now check the reply code, if positive mean connection success
+                if (FTPReply.isPositiveCompletion(mFTPClient.getReplyCode())) {
+                    // login using username & password
+                    boolean status = mFTPClient.login(username, password);
+
+				/*
+				 * Set File Transfer Mode
+				 *
+				 * To avoid corruption issue you must specified a correct
+				 * transfer mode, such as ASCII_FILE_TYPE, BINARY_FILE_TYPE,
+				 * EBCDIC_FILE_TYPE .etc. Here, I use BINARY_FILE_TYPE for
+				 * transferring text, image, and compressed files.
+				 */
+                    mFTPClient.setFileType(FTP.BINARY_FILE_TYPE);
+                    mFTPClient.enterLocalPassiveMode();
+
+                    System.out.println("function FTP connect :");
+                    System.out.println(">Status MyFTPFunctions: " + status);
+                    return status;
+                }
+            } catch (Exception e) {
+                System.out.println("Error: could not connect to host " + host);
+            }
+
+            return false;
+        }
+
+
+        public boolean ftpDownload(String srcFilePath, String desFilePath) {
+            boolean status = false;
+            try {
+                FileOutputStream desFileStream = new FileOutputStream(desFilePath);
+
+                System.out.println("function ftpDownload :");
+                System.out.println(">srcFilePath : " + srcFilePath);
+                System.out.println(">desFilePath : " + desFilePath);
+                status = mFTPClient.retrieveFile(srcFilePath, desFileStream);
+                desFileStream.close();
+                System.out.println(">Status ftpDownload: " + status);
+
+
+
+                // this because there is no other check on the validity of the file
+                // if file doesn't exist it creates an empty file that needs to be deleted
+                if (!status)
+                {
+                    //File dir = Environment.getExternalStorageDirectory();
+                    File file = new File(desFilePath);
+                    boolean deleted = file.delete();
+                }
+                else
+                {
+                    Boolean isImage = srcFilePath.contains(".PNG");
+                    if (!isImage){
+                        iCount +=1;
+                        progress = iCount;
+                        //publishProgress(progress);
+                    }
+                }
+
+
+                return status;
+            } catch (Exception e) {
+                System.out.println("download failed");
+            }
+
+            return status;
+        }
+
+
+
+    }
+
+    class AsyncUpdatesTechnicalDownloadDL extends AsyncTask<String, String, String> {
+
+        boolean status = false;
+        private FTPfunctions ftpclient = null;
+
+        ProgressDialog pd;
+
+
+
+        long startTime ;
+        long stopTime ;
+        long elapsedTime ;
+        int iCount =0;
+        int progress = 0;
+        String downloadedFile = "" ;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
+            pd = ProgressDialog.show(MenuActivity.this, "", "Getting Technical Files...",
+                    true, false);
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+            pd.dismiss();
+            for(int i=0; i<100 ;i++) {
+                MyStats.logEntry("UPDATE", "TEC-" + MyVars.updatetecserver);
+            }
+            if (status == true) {
+
+                setUpdatenrTec(cntx);
+                compareUpdateNrsTec();
+            }
+
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
+
+
+            status = downloadUpdateFilesTec(MyVars.FOLDER_TECHNICAL);
+            System.out.println(MyVars.FOLDER_TECHNICAL + " status : " + status);
+
+
+            if (status == true) {
+                System.out.println("Download success");
+//                    handler.sendEmptyMessage(5);
+
+//                setUpdatenrTec(cntx);
+//                compareUpdateNrsTec();
+            } else {
+                System.out.println("Download failed");
+//                    handler.sendEmptyMessage(-1);
+            }
+
+            ftpDisconnect();
+            return null;
+        }
+
+        public boolean ftpDisconnect() {
+            try {
+                mFTPClient.logout();
+                mFTPClient.disconnect();
+                return true;
+            } catch (Exception e) {
+                System.out.println("Error occurred while disconnecting from ftp server.");
+            }
+
+            return false;
+        }
+
+
+        public boolean downloadUpdateFilesTec(String dir_path) {
+            boolean status = false;
+            String[] fileList = null;
+            int iNot5 = 0;
+            System.out.println("downloadUpdateFileCom in FTPfunctions");
+            System.out.println("dir_path : " + dir_path);
+            try {
+                FTPFile[] ftpFiles = mFTPClient.listFiles(dir_path);
+                int length = ftpFiles.length;
+                System.out.println("length : " + length);
+                fileList = new String[length];
+                for (int i = 0; i < length; i++) {
+                    String name = ftpFiles[i].getName();
+                    boolean isFile = ftpFiles[i].isFile();
+                    //Log.d("DD", "/David/Documents/" + name);
+
+                    if (isFile) {
+                        fileList[i] = "File :: " + name;
+
+
+                        System.out.println("looping through the arraylist");
+                        //MenuActivity.AsyncUpdatesDownloadDL.publishProgress();
+                        System.out.println("listUpdateFiles.length : " + listUpdateFilesTec.size());
+                        for (String cu : listUpdateFilesTec) {
+                            //System.out.println("list Update entry : " + cu);
+                            if (cu.equalsIgnoreCase(name)){
+                                //iCount +=1;
+                                System.out.println("iCount = " +iCount);
+                                System.out.println("found this file in update list");
+                                System.out.println(">file : " + name);
+                                System.out.println(">cu   : " + cu);
+                                System.out.println("function bulk ftpDownload updates :");
+                                System.out.println(">file : " + name);
+
+                                downloadedFile = name;
+                                //publishProgress(iCount);
+
+                                status = ftpDownload(MyVars.FOLDER_TECHNICAL + name,
+                                        Environment.getExternalStorageDirectory() + MyVars.FOLDER_TECHNICAL + name);
+
+
+
+
+                                String imgName = name.replace(".pdf", ".PNG");
+                                downloadedFile = imgName;
+                                //publishProgress(iCount);
+                                ftpDownload(MyVars.FOLDER_TECHNICAL + imgName,
+                                        Environment.getExternalStorageDirectory() + MyVars.FOLDER_TECHNICAL + imgName);
 
 
 

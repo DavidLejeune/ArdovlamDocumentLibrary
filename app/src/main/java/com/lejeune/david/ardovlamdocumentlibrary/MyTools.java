@@ -91,6 +91,8 @@ public class MyTools {
         MyVars.updatedocserver = SharedPrefHelper.getInstance().getValue(cntx, "updatedocserver");
         MyVars.updatecomlocal = SharedPrefHelper.getInstance().getValue(cntx, "updatecomlocal");
         MyVars.updatecomserver = SharedPrefHelper.getInstance().getValue(cntx, "updatecomserver");
+        MyVars.updateteclocal = SharedPrefHelper.getInstance().getValue(cntx, "updateteclocal");
+        MyVars.updatetecserver = SharedPrefHelper.getInstance().getValue(cntx, "updatetecserver");
 
 //        System.out.println("firstname:"+MyVars.firstname);
 //        System.out.println("lastname:"+MyVars.lastname);
