@@ -52,5 +52,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@android:color/holo_purple" />
 </RelativeLayout>

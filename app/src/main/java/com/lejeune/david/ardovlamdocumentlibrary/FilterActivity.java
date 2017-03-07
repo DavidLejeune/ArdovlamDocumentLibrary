@@ -370,6 +370,9 @@ public class FilterActivity extends Activity {
 
             }
         }
+
+        setViewOfFilter();
+        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
 //
 //        setViewOfFilter();
 //        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
@@ -461,7 +464,7 @@ public class FilterActivity extends Activity {
         }
 
         setViewOfFilter();
-        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
         System.out.println("Total files in folder : " + iCountTotalDocs);
         System.out.println("# files with same filter : " + iCountOccurence);
     }
@@ -518,6 +521,10 @@ public class FilterActivity extends Activity {
 
             }
         }
+
+
+        setViewOfFilter();
+        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
 //
 //        setViewOfFilter();
 //        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
