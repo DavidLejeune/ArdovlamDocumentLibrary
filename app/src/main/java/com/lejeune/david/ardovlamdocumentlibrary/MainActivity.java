@@ -32,14 +32,16 @@ import java.nio.channels.FileChannel;
 
 public class MainActivity extends Activity {
 
+    //region Declarations
     public TextView tvTitleLogin ,txtResultMain ;
 
     public static String connectionType ;
-    MyTools myTools= null;
-    Context cntx;
-    MyTimer timeActivity;
+    private MyTools myTools= null;
+    private Context cntx;
+    private MyTimer timeActivity;
 
 //    SQLiteDatabase mydb;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +50,23 @@ public class MainActivity extends Activity {
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 
-        // Start declarations
+        //region Initialisations
         cntx = getApplicationContext();
         timeActivity = new MyTimer("MainActivity");
-        // Making sure the correct folder structure exists
+        myTools= new MyTools();
 
+        //making sure the correct folder structure exists
+        myTools.createFolders();
+        myTools.retrieveSharedPref(cntx);
+        //endregion
+
+        //region UI elements
         txtResultMain = (TextView) findViewById(R.id.txtResultMain);
         txtResultMain.setVisibility(View.VISIBLE);
         txtResultMain.setText("");
 
-        myTools= new MyTools();
 
         txtResultMain.setText(txtResultMain.getText() + "Checking folders \n");
-        myTools.createFolders();
-        myTools.retrieveSharedPref(cntx);
 
 //        String currentTime = myTools.getTime();
 //        String currentDate = myTools.getDate();
@@ -82,29 +87,12 @@ public class MainActivity extends Activity {
         imgLogo.setImageDrawable(getResources().getDrawable(R.drawable.logo));
         tvTitleLogin = (TextView) findViewById(R.id.tvTitleLogin);
         tvTitleLogin.setVisibility(View.VISIBLE);
+        //endregion
 
 
 
-        // automatic redirect to loginactivity
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-//                final Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
-//
-////                if(MyVars.registereduser.equalsIgnoreCase("1")){
-////
-////                    MainActivity.this.startActivity(menuIntent);
-////                    MainActivity.this.finish();
-////                }
-////                else
-////                {
-//                    MainActivity.this.startActivity(loginIntent);
-//                    MainActivity.this.finish();
-////                }
-//            }
-//        }, 1977);
 
+        //region Download actions based on connection status (and type)
         // Checknetworkstatus , if on wifi this will allow data folder download
         connectionType = MyTools.checkNetworkStatus(cntx);
         System.out.println("connectionType : " + connectionType);
@@ -119,14 +107,16 @@ public class MainActivity extends Activity {
             txtResultMain.setText(txtResultMain.getText() + "NO WiFi detected \n");
             gotoLogin();
         }
+        //endregion
 
-
+        //region Misc actions
         refreshDisplayVariables();
         System.out.println("Height:" + MyVars.screenHeight + " Width:" + MyVars.screenWidth);
-
+        //endregion
 
     }
 
+    //region Misc methods
     private void refreshDisplayVariables(){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -141,95 +131,11 @@ public class MainActivity extends Activity {
                     MainActivity.this.startActivity(loginIntent);
                     MainActivity.this.finish();
     }
-
-
-//    public void showTable(){
-//        try{
-//            mydb = openOrCreateDatabase("Documents.db", Context.MODE_PRIVATE,null);
-//            Cursor allrows  = mydb.rawQuery("SELECT * FROM "+  "documents_table", null);
-//            System.out.println("COUNT : " + allrows.getCount());
-//            Integer cindex = allrows.getColumnIndex("folder");
-//            Integer cindex1 = allrows.getColumnIndex("document");
-//            Integer cindex2 = allrows.getColumnIndex("update");
-//
-//
-//            if(allrows.moveToFirst()){
-//                do{
-//
-//                    final String ID = allrows.getString(0);
-//                    String FOLDER= allrows.getString(1);
-//                    String DOCUMENT= allrows.getString(2);
-//                    String UPDATE= allrows.getString(3);
-//
-//
-//                    System.out.println(allrows.getString(cindex) + " "+ allrows.getString(cindex1)+ " "+ allrows.getString(cindex2));
-//
-//                }
-//                while(allrows.moveToNext());
-//            }
-//            mydb.close();
-//        }catch(Exception e){
-//            Toast.makeText(getApplicationContext(), "Error encountered."+e.toString(), Toast.LENGTH_LONG).show();
-//        }
-//
-////        InputStreamReader is = ;
-////        StringBuilder sb = new StringBuilder();
-////        try {
-////            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-////            String line = null;
-////            while ((line = reader.readLine()) != null) {
-////                sb.append(line).append("\n");
-////            }
-////            is.close();
-////        } catch(OutOfMemoryError om) {
-////            om.printStackTrace();
-////        } catch(Exception ex) {
-////            ex.printStackTrace();
-////        }
-////        String result = sb.toString();
-//
-////        BufferedReader reader = null;
-////        try {
-////            Context context = getApplicationContext();
-////            reader = new BufferedReader( new InputStreamReader(context.openFileInput(Environment.getExternalStorageDirectory() + "/Users.csv"))) ;
-////            reader.readLine(); // Ignores the first line
-////            String data;
-////            while ((data = reader.readLine()) != null) { // Gets a whole line
-////                String[] line = data.split(","); // Splits the line up into a string array
-////                if (line.length > 1) {
-////                    // Do stuff, e.g:
-////                    String value = line[1];
-////                    System.out.println(value);
-////                }
-////            }
-////        } catch (IOException e) {
-////            e.printStackTrace();
-////        } finally {
-////            if (reader != null) {
-////                try {
-////                    reader.close();
-////                } catch (IOException e) {
-////                    e.printStackTrace();
-////                }
-////            }
-////        }
-//
-////        CSVReader reader = new CSVReader(new FileReader(Environment.getExternalStorageDirectory() + "/Users.csv"));
-////        String [] nextLine;
-////        while ((nextLine = reader.readNext()) != null) {
-////            // nextLine[] is an array of values from the line
-////            System.out.println(nextLine[0] + nextLine[1] + "etc...");
-////        }
-//
-////https://www.youtube.com/watch?v=BALgSGrsXH8
-//
-//
-//
-//
-//    }
+    //endregion
 
 
 
+    //region Internal Async Tasks
     public class AsyncDataDownloadDL extends AsyncTask<String, String, String> {
 
 
@@ -898,7 +804,125 @@ public class MainActivity extends Activity {
 
 
     }
-
+    //endregion
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    public void showTable(){
+//        try{
+//            mydb = openOrCreateDatabase("Documents.db", Context.MODE_PRIVATE,null);
+//            Cursor allrows  = mydb.rawQuery("SELECT * FROM "+  "documents_table", null);
+//            System.out.println("COUNT : " + allrows.getCount());
+//            Integer cindex = allrows.getColumnIndex("folder");
+//            Integer cindex1 = allrows.getColumnIndex("document");
+//            Integer cindex2 = allrows.getColumnIndex("update");
+//
+//
+//            if(allrows.moveToFirst()){
+//                do{
+//
+//                    final String ID = allrows.getString(0);
+//                    String FOLDER= allrows.getString(1);
+//                    String DOCUMENT= allrows.getString(2);
+//                    String UPDATE= allrows.getString(3);
+//
+//
+//                    System.out.println(allrows.getString(cindex) + " "+ allrows.getString(cindex1)+ " "+ allrows.getString(cindex2));
+//
+//                }
+//                while(allrows.moveToNext());
+//            }
+//            mydb.close();
+//        }catch(Exception e){
+//            Toast.makeText(getApplicationContext(), "Error encountered."+e.toString(), Toast.LENGTH_LONG).show();
+//        }
+//
+////        InputStreamReader is = ;
+////        StringBuilder sb = new StringBuilder();
+////        try {
+////            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+////            String line = null;
+////            while ((line = reader.readLine()) != null) {
+////                sb.append(line).append("\n");
+////            }
+////            is.close();
+////        } catch(OutOfMemoryError om) {
+////            om.printStackTrace();
+////        } catch(Exception ex) {
+////            ex.printStackTrace();
+////        }
+////        String result = sb.toString();
+//
+////        BufferedReader reader = null;
+////        try {
+////            Context context = getApplicationContext();
+////            reader = new BufferedReader( new InputStreamReader(context.openFileInput(Environment.getExternalStorageDirectory() + "/Users.csv"))) ;
+////            reader.readLine(); // Ignores the first line
+////            String data;
+////            while ((data = reader.readLine()) != null) { // Gets a whole line
+////                String[] line = data.split(","); // Splits the line up into a string array
+////                if (line.length > 1) {
+////                    // Do stuff, e.g:
+////                    String value = line[1];
+////                    System.out.println(value);
+////                }
+////            }
+////        } catch (IOException e) {
+////            e.printStackTrace();
+////        } finally {
+////            if (reader != null) {
+////                try {
+////                    reader.close();
+////                } catch (IOException e) {
+////                    e.printStackTrace();
+////                }
+////            }
+////        }
+//
+////        CSVReader reader = new CSVReader(new FileReader(Environment.getExternalStorageDirectory() + "/Users.csv"));
+////        String [] nextLine;
+////        while ((nextLine = reader.readNext()) != null) {
+////            // nextLine[] is an array of values from the line
+////            System.out.println(nextLine[0] + nextLine[1] + "etc...");
+////        }
+//
+////https://www.youtube.com/watch?v=BALgSGrsXH8
+//
+//
+//
+//
+//    }
+
+//    public void autoLaunchActivity(){
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+//                final Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
+//
+//                if(MyVars.registereduser.equalsIgnoreCase("1")){
+//
+//                    MainActivity.this.startActivity(menuIntent);
+//                    MainActivity.this.finish();
+//                }
+//              else
+//                {
+//                    MainActivity.this.startActivity(loginIntent);
+//                    MainActivity.this.finish();
+//                }
+//            }
+//        }, 1977);
+//    }
