@@ -113,6 +113,8 @@ public class LoginActivity extends Activity {
             }
         });
 
+        new AsyncRemoveOldFilesDL().execute();
+
     }
 
     public void onCheckboxClicked(View view) {

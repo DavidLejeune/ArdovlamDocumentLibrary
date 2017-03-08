@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ardovlam  Doc Lib</string>
+    <string name="app_name">Ardovlam</string>
     <string name="strTitleLogin">Document Library</string>
     <string name="lbl_first_name">First Name</string>
     <string name="lbl_last_name">Last Name</string>

@@ -73,6 +73,8 @@ class MyAdapter extends ArrayAdapter<String> {
         if(!FilterActivity.chkCommercial.isChecked() && !FilterActivity.chkDocuments.isChecked() && FilterActivity.chkTechnical.isChecked() ){
             file = new File(dir,MyVars.FOLDER_TECHNICAL + strThumbnail);
         }
+
+
         System.out.println("thumbnail : " + file.toString());
         long length = file.length();
         System.out.println("length:"+length);

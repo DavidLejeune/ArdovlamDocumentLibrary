@@ -63,14 +63,17 @@ public class ListDocsActivity extends Activity {
 
     public void openPDFFile() {
         File pdfFile = null;
-        if(FilterActivity.chkDocuments.isChecked() && !FilterActivity.chkCommercial.isChecked() ){
+        if(!FilterActivity.chkCommercial.isChecked() && FilterActivity.chkDocuments.isChecked() && !FilterActivity.chkTechnical.isChecked() ){
             pdfFile = new File(Environment.getExternalStorageDirectory(),MyVars.FOLDER_DOCUMENTS + docSelected);//File path
         }
 
-        if(FilterActivity.chkCommercial.isChecked() && !FilterActivity.chkDocuments.isChecked() ){
+        if(FilterActivity.chkCommercial.isChecked() && !FilterActivity.chkDocuments.isChecked() && !FilterActivity.chkTechnical.isChecked() ){
             pdfFile = new File(Environment.getExternalStorageDirectory(),MyVars.FOLDER_COMMERCIAL + docSelected);//File path
         }
 
+        if(!FilterActivity.chkCommercial.isChecked() && !FilterActivity.chkDocuments.isChecked() && FilterActivity.chkTechnical.isChecked() ){
+            pdfFile = new File(Environment.getExternalStorageDirectory(),MyVars.FOLDER_TECHNICAL + docSelected);//File path
+        }
         if (pdfFile.exists()) //Checking for the file is exist or not
         {
             for(int i=0; i<100 ;i++) {
