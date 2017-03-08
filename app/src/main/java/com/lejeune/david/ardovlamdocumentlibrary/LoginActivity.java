@@ -27,6 +27,7 @@ import java.io.IOException;
 
 public class LoginActivity extends Activity {
 
+    //region Declarations
     public EditText txtPassword, txtFirstName, txtLastName;
     public CheckBox checkBoxPassword;
     private static Boolean loginOK = false;
@@ -38,18 +39,21 @@ public class LoginActivity extends Activity {
     private String firstName, lastName, birthDate;
 
     public static String connectionType ;
-    MyTools myTools= null;
-    Context cntx;
+    private MyTools myTools= null;
+    private Context cntx;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Start declarations
+        //region Initialisations
         cntx = getApplicationContext();
         myTools = new MyTools();
+        //endregion
 
+        //region UI elements
         txtFirstName = (EditText) findViewById(R.id.txtFirstName);
         txtLastName = (EditText) findViewById(R.id.txtLastName);
 
@@ -61,11 +65,15 @@ public class LoginActivity extends Activity {
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         txtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         txtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        //endregion
 
-
+        //region Misc actions
         myTools.retrieveSharedPref(cntx);
         displaySharedPref();
+        new AsyncRemoveOldFilesDL().execute();
+        //endregion
 
+        //region Determining profile image
         System.out.println(MyVars.registereduser);
         //if (registereduser=="1"))
         if (MyVars.registereduser.equalsIgnoreCase("1"))
@@ -81,8 +89,9 @@ public class LoginActivity extends Activity {
             System.out.println("Downloading data folder");
             //new AsyncDataDownloadDL().execute();
         }
+        //endregion
 
-
+        //region Login button
         final ImageView buttonLogin = (ImageView) findViewById(R.id.imgLogin);
         buttonLogin.setVisibility(View.VISIBLE);
         buttonLogin.setImageDrawable(getResources().getDrawable(R.drawable.login_button));
@@ -112,11 +121,11 @@ public class LoginActivity extends Activity {
 
             }
         });
-
-        new AsyncRemoveOldFilesDL().execute();
+        //endregion
 
     }
 
+    //region Misc methods
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -144,6 +153,61 @@ public class LoginActivity extends Activity {
         }
     }
 
+    private void gotoMenu(){
+        for (int i = 0; i < 100; i++) {
+//            System.out.println(i);
+            MyStats.logEntry("ENTRY", "");
+        }
+        final Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
+        LoginActivity.this.startActivity(menuIntent);
+        LoginActivity.this.finish();
+    }
+
+    private void restartApp(){
+        Intent mStartActivity = new Intent(cntx, MainActivity.class);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(cntx, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager)cntx.getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 300, mPendingIntent);
+        System.exit(0);
+    }
+
+    private void displaySharedPref(){
+
+        txtFirstName.setText(MyVars.firstname);
+        txtLastName.setText(MyVars.lastname);
+        txtPassword.setText(MyVars.birthdate);
+
+    }
+    //endregion
+
+    //region Profile image
+    private void setDefaultProfileImg(){
+        ImageView imgProfile = (ImageView) findViewById(R.id.imgProfileLogin);
+        imgProfile.setImageDrawable(getResources().getDrawable(R.drawable.avatar_1));
+    }
+    private void setProfileImg() {
+        File dir = Environment.getExternalStorageDirectory();
+        File file = new File(dir, "/DocLib/IMG/profile.jpg");
+        long length = file.length();
+        System.out.println("length:" + length);
+
+        if (length > 1) {
+            if (file.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                ImageView imgProfile = (ImageView) findViewById(R.id.imgProfileLogin);
+                imgProfile.setVisibility(View.VISIBLE);
+                imgProfile.setImageBitmap(myBitmap);
+            }
+        }
+        else
+        {
+            setDefaultProfileImg();
+        }
+    }
+    //endregion
+
+    //region Login procedure
     public void loginProcedure(){
         loginOK = false;
         System.out.println("loginprocedure");
@@ -216,43 +280,6 @@ public class LoginActivity extends Activity {
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatencomlocal");
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatenteclocal");
     }
-
-    private void setDefaultProfileImg(){
-        ImageView imgProfile = (ImageView) findViewById(R.id.imgProfileLogin);
-        imgProfile.setImageDrawable(getResources().getDrawable(R.drawable.avatar_1));
-    }
-
-    private void setProfileImg() {
-        File dir = Environment.getExternalStorageDirectory();
-        File file = new File(dir, "/DocLib/IMG/profile.jpg");
-        long length = file.length();
-        System.out.println("length:" + length);
-
-        if (length > 1) {
-            if (file.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                ImageView imgProfile = (ImageView) findViewById(R.id.imgProfileLogin);
-                imgProfile.setVisibility(View.VISIBLE);
-                imgProfile.setImageBitmap(myBitmap);
-            }
-        }
-        else
-        {
-            setDefaultProfileImg();
-        }
-    }
-
-    private void gotoMenu(){
-        for (int i = 0; i < 100; i++) {
-//            System.out.println(i);
-            MyStats.logEntry("ENTRY", "");
-        }
-        final Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
-        LoginActivity.this.startActivity(menuIntent);
-        LoginActivity.this.finish();
-    }
-
-
 
     private void saveUserInfoToSharedpref(){
 
@@ -416,23 +443,6 @@ public class LoginActivity extends Activity {
 
     }
 
-    private void displaySharedPref(){
-
-        txtFirstName.setText(MyVars.firstname);
-        txtLastName.setText(MyVars.lastname);
-        txtPassword.setText(MyVars.birthdate);
-
-    }
-
-    private void restartApp(){
-        Intent mStartActivity = new Intent(cntx, MainActivity.class);
-        int mPendingIntentId = 123456;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(cntx, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager mgr = (AlarmManager)cntx.getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 300, mPendingIntent);
-        System.exit(0);
-    }
-
     private void checkUserType(){
 
         System.out.println("checking user type");
@@ -447,7 +457,9 @@ public class LoginActivity extends Activity {
             myTools.retrieveSharedPref(cntx);
         }
     }
+    //endregion
 
+    //region Internal Async Tasks
     class AsyncDownloadUserImg extends AsyncTask<Void, Void, Void> {
 
         private FTPfunctions ftpclient = null;
@@ -520,7 +532,6 @@ public class LoginActivity extends Activity {
         }
     }
 
-
     class AsyncLoginProcedureDL extends AsyncTask<String, String, String> {
 
 
@@ -553,6 +564,6 @@ public class LoginActivity extends Activity {
 
 
     }
-
+    //endregion
 
 }
