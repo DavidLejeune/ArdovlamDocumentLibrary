@@ -75,9 +75,7 @@ class MyAdapter extends ArrayAdapter<String> {
         }
 
 
-        System.out.println("thumbnail : " + file.toString());
         long length = file.length();
-        System.out.println("length:"+length);
 
         if (length > 1){
             if(file.exists()){

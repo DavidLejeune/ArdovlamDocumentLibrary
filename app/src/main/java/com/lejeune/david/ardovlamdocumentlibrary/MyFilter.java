@@ -21,7 +21,6 @@ public class MyFilter {
 
         String departmentTag = "";
 
-        System.out.println("findVariableDepartment for " + department);
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, MyVars.FOLDER_DATA + "var_departement.txt");
         String line = "";
@@ -41,7 +40,6 @@ public class MyFilter {
 
                             if(department.equalsIgnoreCase(departmentName)){
                                 departmentTag = filterLetter;
-                                System.out.println("filter letter : " + departmentTag);
                             }
                         }
 
@@ -53,7 +51,6 @@ public class MyFilter {
         }
         else
         {
-            System.out.println("File Var_departement not found");
         }
 
         return departmentTag;
@@ -64,7 +61,6 @@ public class MyFilter {
 
         String typeDocFilter = "";
 
-        System.out.println("findVariableTypeDoc for " + doctype);
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, MyVars.FOLDER_DATA + "var_type_doc.txt");
         String line = "";
@@ -82,7 +78,6 @@ public class MyFilter {
                             String typeDocID = str[0].toUpperCase();
                             String typeDocName = str[1].toUpperCase();
 
-                            System.out.println("typeDocID : " + typeDocID + " typeDocName : " + typeDocName);
                             if(doctype.equalsIgnoreCase(typeDocName)){
 
                                 typeDocFilter = typeDocID;
@@ -97,7 +92,6 @@ public class MyFilter {
         }
         else
         {
-            System.out.println("File Var_departement not found");
         }
 
         return typeDocFilter;
@@ -110,7 +104,6 @@ public class MyFilter {
 
         String typeDoc = "";
 
-        System.out.println("findVariableTypeDoc for " + typeDoc);
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, MyVars.FOLDER_DATA + "var_type_doc.txt");
         String line = "";
@@ -128,12 +121,8 @@ public class MyFilter {
                             String typeDocID = str[0].toUpperCase();
                             String typeDocName = str[1].toUpperCase();
 
-                            System.out.println("typeDocID : " + typeDocID + " typeDocName : " + typeDocName);
                             typeDoc = typeDocName;
                             listTypeDocNames.add(typeDoc);
-//                            if(department.equalsIgnoreCase(departmentName)){
-//                                departmentTag = filterLetter;
-//                                System.out.println("filter letter : " + departmentTag);
 //                            }
                         }
 
@@ -145,7 +134,6 @@ public class MyFilter {
         }
         else
         {
-            System.out.println("File Var_type doc not found");
         }
 
     }

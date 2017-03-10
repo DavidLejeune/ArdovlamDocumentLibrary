@@ -32,25 +32,10 @@ public class MergerFiles {
     }
     public static void createBigLogFile() {
 
-//        File dir = Environment.getExternalStorageDirectory();
-//        File file = null;
-//        file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
-//
-//        String sourceFilePath = "/home/programcreek/Desktop/s1";
-//        String sourceFile2Path = "/home/programcreek/Desktop/s2";
-//
-//        String mergedFilePath = "/home/programcreek/Desktop/m";
-//
-//        File[] files = new File[2];
-//        files[0] = new File(sourceFile1Path);
-//        files[1] = new File(sourceFile2Path);
-//
-//
         File dir = Environment.getExternalStorageDirectory();
         File mergedFile = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
 
         mergeFiles(files, mergedFile);
-
 
     }
 
@@ -66,7 +51,6 @@ public class MergerFiles {
         }
 
         for (File f : files) {
-            //System.out.println("merging: " + f.getName());
             FileInputStream fis;
             try {
                 fis = new FileInputStream(f);
