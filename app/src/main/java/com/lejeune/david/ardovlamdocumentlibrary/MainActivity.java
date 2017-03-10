@@ -47,7 +47,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 
         //region Initialisations
@@ -67,20 +66,6 @@ public class MainActivity extends Activity {
 
 
         txtResultMain.setText(txtResultMain.getText() + "Checking folders \n");
-
-//        String currentTime = myTools.getTime();
-//        String currentDate = myTools.getDate();
-//        System.out.println("Time :" + currentTime);
-//        System.out.println("Date :" + currentDate);
-
-
-
-
-
-//        showTable();
-
-        //CHANGE UPDATENR HERE TO TEST IMPORTS OF UPDATES
-        //SharedPrefHelper.getInstance().save(MainActivity.this,"1","updatenr");
 
         // Central screen advertisement
         ImageView imgLogo = (ImageView) findViewById(R.id.imgLogoTitle);
@@ -152,23 +137,6 @@ public class MainActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-//            Thread thread = new Thread() {
-//                @Override
-//                public void run() {
-//
-//                        MyTimer myTimer = new MyTimer();
-//                        System.out.println("testing helper");
-//                        helper.DATABASE_VERSION = helper.DATABASE_VERSION + 1;
-//                        helper = new DatabaseHelper(cntx);
-//                        saveDocumentsFile();
-//                        myTimer.getElapsedTime();
-//                }
-//            };
-//
-//            thread.start();
-
-
-
             new AsyncUploadStatDL().execute();
         }
 
@@ -179,20 +147,15 @@ public class MainActivity extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-//        Toast.makeText(this, "Trying to download stuff", Toast.LENGTH_LONG).show();
-//
 
 
             ftpclient = new FTPfunctions();
             ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
             boolean status = false;
             status = ftpclient.downloadDataFiles(MyVars.FOLDER_DATA);
-            //System.out.println(MyVars.FOLDER_DATA + " status : " + status);
             if (status == true) {
-                System.out.println("Download success");
 //                    handler.sendEmptyMessage(5);
             } else {
-                System.out.println("Download failed");
 //                    handler.sendEmptyMessage(-1);
             }
 
@@ -217,7 +180,6 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            System.out.println("Usertype check : " + MyVars.usertype);
             if(MyVars.usertype.equalsIgnoreCase("1")){
                 new AsyncStatsDownloadDL().execute();
             }
@@ -237,9 +199,6 @@ public class MainActivity extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-//        Toast.makeText(this, "Trying to download stuff", Toast.LENGTH_LONG).show();
-//
-
 
             ftpclient = new FTPfunctions();
             ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
@@ -249,13 +208,10 @@ public class MainActivity extends Activity {
             status = ftpclient.ftpUpload(Environment.getExternalStorageDirectory() + MyVars.FOLDER_DATA + MyVars.fullname + ".txt" ,
                     MyVars.FOLDER_DATA + "Stats/" + MyVars.fullname + ".txt" ,
                     MyVars.FOLDER_DATA + "Stats/" , cntx);
-            System.out.println("upload stats status : " + status);
             if (status == true) {
                 System.out.println("upload success");
-//                    handler.sendEmptyMessage(5);
             } else {
                 System.out.println("upload failed");
-//                    handler.sendEmptyMessage(-1);
             }
 
             ftpclient.ftpDisconnect();
@@ -269,7 +225,6 @@ public class MainActivity extends Activity {
         private FTPfunctions ftpclient = null;
         ProgressDialog pd;
 
-        //DatabaseHelperStats helper;
         MyTimer myTimer;
 
 
@@ -279,18 +234,12 @@ public class MainActivity extends Activity {
 
             txtResultMain.setText(txtResultMain.getText() + "Downloading all user stat files \n");
             myTimer = new MyTimer("AsyncStatsDownloadDL");
-//            pd = ProgressDialog.show(MainActivity.this, "", "Downloading stat files...",
-//                    true, false);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-//            helper = new DatabaseHelperStats(cntx);
-//            helper.DATABASE_VERSION = helper.DATABASE_VERSION + 1;
-//            saveStatFiles();
-            //pd.dismiss();
             myTimer.getElapsedTime();
             new AsyncBigStatsCreateDL().execute();
 
@@ -308,13 +257,10 @@ public class MainActivity extends Activity {
             ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
             boolean status = false;
             status = ftpclient.downloadStatsFiles(MyVars.FOLDER_STATS);
-            //System.out.println(MyVars.FOLDER_STATS + " status : " + status);
             if (status == true) {
                 System.out.println("Download success");
-//                    handler.sendEmptyMessage(5);
             } else {
                 System.out.println("Download failed");
-//                    handler.sendEmptyMessage(-1);
             }
 
             ftpclient.ftpDisconnect();
@@ -323,114 +269,14 @@ public class MainActivity extends Activity {
 
 
 
-
-//
-//        private void insertDataSQLite(String user_name , String date, String time, String type, String extra){
-//
-//            boolean isInserted = helper.insertData(user_name , date, time, type, extra);
-//            if (isInserted){
-//                //System.out.println("data inserted");
-//            }
-//            else
-//            {
-//                //System.out.println("data NOT inserted");
-//            }
-//
-//        }
-
-//        private void viewAllDataSQLite(){
-//            Cursor cursor = helper.getAllData();
-//            if(cursor.getCount() == 0){
-//                System.out.println("no results");
-//                //showMessage("Error", "No data in SQLite");
-//                return;
-//            }
-//            else
-//            {
-//                StringBuffer buffer = new StringBuffer();
-//                while(cursor.moveToNext()){
-//                    buffer.append("id : " + cursor.getString(0) + "\n");
-//                    buffer.append("user : " + cursor.getString(1) + "\n");
-//                    buffer.append("date : " + cursor.getString(2) + "\n");
-//                    buffer.append("time : " + cursor.getString(3) + "\n\n");
-//                    buffer.append("type : " + cursor.getString(4) + "\n\n");
-//                    buffer.append("extra : " + cursor.getString(5) + "\n\n");
-//                    System.out.println(buffer);
-//                }
-//
-//                //showMessage("Data", buffer.toString());
-//
-//            }
-//        }
-
-//    public void showMessage(String title, String message){
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setCancelable(true);
-//        builder.setTitle(title);
-//        builder.setMessage(message);
-//        builder.show();
-//
-//    }
-
-
-//        private void saveStatFiles(){
-//            File dir = Environment.getExternalStorageDirectory();
-//            File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
-//            String line = "";
-//            int iCount=0;
-//            if (file.exists()) {
-//
-//                StringBuilder text = new StringBuilder();
-//                try {
-//                    BufferedReader br = new BufferedReader(new FileReader(file));
-//                    while ((line = br.readLine()) != null) {
-//                        if (line.length() > 0) {
-//                            {
-//                                String[] str = line.split(",");
-//                                iCount+=1;
-//                                System.out.println("count entry " + iCount);
-//                                //String strID = str[0].toLowerCase();
-//                                String strUser = str[0].toLowerCase();
-//                                String strDate = str[1].toLowerCase();
-//                                String strTime = str[2].toLowerCase();
-//                                String strType = str[3].toLowerCase();
-//                                String strExtra = str[4].toLowerCase();
-//
-//                                //insertDataSQLite(strUser , strDate, strTime, strType, strExtra);
-//                                if (strUser.equalsIgnoreCase("David Lejeune")){
-//                                    System.out.println("yeah its me");
-//                                }
-//
-//                            }
-//
-//                        }
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                //viewAllDataSQLite();
-//            }
-//            else
-//            {
-//                System.out.println("File documents doc not found");
-//            }
-//
-//
-//        }
-
-
-
     }
 
     public class AsyncBigStatsCreateDL extends AsyncTask<String, String, String> {
 
 
-        ProgressDialog pd;
         int iCountStatFiles;
 
 
-        //DatabaseHelperStats helper;
         MyTimer myTimer;
 
         File dir = null;
@@ -441,15 +287,13 @@ public class MainActivity extends Activity {
             super.onPreExecute();
 
             dir = Environment.getExternalStorageDirectory();
-            file = new File(dir, MyVars.FOLDER_STATS );
+            file = new File(dir, MyVars.FOLDER_STATS);
 
             txtResultMain.setText(txtResultMain.getText() + "Creating big stat file (all users) \n");
 
             myTimer = new MyTimer("AsyncBigStatsCreateDL");
-//            pd = ProgressDialog.show(MainActivity.this, "", "Creating single stat file..",
-//                    true, false);
             MyStats.createBigLogFile();
-            iCountStatFiles=0;
+            iCountStatFiles = 0;
             traverseCount(file);
 
         }
@@ -459,9 +303,7 @@ public class MainActivity extends Activity {
             super.onPostExecute(s);
 
 
-//            pd.dismiss();
             myTimer.getElapsedTime();
-            //traverseBigStatFiles();
 
             gotoLogin();
             timeActivity.getElapsedTime();
@@ -481,122 +323,14 @@ public class MainActivity extends Activity {
             return null;
         }
 
-        public void traverse (File dir) {
+        public void traverseCount(File dir) {
             if (dir.exists()) {
                 File[] files = dir.listFiles();
                 for (int i = 0; i < files.length; ++i) {
                     File file = files[i];
                     if (file.isDirectory()) {
-                        //traverse(file);
                     } else {
-                        // do something here with the file
-                        System.out.println(file.toString());
-
-//
-//                        File dirStats = Environment.getExternalStorageDirectory();
-//                        //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
-//                        //File file = new File(dir, MyVars.FOLDER_STATS + );
-//                        File oFile = new File(dirStats, MyVars.FOLDER_STATS + "all_users.txt");
-//
-//                        FileInputStream is = null;
-//                        try {
-//                            is = new FileInputStream(file);
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
-//                        FileOutputStream fos = null;
-//                        try {
-//                            fos = new FileOutputStream(oFile);
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
-//                        FileChannel f1 = is.getChannel();
-//                        FileChannel f2 = fos.getChannel();
-//
-//                        try {
-//                            f2.transferFrom(f1, 0, f1.size());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        try {
-//                            f2.transferFrom(f1, f1.size(), f1.size());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        try {
-//                            f2.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        try {
-//                            f1.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        //addToBigStatFiles(file);
-
-                    }
-                }
-            }
-            System.out.println("Total files for stat : " + iCountStatFiles);
-        }
-        public void traverseCount (File dir) {
-            if (dir.exists()) {
-                File[] files = dir.listFiles();
-                for (int i = 0; i < files.length; ++i) {
-                    File file = files[i];
-                    if (file.isDirectory()) {
-                        //traverse(file);
-                    } else {
-                        // do something here with the file
-                        System.out.println(file.toString());
-                        iCountStatFiles+=1;
-//
-//                        File dirStats = Environment.getExternalStorageDirectory();
-//                        //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
-//                        //File file = new File(dir, MyVars.FOLDER_STATS + );
-//                        File oFile = new File(dirStats, MyVars.FOLDER_STATS + "all_users.txt");
-//
-//                        FileInputStream is = null;
-//                        try {
-//                            is = new FileInputStream(file);
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
-//                        FileOutputStream fos = null;
-//                        try {
-//                            fos = new FileOutputStream(oFile);
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
-//                        FileChannel f1 = is.getChannel();
-//                        FileChannel f2 = fos.getChannel();
-//
-//                        try {
-//                            f2.transferFrom(f1, 0, f1.size());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        try {
-//                            f2.transferFrom(f1, f1.size(), f1.size());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        try {
-//                            f2.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        try {
-//                            f1.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        //addToBigStatFiles(file);
-
-
+                        iCountStatFiles += 1;
 
                     }
                 }
@@ -604,7 +338,7 @@ public class MainActivity extends Activity {
         }
 
 
-        public void traverseMerge (File dir) {
+        public void traverseMerge(File dir) {
 
             int iCountIndex = 0;
             MergerFiles.files = new File[iCountStatFiles];
@@ -614,195 +348,17 @@ public class MainActivity extends Activity {
                 for (int i = 0; i < files.length; ++i) {
                     File file = files[i];
                     if (file.isDirectory()) {
-                        //traverse(file);
                     } else {
-                        // do something here with the file
-                        //System.out.println(file.toString());
-                        MergerFiles.addFileToList(file.toString(),iCountIndex);
-                        iCountIndex+=1;
+                        MergerFiles.addFileToList(file.toString(), iCountIndex);
+                        iCountIndex += 1;
 
-//
-//                        File dirStats = Environment.getExternalStorageDirectory();
-//                        //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
-//                        //File file = new File(dir, MyVars.FOLDER_STATS + );
-//                        File oFile = new File(dirStats, MyVars.FOLDER_STATS + "all_users.txt");
-//
-//                        FileInputStream is = null;
-//                        try {
-//                            is = new FileInputStream(file);
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
-//                        FileOutputStream fos = null;
-//                        try {
-//                            fos = new FileOutputStream(oFile);
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
-//                        FileChannel f1 = is.getChannel();
-//                        FileChannel f2 = fos.getChannel();
-//
-//                        try {
-//                            f2.transferFrom(f1, 0, f1.size());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        try {
-//                            f2.transferFrom(f1, f1.size(), f1.size());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        try {
-//                            f2.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        try {
-//                            f1.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        //addToBigStatFiles(file);
 
                     }
                 }
                 MergerFiles.createBigLogFile();
             }
 
-
-
         }
-
-
-
-
-
-        private void addToBigStatFiles(File file){
-            //File dir = Environment.getExternalStorageDirectory();
-            //File file = new File(dir, MyVars.FOLDER_STATS + "David Lejeune.txt");
-            //MyTimer myTimer = new MyTimer();
-            String line = "";
-            int iCount=0;
-            if (file.exists()) {
-
-                StringBuilder text = new StringBuilder();
-                try {
-                    BufferedReader br = new BufferedReader(new FileReader(file));
-                    while ((line = br.readLine()) != null) {
-                        if (line.length() > 0) {
-                            {
-                                String[] str = line.split(",");
-                                iCount+=1;
-                                //System.out.println(iCount + " " + line);
-
-                                MyStats.logStatEntryToBigLogFile(line + "\n");
-//                                String strID = str[0].toLowerCase();
-//                                String strUser = str[0].toLowerCase();
-//                                String strDate = str[1].toLowerCase();
-//                                String strTime = str[2].toLowerCase();
-//                                String strType = str[3].toLowerCase();
-//                                String strExtra = str[4].toLowerCase();
-//
-//                                String strYear = strDate.substring(0,4);
-//                                String strMonth = strDate.substring(4,6);
-//                                String strDay = strDate.substring(6);
-//
-//                                String strHour = strTime.substring(0,2);
-//                                String strMinute = strTime.substring(3,5);
-
-//                            //insertDataSQLite(strUser , strDate, strTime, strType, strExtra);
-//                            if (strUser.equalsIgnoreCase("David Lejeune")){
-//                                //System.out.println("yeah its me");
-//                                //System.out.println(strYear);
-//                                //System.out.println(strMonth);
-//                                //System.out.println(strDay);
-//                                System.out.println(strHour);
-//                                System.out.println(strMinute);
-//                            }
-
-                            }
-
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //System.out.println("file export");
-                //myTimer.getElapsedTime();
-                //viewAllDataSQLite();
-            }
-            else
-            {
-                System.out.println("File documents doc not found");
-            }
-
-
-        }
-
-        private void traverseBigStatFiles(){
-            File dir = Environment.getExternalStorageDirectory();
-            File file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
-            MyTimer myTimer = new MyTimer("traverseBigStatFiles");
-            String line = "";
-            int iCount=0;
-            if (file.exists()) {
-
-                StringBuilder text = new StringBuilder();
-                try {
-                    BufferedReader br = new BufferedReader(new FileReader(file));
-                    while ((line = br.readLine()) != null) {
-                        if (line.length() > 0) {
-                            {
-                                String[] str = line.split(",");
-                                iCount+=1;
-                                //System.out.println(iCount + " " + line);
-
-                                //String strID = str[0].toLowerCase();
-//                            String strUser = str[0].toLowerCase();
-//                            String strDate = str[1].toLowerCase();
-//                            String strTime = str[2].toLowerCase();
-//                            String strType = str[3].toLowerCase();
-//                            String strExtra = str[4].toLowerCase();
-//
-//                            String strYear = strDate.substring(0,4);
-//                            String strMonth = strDate.substring(4,6);
-//                            String strDay = strDate.substring(6);
-//
-//                            String strHour = strTime.substring(0,2);
-//                            String strMinute = strTime.substring(3,5);
-
-//                            //insertDataSQLite(strUser , strDate, strTime, strType, strExtra);
-//                            if (strUser.equalsIgnoreCase("David Lejeune")){
-//                                //System.out.println("yeah its me");
-//                                //System.out.println(strYear);
-//                                //System.out.println(strMonth);
-//                                //System.out.println(strDay);
-//                                System.out.println(strHour);
-//                                System.out.println(strMinute);
-//                            }
-
-                            }
-
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //System.out.println("file export");
-                myTimer.getElapsedTime();
-                //viewAllDataSQLite();
-            }
-            else
-            {
-                System.out.println("File documents doc not found");
-            }
-
-
-        }
-
-
-
     }
     //endregion
 
