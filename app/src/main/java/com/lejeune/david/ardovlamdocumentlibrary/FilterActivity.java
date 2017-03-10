@@ -78,6 +78,7 @@ public class FilterActivity extends Activity {
                                                                 lblDocType.setVisibility(View.VISIBLE);
                                                             }
                                                         }
+                                                        resetTxtResult();
                                                         getFilteredDocuments();
                                                     }
                                                 }
@@ -91,7 +92,6 @@ public class FilterActivity extends Activity {
                                                              if (chkDocuments.isChecked()){
                                                                  chkDocuments.setChecked(false);
                                                                  docTypeFilter = "" ;
-                                                                 resetTxtResult();
                                                                  spinDocType.setVisibility(View.INVISIBLE);
                                                                  lblDocType.setVisibility(View.INVISIBLE);
                                                              }
@@ -100,6 +100,7 @@ public class FilterActivity extends Activity {
                                                                  spinDocType.setVisibility(View.INVISIBLE);
                                                                  lblDocType.setVisibility(View.INVISIBLE);
                                                              }
+                                                             resetTxtResult();
                                                              getFilteredDocuments();
                                                          }
                                                      }
@@ -120,6 +121,7 @@ public class FilterActivity extends Activity {
                         MyStats.logEntry("SEARCH", filterID + "-" + docTypeFilter);
                     }
                 }
+                resetTxtResult();
                 showFilteredResult();
             }
         });
@@ -176,7 +178,6 @@ public class FilterActivity extends Activity {
                                                             if (chkDocuments.isChecked()){
                                                                 chkDocuments.setChecked(false);
                                                                 docTypeFilter = "" ;
-                                                                resetTxtResult();
                                                                 spinDocType.setVisibility(View.INVISIBLE);
                                                                 lblDocType.setVisibility(View.INVISIBLE);
                                                             }
@@ -189,6 +190,7 @@ public class FilterActivity extends Activity {
                                                             }
 
 
+                                                            resetTxtResult();
                                                             getFilteredDocuments();
                                                         }
                                                     }
@@ -377,7 +379,7 @@ public class FilterActivity extends Activity {
 
         //setViewOfFilter();
         //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
-        txtResultFilter.setText("Number of files matching filter(s) : " + iCountOccurence);
+        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
 //
 //        setViewOfFilter();
 //        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
@@ -413,8 +415,6 @@ public class FilterActivity extends Activity {
 //        }
 
     }
-
-
     private void getFilteredDocumentList(){
         iCountTotalDocs=0;
         iCountOccurence = 0;
@@ -470,11 +470,10 @@ public class FilterActivity extends Activity {
 
         //setViewOfFilter();
         //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
-        txtResultFilter.setText("Number of files matching filter(s) : " + iCountOccurence);
+        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
         System.out.println("Total files in folder : " + iCountTotalDocs);
         System.out.println("# files with same filter : " + iCountOccurence);
     }
-
     private void getFilteredCommercialList(){
         iCountTotalDocs=0;
         iCountOccurence = 0;
@@ -531,7 +530,7 @@ public class FilterActivity extends Activity {
 
         //setViewOfFilter();
         //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
-        txtResultFilter.setText("Number of files matching filter(s) : " + iCountOccurence);
+        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
 //
 //        setViewOfFilter();
 //        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
@@ -595,7 +594,6 @@ public class FilterActivity extends Activity {
             System.out.println("list doc type entry : " + cu);
         }
     }
-
 
     public void showArrayListTempDocType(){
 
