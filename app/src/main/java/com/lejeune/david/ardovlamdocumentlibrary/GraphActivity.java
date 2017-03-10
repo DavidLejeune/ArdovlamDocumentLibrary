@@ -70,11 +70,6 @@ public class GraphActivity extends Activity {
 
         initActivity();
 
-        System.out.println("type : " + MyVars.filterStatType);
-        System.out.println("year : " + MyVars.filterStatYear);
-        System.out.println("month : " + MyVars.filterStatMonth);
-
-
 
     }
 
@@ -88,7 +83,6 @@ public class GraphActivity extends Activity {
         for (int i = 0; i < arrMonth.length; i++) {
             float iFloat = (float) i + 1;
             float arrFloat = (float) arrMonth[i];
-            //System.out.println(arrFloat + " " + arrMonth.length);
 
             Entry entry = new Entry(iFloat, arrFloat); // 0 == quarter 1
             entries.add(entry);
@@ -137,20 +131,11 @@ public class GraphActivity extends Activity {
 
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < arrMonthHour.length; i++) {
-            //System.out.println("arrMonthHour.length : " + arrMonthHour.length);
             float iFloat = (float) i;
             float arrFloat = (float) arrMonthHour[i];
-            //System.out.println(iFloat + " " + arrFloat);
             entries.add(new BarEntry(iFloat, arrFloat));
         }
 
-//        entries.add(new BarEntry(0f, 30f));
-//        entries.add(new BarEntry(1f, 80f));
-//        entries.add(new BarEntry(2f, 60f));
-//        entries.add(new BarEntry(3f, 50f));
-//        // gap of 2f
-//        entries.add(new BarEntry(5f, 70f));
-//        entries.add(new BarEntry(6f, 60f));
 
         BarDataSet set = new BarDataSet(entries, MyVars.filterStatType + " / Hour");
         set.setDrawValues(false);
@@ -170,31 +155,20 @@ public class GraphActivity extends Activity {
         float arrLength = (float) arrMonthHour.length;
 
         xAxis.setAxisMaximum(arrLength + 1);
-        //xAxis.setGranularity(5f);
 
 
         YAxis yAxis = barChart.getAxisLeft();
         yAxis.setAxisMinimum(0);
 
-//        barChart.getAxisLeft().setDrawGridLines(false);
-//        barChart.getAxisLeft().setDrawGridLines(false);
-//        barChart.getAxisRight().setDrawGridLines(false);
-//        barChart.getAxisRight().setDrawGridLines(false);
         barChart.getAxisRight().setEnabled(false);
-
-
 
         XAxis xl = barChart.getXAxis();
         xl.setDrawAxisLine(true);
         xl.setDrawGridLines(false);
-//
+
         YAxis yl = barChart.getAxisLeft();
         yl.setDrawAxisLine(true);
         yl.setDrawGridLines(false);
-//
-//        YAxis yr = barChart.getAxisRight();
-//        yr.setDrawAxisLine(true);
-//        yr.setDrawGridLines(false);
 
 
         //yAxis.setLabelCount(10, true);
