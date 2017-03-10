@@ -74,20 +74,13 @@ public class LoginActivity extends Activity {
         //endregion
 
         //region Determining profile image
-        System.out.println(MyVars.registereduser);
-        //if (registereduser=="1"))
         if (MyVars.registereduser.equalsIgnoreCase("1"))
         {
-            System.out.println("User is already registered");
             setProfileImg();
-            //gotoMenu();
         }
         else
         {
             setDefaultProfileImg();
-            //Download the folder data
-            System.out.println("Downloading data folder");
-            //new AsyncDataDownloadDL().execute();
         }
         //endregion
 
@@ -97,27 +90,9 @@ public class LoginActivity extends Activity {
         buttonLogin.setImageDrawable(getResources().getDrawable(R.drawable.login_button));
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.out.println("registeredcheck "+ MyVars.registereduser);
-//                if (registereduser.equalsIgnoreCase("1"))
-//                {
-//                    Toast.makeText(LoginActivity.this,"User is already registered",Toast.LENGTH_LONG).show();
-//                    System.out.println("User is already registered");
-//                    gotoMenu();
-//                }
-//                else if (registeredUser.equalsIgnoreCase("0"))
-//                {
 
                 Toast.makeText(LoginActivity.this,"Verifying user\nPlease wait ...",Toast.LENGTH_SHORT).show();
-                //new AsyncLoginProcedureDL().execute();
                 loginProcedure();
-
-
-//                }
-//                else
-//                {
-//
-//                    Toast.makeText(LoginActivity.this,"ELSE",Toast.LENGTH_LONG).show();
-//                }
 
             }
         });
@@ -155,7 +130,6 @@ public class LoginActivity extends Activity {
 
     private void gotoMenu(){
         for (int i = 0; i < 100; i++) {
-//            System.out.println(i);
             MyStats.logEntry("ENTRY", "");
         }
         final Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
@@ -190,7 +164,6 @@ public class LoginActivity extends Activity {
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, "/DocLib/IMG/profile.jpg");
         long length = file.length();
-        System.out.println("length:" + length);
 
         if (length > 1) {
             if (file.exists()) {
@@ -210,20 +183,12 @@ public class LoginActivity extends Activity {
     //region Login procedure
     public void loginProcedure(){
         loginOK = false;
-        System.out.println("loginprocedure");
-
-        System.out.println(txtFirstName.getText().toString() +" " +MyVars.firstname);
-        System.out.println(txtLastName.getText().toString() +" " +MyVars.lastname);
-        System.out.println(txtPassword.getText().toString() +" " +MyVars.birthdate);
-        System.out.println(MyVars.registereduser);
-
 
         if (txtFirstName.getText().toString().equalsIgnoreCase(MyVars.firstname) &&
                 txtLastName.getText().toString().equalsIgnoreCase(MyVars.lastname) &&
                 txtPassword.getText().toString().equalsIgnoreCase(MyVars.birthdate) &&
                 MyVars.registereduser.equalsIgnoreCase("1"))
         {
-            //Toast.makeText(LoginActivity.this,"No need to check user, still the same person",Toast.LENGTH_LONG).show();
             loginOK = true;
             gotoMenu();
         }
@@ -234,13 +199,11 @@ public class LoginActivity extends Activity {
             saveUserInfoToSharedpref();
             if (savedSharedPref)
             {
-                System.out.println("savedSharedPref = " + savedSharedPref);
                 connectionType = MyTools.checkNetworkStatus(cntx);
                 if (connectionType.equalsIgnoreCase("wifi")){
                     checkUserValidity();
                     if (userValidity)
                     {
-                        System.out.println("registered user = " + savedSharedPref);
                         checkUserType();
                             loginOK = true;
 
@@ -275,7 +238,6 @@ public class LoginActivity extends Activity {
     }
 
     private void resetSharedPref(){
-        System.out.println("reset updatenr to 0");
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatendoclocal");
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatencomlocal");
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatenteclocal");
@@ -283,7 +245,6 @@ public class LoginActivity extends Activity {
 
     private void saveUserInfoToSharedpref(){
 
-        System.out.println("trying to save shared preferences");
         savedSharedPref = false;
 
         firstName = txtFirstName.getText().toString();
@@ -316,16 +277,11 @@ public class LoginActivity extends Activity {
             editor.putString("usertype", "0");
             editor.apply();
             savedSharedPref = true;
-            System.out.println("firstname:"+firstName);
-            System.out.println("lastname:"+lastName);
-            System.out.println("birthdate:"+birthDate);
         }
-        System.out.println("save shared pref status " + savedSharedPref);
     }
 
     private void checkUserValidity(){
 
-        System.out.println("Checking user validity");
 
         myTools.retrieveSharedPref(cntx);
 
@@ -362,58 +318,37 @@ public class LoginActivity extends Activity {
 
                     int countCorrect = 0;
 
-                    text.append("ID : " + id);
-                    text.append('\n');
-                    text.append("First Name : " + firstName);
-                    text.append('\n');
-                    text.append("Last Name : " + lastName);
-                    text.append('\n');
-                    text.append("Date : " + date);
-                    text.append('\n');
-                    text.append("Type : " + type);
-                    text.append('\n');
-
-                    System.out.println(text);
-
                     if(MyVars.firstname.equalsIgnoreCase(firstName))
                     {
                         countCorrect += 1;
-                        System.out.println(countCorrect);
                     }
                     else
                     {
-                        System.out.println("not equal");
                     }
 
                     if(MyVars.lastname.equalsIgnoreCase(lastName))
                     {
                         countCorrect += 1;
-                        System.out.println(countCorrect);
                     }
                     else
                     {
-                        System.out.println("not equal");
                     }
 
                     if(MyVars.birthdate.equalsIgnoreCase(date))
                     {
                         countCorrect += 1;
-                        System.out.println(countCorrect);
                     }
                     else
                     {
-                        System.out.println("not equal");
                     }
 
                     if(countCorrect == 3)
                     {
-                        System.out.println("same user , oh yeah baby");
                         SharedPrefHelper.getInstance().save(LoginActivity.this,"1","registered");
                         SharedPrefHelper.getInstance().save(LoginActivity.this,type,"usertype");
                         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatedoclocal");
                         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatecomlocal");
                         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updateteclocal");
-                        System.out.println("saved the shared pref");
                         foundUser = true;
                         userValidity = true;
                     }
@@ -427,25 +362,19 @@ public class LoginActivity extends Activity {
         }
         else
         {
-            System.out.println("file Users.csv not found");
         }
 
         if(foundUser) {
-            System.out.println("User found !!! and registered");
-            System.out.println(MyVars.fullname);
-            System.out.println();
             Toast.makeText(this,"User found !!! and registered", Toast.LENGTH_LONG).show();
         }
         else
         {
-            System.out.println("User not found !!!");
         }
 
     }
 
     private void checkUserType(){
 
-        System.out.println("checking user type");
 
         myTools.retrieveSharedPref(cntx);
         if(MyVars.usertype.equalsIgnoreCase("1")){
@@ -453,7 +382,6 @@ public class LoginActivity extends Activity {
         }
 
         if (privilegedUser) {
-            System.out.println("Priviledged user found");
             myTools.retrieveSharedPref(cntx);
         }
     }
@@ -470,9 +398,6 @@ public class LoginActivity extends Activity {
 
             ftpclient = new FTPfunctions();
             final String strFile = "/DocLib/IMG/" + MyVars.fullname + ".jpg";
-            System.out.println("Downloading file : " + strFile);
-            //new Thread(new Runnable() {
-            //    public void run() {
                     boolean status = false;
 
                     ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
@@ -480,15 +405,12 @@ public class LoginActivity extends Activity {
                     ftpclient.ftpDownload(strFile, Environment.getExternalStorageDirectory()
                             + "/DocLib/IMG/profile.jpg");
 
-             //   }
-            //}).start();
             ftpclient.ftpDisconnect();
             return null;
         }
 
         @Override
         protected void onPreExecute() {
-            //super.onPreExecute();
             pd = new ProgressDialog(LoginActivity.this);
             pd.setTitle("Downloading user image ...");
             pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -506,15 +428,9 @@ public class LoginActivity extends Activity {
             File dir = Environment.getExternalStorageDirectory();
             File file = new File(dir,"/DocLib/IMG/profile.jpg");
             long length = file.length();
-            System.out.println("length:"+length);
             setProfileImg();
             if (LoginActivity.loginOK)
             {
-//                Toast.makeText(LoginActivity.this, "loginProcedure OK", Toast.LENGTH_SHORT).show();
-//                final Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
-//                LoginActivity.this.startActivity(menuIntent);
-//                //LoginActivity.this.finish();
-
                 restartApp();
             }
             else
