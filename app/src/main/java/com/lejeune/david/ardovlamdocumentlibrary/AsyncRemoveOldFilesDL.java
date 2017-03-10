@@ -57,13 +57,6 @@ public class AsyncRemoveOldFilesDL extends AsyncTask{
         compareFileList(listFilesComLocal , listFilesComCSV , "Commercial");
         compareFileList(listFilesTecLocal , listFilesTecCSV , "Technical");
 
-//        loopCSVfile("Documents.csv" , listFilesDocLocal);
-//        loopCSVfile("Commercial.csv" , listFilesComLocal);
-//        loopCSVfile("Technical.csv" , listFilesTecLocal);
-
-
-
-
     }
 
     @Override
@@ -118,7 +111,6 @@ public class AsyncRemoveOldFilesDL extends AsyncTask{
                     if (line.length() > 0) {
                         {
                             String[] str = line.split(",");
-                            //System.out.println(iCount + " " + line);
 
                             strFile = str[2].toLowerCase();
                             listFiles.add(strFile);

@@ -144,15 +144,9 @@ public class FilterActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedDocType = parent.getItemAtPosition(position).toString();
-                System.out.println("selectedDocType " + selectedDocType);
                 docTypeFilter = MyFilter.findVariableTypeDoc(selectedDocType);
-                System.out.println("docTypeFilter " + docTypeFilter);
-                //if (docTypeFilter.length()>0){
                 setViewOfFilter();
                 getFilteredDocuments();
-                //txtResultFilter.setText(txtResultFilter.getText() +"\nType of doc filter : " + docTypeFilter);
-                //}
-
             }
 
             @Override
@@ -160,8 +154,6 @@ public class FilterActivity extends Activity {
 
             }
         });
-        //spinDocType.setVisibility(View.INVISIBLE);
-        //lblDocType.setVisibility(View.INVISIBLE);
 
 
         showArrayListTempDocType();
@@ -204,27 +196,14 @@ public class FilterActivity extends Activity {
 
 
 
-//        System.out.println("countOccurencesOnDocType");
-//        for (String cu : MyFilter.listTypeDocNames) {
-//            //System.out.println("list doc type entry : " + cu);
-//            docTypeFilter = MyFilter.findVariableTypeDoc(cu);
-//            getFilteredDocuments();
-//            System.out.println(cu + " countoccurence : " + iCountOccurence);
-//        }
-//        docTypeFilter = "";
-
-
         tempDocType = new ArrayList<>();
-        System.out.println("trying to filter the doc list based on found results");
         for (String cu : listTypeDocNames) {
             if (chkDocuments.isChecked()) {
-                System.out.println("first get the departmenttag");
                 docTypeFilter = MyFilter.findVariableTypeDoc(cu);
                 getDepartmentTag();
                 getFilteredDocumentList();
                 if (iCountOccurence>0){
                     tempDocType.add(cu);
-                    System.out.println(iCountOccurence + " iCountOccurence for cu " + cu);
                 }
             }
         }
@@ -283,8 +262,6 @@ public class FilterActivity extends Activity {
             result = "You have installer rights";
         }
         if(userType.equalsIgnoreCase("3")){
-//            chkDocuments.setVisibility(View.INVISIBLE);
-//            chkCommercial.setVisibility(View.INVISIBLE);
             chkTechnical.setVisibility(View.VISIBLE);
             chkTechnical.setChecked(true);
             result = "You have technician rights";
@@ -293,8 +270,6 @@ public class FilterActivity extends Activity {
     }
 
     private void showFilteredResult(){
-        //if(chkDocuments.isChecked())
-        //{
         if(!chkDocuments.isChecked() && !chkCommercial.isChecked() && !chkTechnical.isChecked())
         {
             Toast.makeText(FilterActivity.this , "you need to check which type",Toast.LENGTH_LONG).show();
@@ -304,10 +279,6 @@ public class FilterActivity extends Activity {
             getFilteredDocuments();
             gotoListDocs();
         }
-
-        //}
-
-
     }
 
     private void getFilteredDocuments(){
@@ -315,7 +286,6 @@ public class FilterActivity extends Activity {
         if(chkDocuments.isChecked()) getFilteredDocumentList();
         if(chkCommercial.isChecked())  getFilteredCommercialList();
         if(chkTechnical.isChecked())  getFilteredTechnicalList();
-        //showFilteredDocumentList();
     }
     private void getDepartmentTag(){
         departmentTag = MyFilter.findVariableDepartment(filterID);
@@ -360,14 +330,12 @@ public class FilterActivity extends Activity {
                             {
                                 iCountOccurence += 1 ;
                                 listFilteredFiles.add(strFile);
-                                //System.out.println("Found : " + strFile);
                             }
                         }
                         else
                         {
                             iCountOccurence += 1 ;
                             listFilteredFiles.add(strFile);
-                            //System.out.println("Found : " + strFile);
                         }
 
                     }
@@ -377,42 +345,7 @@ public class FilterActivity extends Activity {
             }
         }
 
-        //setViewOfFilter();
-        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
         txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
-//
-//        setViewOfFilter();
-//        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
-//        System.out.println("Total files in folder : " + iCountTotalDocs);
-//        System.out.println("# files with same filter : " + iCountOccurence);
-
-//        iCountTotalDocs=6;
-//        listFilteredFiles = new ArrayList<>();
-//
-//
-//
-
-//        switch (filterID) {
-//
-//            case "Inbraakdetectie":
-//                listFilteredFiles.add("INBRAAKDETECTIE.pdf");
-//                break;
-//            case "Branddetectie":
-//                listFilteredFiles.add("BRANDDETECTIE.pdf");
-//                break;
-//            case "Gasdetectie":
-//                listFilteredFiles.add("GASBLUSSING.pdf");
-//                listFilteredFiles.add("GASDETECTIE.pdf");
-//                break;
-//            case "Camerabewaking":
-//                listFilteredFiles.add("CAMERABEWAKING.pdf");
-//                break;
-//            case "Toegangscontrole":
-//                listFilteredFiles.add("TOEGANGSCONTROLE.pdf");
-//                break;
-//            case "Geintegreerde bewaking":
-//                break;
-//        }
 
     }
     private void getFilteredDocumentList(){
@@ -451,14 +384,12 @@ public class FilterActivity extends Activity {
                             {
                                 iCountOccurence += 1 ;
                                 listFilteredFiles.add(strFile);
-                                //System.out.println("Found : " + strFile);
                             }
                         }
                         else
                         {
                             iCountOccurence += 1 ;
                             listFilteredFiles.add(strFile);
-                            //System.out.println("Found : " + strFile);
                         }
 
                     }
@@ -468,8 +399,6 @@ public class FilterActivity extends Activity {
             }
         }
 
-        //setViewOfFilter();
-        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
         txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
         System.out.println("Total files in folder : " + iCountTotalDocs);
         System.out.println("# files with same filter : " + iCountOccurence);
@@ -510,14 +439,12 @@ public class FilterActivity extends Activity {
                             {
                                 iCountOccurence += 1 ;
                                 listFilteredFiles.add(strFile);
-                                //System.out.println("Found : " + strFile);
                             }
                         }
                         else
                         {
                             iCountOccurence += 1 ;
                             listFilteredFiles.add(strFile);
-                            //System.out.println("Found : " + strFile);
                         }
 
                     }
@@ -527,55 +454,10 @@ public class FilterActivity extends Activity {
             }
         }
 
-
-        //setViewOfFilter();
-        //txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
         txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
-//
-//        setViewOfFilter();
-//        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
-//        System.out.println("Total files in folder : " + iCountTotalDocs);
-//        System.out.println("# files with same filter : " + iCountOccurence);
-
-//        iCountTotalDocs=6;
-//        listFilteredFiles = new ArrayList<>();
-//
-//
-//
-
-//        switch (filterID) {
-//
-//            case "Inbraakdetectie":
-//                listFilteredFiles.add("INBRAAKDETECTIE.pdf");
-//                break;
-//            case "Branddetectie":
-//                listFilteredFiles.add("BRANDDETECTIE.pdf");
-//                break;
-//            case "Gasdetectie":
-//                listFilteredFiles.add("GASBLUSSING.pdf");
-//                listFilteredFiles.add("GASDETECTIE.pdf");
-//                break;
-//            case "Camerabewaking":
-//                listFilteredFiles.add("CAMERABEWAKING.pdf");
-//                break;
-//            case "Toegangscontrole":
-//                listFilteredFiles.add("TOEGANGSCONTROLE.pdf");
-//                break;
-//            case "Geintegreerde bewaking":
-//                break;
-//        }
-
 
     }
 
-
-
-    private void showFilteredDocumentList(){
-        System.out.println("looping through the arraylist");
-        for (String cu : listFilteredFiles) {
-            System.out.println("listFilteredFiles entry : " + cu);
-        }
-    }
 
     private void gotoListDocs(){
         final Intent listDocs = new Intent(FilterActivity.this, ListDocsActivity.class);
