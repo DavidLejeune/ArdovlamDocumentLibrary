@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -66,8 +67,8 @@ public class GraphActivity extends Activity {
 
 
         txtResultGraph.setText("");
-        txtResultGraph.setText("Processing ..");
         txtResultGraph.setVisibility(View.INVISIBLE);
+        txtResultGraph.setGravity(Gravity.LEFT);
 
 
     }
@@ -284,6 +285,7 @@ public class GraphActivity extends Activity {
                 {
 
                     txtResultGraph.setText("Processing ..");
+                    txtResultGraph.setGravity(Gravity.CENTER);
                     txtResultGraph.setVisibility(View.VISIBLE);
                     MyVars.filterStatType = selectedType;
                     new AsyncCreateStatsDL().execute();
@@ -326,6 +328,7 @@ public class GraphActivity extends Activity {
                 else
                 {
                     txtResultGraph.setText("Processing ..");
+                    txtResultGraph.setGravity(Gravity.CENTER);
                     txtResultGraph.setVisibility(View.VISIBLE);
                     MyVars.filterStatYear = selectedYear;
                     new AsyncCreateStatsDL().execute();
@@ -532,7 +535,11 @@ public class GraphActivity extends Activity {
                 for(int d : arrMonth)
                     sum += d;
                 txtResultGraph.setVisibility(View.VISIBLE);
-                txtResultGraph.setText("Total log records with filter : " + sum);
+                txtResultGraph.setText(txtResultGraph.getText() + "Total log records with filter : " + MyVars.totalStatRecords + "\n");
+                txtResultGraph.setText(txtResultGraph.getText() + "Total records with filter : " + sum + "\n");
+                Double percent = 0.0;
+                percent = (sum * 1.0/  MyVars.totalStatRecords) * 100;
+                txtResultGraph.setText(txtResultGraph.getText() + "Percentage of total : " + String.format("%.2f", percent) + "%");
 
 
 

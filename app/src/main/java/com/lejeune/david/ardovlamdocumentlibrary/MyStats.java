@@ -218,6 +218,8 @@ public class MyStats {
 
 
     public static void filterBigStatFiles(String filterStatYear , String filterStatType){
+
+        MyVars.totalStatRecords = 0;
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
         MyTimer myTimer = new MyTimer("filterBigStatFiles");
@@ -233,7 +235,7 @@ public class MyStats {
                         {
                             String[] str = line.split(",");
                             iCount+=1;
-
+                            MyVars.totalStatRecords += 1;
                             String strID = str[0].toLowerCase();
                             String strUser = str[0].toLowerCase();
                             String strDate = str[1].toLowerCase();

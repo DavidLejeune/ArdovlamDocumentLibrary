@@ -75,26 +75,25 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/lineChart"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/spinnerYear"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-    </com.github.mikephil.charting.charts.LineChart>
-
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lineChart"
         android:id="@+id/txtResultGraph"
+        android:textAlignment="center"
+        android:textColor="?android:attr/colorFocusedHighlight"
+        android:layout_below="@+id/spinnerMonth"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textAlignment="center"
-        android:textColor="?android:attr/colorFocusedHighlight" />
+        android:layout_alignParentEnd="true" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:id="@+id/lineChart"
+        android:layout_below="@+id/txtResultGraph"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="200dp">
+    </com.github.mikephil.charting.charts.LineChart>
 </RelativeLayout>

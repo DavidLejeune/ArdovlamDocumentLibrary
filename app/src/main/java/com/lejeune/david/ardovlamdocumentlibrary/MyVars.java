@@ -59,5 +59,7 @@ public class MyVars {
     public static String filterStatYear;
     public static String filterStatMonth;
 
+    public static int totalStatRecords;
+
 
 }
