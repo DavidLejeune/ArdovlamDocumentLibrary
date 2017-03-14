@@ -15,7 +15,6 @@ import java.util.Date;
 
 public class MyTools {
 
-    //public static String networkStatus;
 
 
 
@@ -56,21 +55,17 @@ public class MyTools {
 
         for (String s: foldernames)
         {
-            //System.out.println(s);
             File root = new File(Environment.getExternalStorageDirectory(),s);
             if (!root.exists()) {
                 root.mkdirs();
                 if (root.exists()) {
-                    //System.out.println("Folder " + s + " created");
                 }
                 else
                 {
-                    //System.out.println("Folder " + s + " not created");
                 }
             }
             else
             {
-                //System.out.println("Folder " + s + " exists");
             }
         }
         myTimer.getElapsedTime();
@@ -79,7 +74,6 @@ public class MyTools {
 
     public void retrieveSharedPref(Context cntx){
 
-        System.out.println("retrieving shared pref");
 
         MyVars.firstname = SharedPrefHelper.getInstance().getValue(cntx, "firstname");
         MyVars.lastname = SharedPrefHelper.getInstance().getValue(cntx, "lastname");
@@ -94,15 +88,6 @@ public class MyTools {
         MyVars.updateteclocal = SharedPrefHelper.getInstance().getValue(cntx, "updateteclocal");
         MyVars.updatetecserver = SharedPrefHelper.getInstance().getValue(cntx, "updatetecserver");
 
-//        System.out.println("firstname:"+MyVars.firstname);
-//        System.out.println("lastname:"+MyVars.lastname);
-//        System.out.println("birthdate:"+MyVars.birthdate);
-//        System.out.println("registered:"+MyVars.registereduser);
-//        System.out.println("usertype:"+MyVars.usertype);
-//        System.out.println("updatedoclocal:"+MyVars.updatedoclocal);
-//        System.out.println("updatedocserver:"+MyVars.updatedocserver);
-//        System.out.println("updatecomlocal:"+MyVars.updatecomlocal);
-//        System.out.println("updatecomserver:"+MyVars.updatecomserver);
 
     }
 
@@ -125,7 +110,6 @@ public class MyTools {
         int year = calendar.get(Calendar.YEAR);
         String strYear = "" + year;
         MyVars.filterStatYear = strYear;
-        System.out.println(strYear);
 
     }
 

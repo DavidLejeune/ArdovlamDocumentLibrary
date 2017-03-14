@@ -51,37 +51,9 @@ public class StatsActivity extends Activity {
         if (MyVars.filterStatType.equalsIgnoreCase("")){
             MyVars.filterStatType = "ENTRY";
         }
-//        if (MyVars.filterStatType.equalsIgnoreCase("")){
-//            System.out.println("current year");
-//            MyTools.setStatCurrentYear();
-//        }
-
-
 
         btnShowGrap = (Button) findViewById(R.id.btnShowGraph);
         btnShowGrap.setVisibility(View.INVISIBLE);
-//        btnShowGrap.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-                System.out.println("Showing a graph");
-//
-//                myStats.createMonthArrays();
-//                myStats.createMonthHourArrays();
-                //MyVars.filterStatType = "ENTRY";
-//        MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
-//
-//        gotoGraph();
-//
-//            }
-//        });
-
-//        btnUpdatesStat = (ImageButton) findViewById(R.id.btnUpdatesStat);
-//        btnUpdatesStat.setImageDrawable(getResources().getDrawable(R.drawable.update));
-//        btnUpdatesStat.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                System.out.println("Starting stat update procedure");
-//
-//            }
-//        });
 
         new AsyncCreateStatForYearDL().execute();
 
