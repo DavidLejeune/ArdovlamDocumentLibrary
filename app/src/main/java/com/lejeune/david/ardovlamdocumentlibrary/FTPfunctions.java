@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 
 public class FTPfunctions {
 
+    //region Declarations
     com.lejeune.david.ardovlamdocumentlibrary.MenuActivity.AsyncUpdatesDocumentsDownloadDL mThreadReference = null;
 
     private static final String TEMP_FILENAME = "DiscreteSystemsandSignalProcessing.pdf";
@@ -38,6 +39,7 @@ public class FTPfunctions {
 
     private static final String TAG = "MyFTPClientFunctions";
     public FTPClient mFTPClient = null;
+    //endregion
 
     // Method to connect to FTP server:
     public boolean ftpConnect(String host, String username, String password,

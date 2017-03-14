@@ -24,6 +24,7 @@ import static com.lejeune.david.ardovlamdocumentlibrary.MyFilter.listTypeDocName
 
 public class FilterActivity extends Activity {
 
+    //region Declarations
     TextView txtResultFilter, txtDepartment;
     public static CheckBox chkDocuments , chkCommercial , chkTechnical;
     Button btnShowFilteredDocs;
@@ -39,6 +40,7 @@ public class FilterActivity extends Activity {
     ArrayList<String> tempDocType;
 
     int iCountOccurence;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

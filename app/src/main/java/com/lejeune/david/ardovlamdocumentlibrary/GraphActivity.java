@@ -553,9 +553,9 @@ public class GraphActivity extends Activity {
         spinnerMonth.setSelection(spinnerPositionMonth);
     }
 
-    //================================================================================
-    // Internal classes
-    //================================================================================
+//    ================================================================================
+//     Internal classes
+//    ================================================================================
 
     public class AsyncCreateStatsDL extends AsyncTask<String, String, String> {
 
