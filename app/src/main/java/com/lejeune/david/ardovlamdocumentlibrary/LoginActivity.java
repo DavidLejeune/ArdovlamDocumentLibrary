@@ -129,7 +129,7 @@ public class LoginActivity extends Activity {
     }
 
     private void gotoMenu(){
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             MyStats.logEntry("ENTRY", "");
         }
         final Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);

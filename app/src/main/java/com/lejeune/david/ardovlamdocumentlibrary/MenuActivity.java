@@ -908,7 +908,7 @@ public class MenuActivity extends Activity {
 
             System.out.println("finished AsyncUpdates download");
 
-            for(int i=0; i<100 ;i++) {
+            for(int i=0; i<1000 ;i++) {
                 MyStats.logEntry("UPDATE", "DOC-" + MyVars.updatedocserver);
             }
 
@@ -1182,7 +1182,7 @@ public class MenuActivity extends Activity {
 
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             pd.dismiss();
-            for(int i=0; i<100 ;i++) {
+            for(int i=0; i<1000 ;i++) {
                 MyStats.logEntry("UPDATE", "COM-" + MyVars.updatecomserver);
             }
 

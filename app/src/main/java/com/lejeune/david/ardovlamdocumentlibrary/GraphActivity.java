@@ -32,10 +32,7 @@ import java.util.List;
 
 public class GraphActivity extends Activity {
 
-    //================================================================================
-    // Declarations
-    //================================================================================
-
+    //region Declarations
     BarChart barChart;
     LineChart lineChart;
 
@@ -54,16 +51,13 @@ public class GraphActivity extends Activity {
     ProgressDialog pd;
 
     TextView txtResultGraph;
-
+    //endregion
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
         txtResultGraph = (TextView) findViewById(R.id.txtResultGraph);
-        txtResultGraph.setText("");
-        txtResultGraph.setText("Processing ..");
-        txtResultGraph.setVisibility(View.INVISIBLE);
 
         barChart = (BarChart) findViewById(R.id.barChart);
         lineChart = (LineChart) findViewById(R.id.lineChart);
@@ -71,13 +65,15 @@ public class GraphActivity extends Activity {
         initActivity();
 
 
+        txtResultGraph.setText("");
+        txtResultGraph.setText("Processing ..");
+        txtResultGraph.setVisibility(View.INVISIBLE);
+
+
     }
 
 
-    //================================================================================
-    // Activity functions
-    //================================================================================
-
+    //region Activity functions
     private void createLineChart(){
         List<Entry> entries = new ArrayList<Entry>();
         for (int i = 0; i < arrMonth.length; i++) {
@@ -206,10 +202,9 @@ public class GraphActivity extends Activity {
 
         return res;
     }
+    //endregion
 
-    //================================================================================
-    // Inits
-    //================================================================================
+    //region Inits
 
     private void initActivity(){
         initSpinners();
@@ -288,6 +283,7 @@ public class GraphActivity extends Activity {
                 else
                 {
 
+                    txtResultGraph.setText("Processing ..");
                     txtResultGraph.setVisibility(View.VISIBLE);
                     MyVars.filterStatType = selectedType;
                     new AsyncCreateStatsDL().execute();
@@ -329,6 +325,7 @@ public class GraphActivity extends Activity {
                 }
                 else
                 {
+                    txtResultGraph.setText("Processing ..");
                     txtResultGraph.setVisibility(View.VISIBLE);
                     MyVars.filterStatYear = selectedYear;
                     new AsyncCreateStatsDL().execute();
@@ -512,8 +509,8 @@ public class GraphActivity extends Activity {
 
                         arrMonth = mergeArrays(MyVars.arrJanuary ,MyVars.arrFebruary, MyVars.arrMarch , MyVars.arrApril, MyVars.arrMay,MyVars.arrJune, MyVars.arrJuly,MyVars.arrAugustus,MyVars.arrSeptember, MyVars.arrOctober, MyVars.arrNovember, MyVars.arrDecember);
 //
-                        for ( int x: arrMonth )
-                            System.out.print( " x : " + x );
+//                        for ( int x: arrMonth )
+//                            System.out.print( " x : " + x );
 
 //                          }
 
@@ -529,6 +526,17 @@ public class GraphActivity extends Activity {
                         //MyVars.filterStatType = "Full year";
                         break;
                 }
+
+                // getting total of log
+                int sum = 0;
+                for(int d : arrMonth)
+                    sum += d;
+                txtResultGraph.setVisibility(View.VISIBLE);
+                txtResultGraph.setText("Total log records with filter : " + sum);
+
+
+
+
 //                  if (!selectedMonth.equalsIgnoreCase(""))
 //                  {
                 createBarGraph();
@@ -552,10 +560,9 @@ public class GraphActivity extends Activity {
         //set the default according to value
         spinnerMonth.setSelection(spinnerPositionMonth);
     }
+    //endregion
 
-//    ================================================================================
-//     Internal classes
-//    ================================================================================
+    //region Internal classes
 
     public class AsyncCreateStatsDL extends AsyncTask<String, String, String> {
 
@@ -594,6 +601,8 @@ public class GraphActivity extends Activity {
 
 
     }
+
+    //endregion
 
 }
 
