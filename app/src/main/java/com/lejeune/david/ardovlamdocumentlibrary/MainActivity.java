@@ -124,7 +124,6 @@ public class MainActivity extends Activity {
     public class AsyncDataDownloadDL extends AsyncTask<String, String, String> {
 
 
-        //DatabaseHelper helper;
         private FTPfunctions ftpclient = null;
 
         @Override
