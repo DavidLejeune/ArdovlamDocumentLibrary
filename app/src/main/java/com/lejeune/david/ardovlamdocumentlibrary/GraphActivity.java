@@ -535,6 +535,7 @@ public class GraphActivity extends Activity {
                 for(int d : arrMonth)
                     sum += d;
                 txtResultGraph.setVisibility(View.VISIBLE);
+                txtResultGraph.setText("");
                 txtResultGraph.setText(txtResultGraph.getText() + "Total log records with filter : " + MyVars.totalStatRecords + "\n");
                 txtResultGraph.setText(txtResultGraph.getText() + "Total records with filter : " + sum + "\n");
                 Double percent = 0.0;

@@ -346,8 +346,15 @@ public class FilterActivity extends Activity {
 
             }
         }
+        if (iCountOccurence!=0){
 
-        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+            txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        }
+        else
+        {
+            txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+
+        }
 
     }
     private void getFilteredDocumentList(){
@@ -401,7 +408,16 @@ public class FilterActivity extends Activity {
             }
         }
 
-        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        if (iCountOccurence!=0){
+
+            txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        }
+        else
+        {
+            resetTxtResult();
+            txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+
+        }
         System.out.println("Total files in folder : " + iCountTotalDocs);
         System.out.println("# files with same filter : " + iCountOccurence);
     }
@@ -456,7 +472,15 @@ public class FilterActivity extends Activity {
             }
         }
 
-        txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        if (iCountOccurence!=0){
+
+            txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+        }
+        else
+        {
+            txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
+
+        }
 
     }
 
