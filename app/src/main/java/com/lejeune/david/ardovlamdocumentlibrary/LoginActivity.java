@@ -30,7 +30,7 @@ public class LoginActivity extends Activity {
     //region Declarations
     public EditText txtPassword, txtFirstName, txtLastName;
     public CheckBox checkBoxPassword;
-    private static Boolean loginOK = false;
+    public static Boolean loginOK = false;
     private Boolean savedSharedPref = false;
     private Boolean userValidity = false;
     private Boolean foundUser = false;
