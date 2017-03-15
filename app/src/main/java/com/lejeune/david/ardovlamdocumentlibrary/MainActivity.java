@@ -78,7 +78,6 @@ public class MainActivity extends Activity {
         //region Download actions based on connection status (and type)
         // Checknetworkstatus , if on wifi this will allow data folder download
         connectionType = MyTools.checkNetworkStatus(cntx);
-        System.out.println("connectionType : " + connectionType);
         if (connectionType.equalsIgnoreCase("wifi")){
             setTxtResultMain("WiFi detected");
             setTxtResultMain("Downloading data folder");
@@ -86,10 +85,10 @@ public class MainActivity extends Activity {
         }
         else
         {
-
             setTxtResultMain("NO WiFi detected");
             gotoLogin();
         }
+
         //endregion
 
         //region Misc actions
@@ -166,18 +165,22 @@ public class MainActivity extends Activity {
         @Override
         protected String doInBackground(String... params) {
 
-
             ftpclient = new FTPfunctions();
             ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
+
             boolean status = false;
             status = ftpclient.downloadDataFiles(MyVars.FOLDER_DATA);
-            if (status == true) {
-//                    handler.sendEmptyMessage(5);
-            } else {
-//                    handler.sendEmptyMessage(-1);
-            }
+
+//            if (status == true) {
+////                    handler.sendEmptyMessage(5);
+//            }
+//            else
+//            {
+////                      handler.sendEmptyMessage(-1);
+//            }
 
             ftpclient.ftpDisconnect();
+
             return null;
         }
 
@@ -200,6 +203,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
             // if admin continue with stat download and big stat creation
             // else just continue to login
             if(MyVars.usertype.equalsIgnoreCase("1")){
@@ -210,7 +214,6 @@ public class MainActivity extends Activity {
                 gotoLogin();
                 timeActivity.getElapsedTime();
             }
-
 
         }
 
@@ -224,12 +227,12 @@ public class MainActivity extends Activity {
 
             ftpclient = new FTPfunctions();
             ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
-            System.out.println(MyVars.FOLDER_DATA + MyVars.fullname + ".txt");
-            boolean status = false;
 
+            boolean status = false;
             status = ftpclient.ftpUpload(Environment.getExternalStorageDirectory() + MyVars.FOLDER_DATA + MyVars.fullname + ".txt" ,
                     MyVars.FOLDER_DATA + "Stats/" + MyVars.fullname + ".txt" ,
                     MyVars.FOLDER_DATA + "Stats/" , cntx);
+
             if (status == true) {
                 System.out.println("upload success");
             } else {
@@ -246,12 +249,9 @@ public class MainActivity extends Activity {
      */
     public class AsyncStatsDownloadDL extends AsyncTask<String, String, String> {
 
-
         private FTPfunctions ftpclient = null;
         ProgressDialog pd;
-
         MyTimer myTimer;
-
 
         @Override
         protected void onPreExecute() {
@@ -280,8 +280,10 @@ public class MainActivity extends Activity {
 
             ftpclient = new FTPfunctions();
             ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
+
             boolean status = false;
             status = ftpclient.downloadStatsFiles(MyVars.FOLDER_STATS);
+
             if (status == true) {
                 System.out.println("Download success");
             } else {
@@ -303,24 +305,23 @@ public class MainActivity extends Activity {
 
 
         int iCountStatFiles;
-
-
         MyTimer myTimer;
-
         File dir = null;
         File file = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            myTimer = new MyTimer("AsyncBigStatsCreateDL");
 
             dir = Environment.getExternalStorageDirectory();
             file = new File(dir, MyVars.FOLDER_STATS);
 
             setTxtResultMain("Creating big stat file (all users)");
 
-            myTimer = new MyTimer("AsyncBigStatsCreateDL");
             MyStats.createBigLogFile();
+
+            // this counter is used for the array of files
             iCountStatFiles = 0;
             traverseCount(file);
 
@@ -329,7 +330,6 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
 
             myTimer.getElapsedTime();
 
@@ -346,12 +346,14 @@ public class MainActivity extends Activity {
         @Override
         protected String doInBackground(String... params) {
 
-
+            // create the big stat file
             traverseMerge(file);
             return null;
         }
 
         public void traverseCount(File dir) {
+
+            // a counter for the array length
             if (dir.exists()) {
                 File[] files = dir.listFiles();
                 for (int i = 0; i < files.length; ++i) {
