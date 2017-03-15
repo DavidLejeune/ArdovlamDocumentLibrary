@@ -22,40 +22,45 @@ import java.io.IOException;
 
 public class StatsActivity extends Activity {
 
+    //region Declaration
     SQLiteDatabase mydb;
     public static Context cntx;
     Button btnShowGrap ;
     ImageButton btnUpdatesStat;
     MyStats myStats;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
-        System.out.println("Stats activity");
 
+        //region Initialisations
         cntx = getApplicationContext();
-
-
 
         myStats = new MyStats();
         MyStats.resetStatVars();
+        //endregion
 
-        System.out.println("this is the year : " + MyVars.filterStatYear);
+        //region Stat initialisations
+        // if no year selected, get current year
         if (MyVars.filterStatYear.equalsIgnoreCase("")){
             System.out.println("current year");
             MyTools.setStatCurrentYear();
         }
-
-
+        // if no stat type selected, select ENTRY
         if (MyVars.filterStatType.equalsIgnoreCase("")){
             MyVars.filterStatType = "ENTRY";
         }
+        //endregion
 
+        // old btnShowGraph
         btnShowGrap = (Button) findViewById(R.id.btnShowGraph);
         btnShowGrap.setVisibility(View.INVISIBLE);
 
+        //region Create the stats for the selected year
         new AsyncCreateStatForYearDL().execute();
+        //endregion
 
     }
 
@@ -65,19 +70,15 @@ public class StatsActivity extends Activity {
         StatsActivity.this.finish();
     }
 
-
+    //region Internal Async tasks
 
     public class AsyncCreateStatForYearDL extends AsyncTask<String, String, String> {
 
-
         ProgressDialog pd;
-
-
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
 
             pd = ProgressDialog.show(StatsActivity.this, "", "Creating single stat for this year..",
                     true, false);
@@ -111,10 +112,7 @@ public class StatsActivity extends Activity {
             return null;
         }
 
-
-
     }
-
-
+    //endregion
 
 }

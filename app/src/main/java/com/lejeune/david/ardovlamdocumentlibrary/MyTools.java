@@ -15,10 +15,6 @@ import java.util.Date;
 
 public class MyTools {
 
-
-
-
-
     // Method to check networstatus (wifi / mobile /no network)
     public static String checkNetworkStatus(final Context context) {
 
@@ -106,15 +102,12 @@ public class MyTools {
     }
 
     public static void setStatCurrentYear(){
+        // When stats are initialised there is no year, so we log for the current year first
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         String strYear = "" + year;
         MyVars.filterStatYear = strYear;
 
     }
-
-
-
-
 
 }

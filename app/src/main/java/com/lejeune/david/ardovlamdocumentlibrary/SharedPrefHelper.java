@@ -10,8 +10,6 @@ public class SharedPrefHelper {
     public static final String PREFS_NAME = "USERINFO";
     public static final String PREFS_KEY = "AOP_PREFS_String";
 
-
-
     public static SharedPrefHelper getInstance()
     {
         if (sharedPreference == null)
