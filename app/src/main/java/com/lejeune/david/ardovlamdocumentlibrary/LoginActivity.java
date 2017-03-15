@@ -28,9 +28,9 @@ import java.io.IOException;
 public class LoginActivity extends Activity {
 
     //region Declarations
-    public EditText txtPassword, txtFirstName, txtLastName;
-    public CheckBox checkBoxPassword;
-    public static Boolean loginOK = false;
+    private EditText txtPassword, txtFirstName, txtLastName;
+    private CheckBox checkBoxPassword;
+    private static Boolean loginOK = false;
     private Boolean savedSharedPref = false;
     private Boolean userValidity = false;
     private Boolean foundUser = false;
@@ -38,7 +38,7 @@ public class LoginActivity extends Activity {
 
     private String firstName, lastName, birthDate;
 
-    public static String connectionType ;
+    private static String connectionType ;
     private MyTools myTools= null;
     private Context cntx;
     //endregion
@@ -60,7 +60,6 @@ public class LoginActivity extends Activity {
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfileLogin);
         imgProfile.setVisibility(View.VISIBLE);
 
-
         //set password field to password type
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         txtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -70,6 +69,7 @@ public class LoginActivity extends Activity {
         //region Misc actions
         myTools.retrieveSharedPref(cntx);
         displaySharedPref();
+        // this deletes for all 3 sections the files that are NOT in their csv file
         new AsyncRemoveOldFilesDL().execute();
         //endregion
 
@@ -129,15 +129,16 @@ public class LoginActivity extends Activity {
     }
 
     private void gotoMenu(){
-        for (int i = 0; i < 1000; i++) {
+        //for (int i = 0; i < 1000; i++) {
             MyStats.logEntry("ENTRY", "");
-        }
+        //}
         final Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
         LoginActivity.this.startActivity(menuIntent);
         LoginActivity.this.finish();
     }
 
     private void restartApp(){
+        // restarting the app if new user is registered (so it gets all the correct data + creation of personal stat file)
         Intent mStartActivity = new Intent(cntx, MainActivity.class);
         int mPendingIntentId = 123456;
         PendingIntent mPendingIntent = PendingIntent.getActivity(cntx, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -161,6 +162,7 @@ public class LoginActivity extends Activity {
         imgProfile.setImageDrawable(getResources().getDrawable(R.drawable.avatar_1));
     }
     private void setProfileImg() {
+        //every users profile image will get the same name
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, "/DocLib/IMG/profile.jpg");
         long length = file.length();
@@ -184,6 +186,8 @@ public class LoginActivity extends Activity {
     public void loginProcedure(){
         loginOK = false;
 
+        // if the shared prefs match the textfields then just go to menu
+        // otherwise start login procedure
         if (txtFirstName.getText().toString().equalsIgnoreCase(MyVars.firstname) &&
                 txtLastName.getText().toString().equalsIgnoreCase(MyVars.lastname) &&
                 txtPassword.getText().toString().equalsIgnoreCase(MyVars.birthdate) &&
@@ -194,19 +198,24 @@ public class LoginActivity extends Activity {
         }
         else
         {
+            // this reset the shared pref in case other valid user was using app on this phone
             SharedPrefHelper.getInstance().save(LoginActivity.this,"0","registered");
             SharedPrefHelper.getInstance().save(LoginActivity.this,"0","usertype");
             saveUserInfoToSharedpref();
             if (savedSharedPref)
             {
+                // a wifi connection must be present (to download user image)
                 connectionType = MyTools.checkNetworkStatus(cntx);
                 if (connectionType.equalsIgnoreCase("wifi")){
+                    // user validity checks if user is present in csv file
                     checkUserValidity();
                     if (userValidity)
                     {
-                        checkUserType();
+                        // the user type determines if the user is
+                        // admin - installateur - commercial or technieker
+                            checkUserType();
                             loginOK = true;
-
+                                    // downloading the user profile image (only happens once , here !!!)
                                     AsyncDownloadUserImg asyncImg = new AsyncDownloadUserImg();
                                     asyncImg.execute();
 
@@ -218,6 +227,7 @@ public class LoginActivity extends Activity {
                     }
                     else
                     {
+                        // this is the result for a failed login
                         setDefaultProfileImg();
                         Toast.makeText(LoginActivity.this, "Failed to login , check your credentials",Toast.LENGTH_LONG).show();
                         resetSharedPref();
@@ -238,6 +248,8 @@ public class LoginActivity extends Activity {
     }
 
     private void resetSharedPref(){
+        // resetting the update variable for all 3 department is neccessary so if user is deiiferent type
+        // he/she will receive all the correct data/documents
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatendoclocal");
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatencomlocal");
         SharedPrefHelper.getInstance().save(LoginActivity.this,"0","updatenteclocal");
@@ -245,6 +257,7 @@ public class LoginActivity extends Activity {
 
     private void saveUserInfoToSharedpref(){
 
+        // if the values of the textfields are non-empty , save them to shared pref
         savedSharedPref = false;
 
         firstName = txtFirstName.getText().toString();
@@ -280,15 +293,16 @@ public class LoginActivity extends Activity {
         }
     }
 
+    /**
+     *  Is the user present in the Users.csv file ?
+     */
     private void checkUserValidity(){
-
 
         myTools.retrieveSharedPref(cntx);
 
-
-
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir,MyVars.FOLDER_DATA + "Users.csv");
+
         if (file.exists())
         {
             StringBuilder text = new StringBuilder();
@@ -296,6 +310,7 @@ public class LoginActivity extends Activity {
             {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line ;
+                // looping throug the csv file
                 while ((line = br.readLine()) != null )
                 {
                     String[] str ;
@@ -318,6 +333,7 @@ public class LoginActivity extends Activity {
 
                     int countCorrect = 0;
 
+                    // check first name, last name and password for each line with the shared pref (= textfields)
                     if(MyVars.firstname.equalsIgnoreCase(firstName))
                     {
                         countCorrect += 1;
@@ -342,6 +358,7 @@ public class LoginActivity extends Activity {
                     {
                     }
 
+                    // if countcorrect = 3 then user is found and we will save the shared prefs
                     if(countCorrect == 3)
                     {
                         SharedPrefHelper.getInstance().save(LoginActivity.this,"1","registered");
@@ -373,10 +390,14 @@ public class LoginActivity extends Activity {
 
     }
 
+    /**
+     *  What kind of user is this ?
+     *  admin - installateur - commercial or technieker
+     */
     private void checkUserType(){
 
-
         myTools.retrieveSharedPref(cntx);
+
         if(MyVars.usertype.equalsIgnoreCase("1")){
             privilegedUser = true;
         }
@@ -384,10 +405,16 @@ public class LoginActivity extends Activity {
         if (privilegedUser) {
             myTools.retrieveSharedPref(cntx);
         }
+
     }
     //endregion
 
     //region Internal Async Tasks
+
+    /**
+     *  Downloads the user profile image (if not present this will result in default profile image for user
+     *  After download -> restart app (for clean start of stat file for user)
+     */
     class AsyncDownloadUserImg extends AsyncTask<Void, Void, Void> {
 
         private FTPfunctions ftpclient = null;
@@ -397,12 +424,12 @@ public class LoginActivity extends Activity {
         protected Void doInBackground(Void... params) {
 
             ftpclient = new FTPfunctions();
+            ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
+
             final String strFile = "/DocLib/IMG/" + MyVars.fullname + ".jpg";
                     boolean status = false;
 
-                    ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
-
-                    ftpclient.ftpDownload(strFile, Environment.getExternalStorageDirectory()
+            ftpclient.ftpDownload(strFile, Environment.getExternalStorageDirectory()
                             + "/DocLib/IMG/profile.jpg");
 
             ftpclient.ftpDisconnect();
