@@ -10,27 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.vives.david.ardovlamdoclib.GraphActivity">
 
-    <Spinner
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerYear"
-        android:layout_width="125sp"
-        android:layout_alignBaseline="@+id/spinnerMonth"
-        android:layout_alignBottom="@+id/spinnerMonth"
-        android:layout_toRightOf="@+id/spinnerMonth"
-        android:layout_toEndOf="@+id/spinnerMonth"
-        android:layout_marginLeft="43dp"
-        android:layout_marginStart="43dp" />
-
-    <TextView
-        android:text="@string/lbl_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblChooseYear"
-        android:layout_alignBaseline="@+id/lblChooseMoonth"
-        android:layout_alignBottom="@+id/lblChooseMoonth"
-        android:layout_alignLeft="@+id/spinnerYear"
-        android:layout_alignStart="@+id/spinnerYear" />
-
     <TextView
         android:text="@string/lbl_type"
         android:layout_width="wrap_content"
@@ -40,62 +19,13 @@
         android:layout_alignParentStart="true"
         android:id="@+id/lblChooseType" />
 
-    <TextView
-        android:text="@string/lbl_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblChooseMoonth"
-        android:layout_above="@+id/spinnerYear"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/spinnerType" />
-
     <Spinner
-        android:layout_width="125sp"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerType"
         android:layout_below="@+id/lblChooseType"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Spinner
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:id="@+id/spinnerMonth"
-        android:layout_width="125sp"
-        android:layout_below="@+id/spinnerType"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:layout_width="match_parent"
-        android:id="@+id/barChart"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_height="150dp" />
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:layout_width="match_parent"
-        android:id="@+id/lineChart"
-        android:layout_height="150dp"
-        android:layout_above="@+id/barChart"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-    </com.github.mikephil.charting.charts.LineChart>
-
-    <TextView
-        android:text="@string/lbl_ChooseUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtResultGraph"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
-        android:layout_above="@+id/lineChart"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_width="100sp" />
 
     <TextView
         android:text="@string/lblUser"
@@ -108,12 +38,81 @@
         android:layout_marginTop="12dp" />
 
     <Spinner
-        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblChooseUser"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/spinnerUser"
         android:layout_toLeftOf="@+id/lblChooseYear"
-        android:layout_toStartOf="@+id/lblChooseYear" />
+        android:layout_toStartOf="@+id/lblChooseYear"
+        android:layout_width="200sp" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerYear"
+        android:layout_width="100sp"
+        android:layout_alignBaseline="@+id/spinnerMonth"
+        android:layout_alignBottom="@+id/spinnerMonth"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="@string/lbl_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblChooseYear"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/spinnerYear"
+        android:layout_alignStart="@+id/spinnerYear" />
+
+    <TextView
+        android:text="@string/lbl_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblChooseMoonth"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/spinnerType"
+        android:layout_toEndOf="@+id/spinnerType"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerMonth"
+        android:layout_width="100sp"
+        android:layout_below="@+id/lblChooseMoonth"
+        android:layout_alignLeft="@+id/lblChooseMoonth"
+        android:layout_alignStart="@+id/lblChooseMoonth" />
+
+    <TextView
+        android:text="@string/txt_result_graph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtResultGraph"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_below="@+id/spinnerUser"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:id="@+id/lineChart"
+        android:layout_below="@+id/txtResultGraph"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp"
+        android:layout_height="175dp">
+    </com.github.mikephil.charting.charts.LineChart>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_width="match_parent"
+        android:id="@+id/barChart"
+        android:layout_height="175dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

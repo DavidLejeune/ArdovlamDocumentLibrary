@@ -20,7 +20,7 @@
     <string name="lbl_type">Type :</string>
     <string name="txt_textview">TextView</string>
     <string name="lblUser">User :</string>
-    <string name="lbl_ChooseUser">User :</string>
+    <string name="txt_result_graph">TxtResult</string>
 
 
     <string-array name="monthsArray">
