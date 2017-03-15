@@ -74,16 +74,10 @@ public class MenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        init();
+
 
         //region Initialisations
-        listUpdateFilesDoc = new ArrayList<>();
-        listUpdateFilesCom = new ArrayList<>();
-        listUpdateFilesTec = new ArrayList<>();
-
-        cntx = getApplicationContext();
-        myTools = new MyTools();
-
+        init();
         //endregion
 
         //region Gridview
@@ -165,17 +159,15 @@ public class MenuActivity extends Activity {
             }
         });
 
-        getUsertype();
         getProfileImg();
         //endregion
 
         //region Setting interface based on Usertype
+        getUsertype();
         if (userType.equalsIgnoreCase("1")){
             strUserType = "Admin";
             checkUpdatesAvailable(updateComFile);
-            //System.out.println("CHECKING UPDATES AVAILABLE COM");
             checkUpdatesAvailable(updateDocFile);
-            //System.out.println("CHECKING UPDATES AVAILABLE TEC");
             checkUpdatesAvailable(updateTecFile);
 
             txtUserType.setText(strUserType);
@@ -184,18 +176,21 @@ public class MenuActivity extends Activity {
         else if (userType.equalsIgnoreCase("2")){
             strUserType = "Projectleider";
             checkUpdatesAvailable(updateComFile);
+
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.INVISIBLE);
         }
         else if (userType.equalsIgnoreCase("0")){
             strUserType = "Installateur";
             checkUpdatesAvailable(updateDocFile);
+
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.INVISIBLE);
         }
         else if (userType.equalsIgnoreCase("3")){
             strUserType = "Technieker";
             checkUpdatesAvailable(updateTecFile);
+
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.INVISIBLE);
         }
@@ -214,6 +209,14 @@ public class MenuActivity extends Activity {
     private void init(){
         //checking displayvariables for gridview images sizes
         refreshDisplayVariables();
+
+        listUpdateFilesDoc = new ArrayList<>();
+        listUpdateFilesCom = new ArrayList<>();
+        listUpdateFilesTec = new ArrayList<>();
+
+        cntx = getApplicationContext();
+        myTools = new MyTools();
+
     }
 
     private void refreshDisplayVariables(){
@@ -224,12 +227,13 @@ public class MenuActivity extends Activity {
     }
 
     private void gotoStats(){
+        // only an admin will get access to stats
         if (userType.equalsIgnoreCase("1")) {
 
-            for(int i=0; i<100 ;i++){
+ //           for(int i=0; i<100 ;i++){
 //            System.out.println(i);
                 MyStats.logEntry("STAT" , "");
-            }
+//            }
 
             final Intent statsIntent = new Intent(MenuActivity.this, StatsActivity.class);
             MenuActivity.this.startActivity(statsIntent);
@@ -253,7 +257,6 @@ public class MenuActivity extends Activity {
     //region User
     private void getUsertype(){
         userType = MyVars.usertype;
-
     }
     private void getProfileImg(){
         File dir = Environment.getExternalStorageDirectory();
@@ -283,6 +286,7 @@ public class MenuActivity extends Activity {
         System.out.println("UpdateProcedure");
         if (userType.equalsIgnoreCase("1")){
             strUserType = "Admin";
+            // this will search updates for all 3 categories
             updateDoc();
             if(!newUpdatesDoc) updateCom();
             if(!newUpdatesCom) updateTec();
@@ -302,13 +306,14 @@ public class MenuActivity extends Activity {
     }
 
     private static void checkUpdatesAvailable(String updateDocument) {
+
+        // this method allows to search for all categories if there are updates (by means of the updateDocument)
         System.out.println("checking server for update " + updateDocument);
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, MyVars.FOLDER_DATA + updateDocument);
         String line = "";
 
         if (file.exists()) {
-            //countUpdates = 0;
             StringBuilder text = new StringBuilder();
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
@@ -339,6 +344,9 @@ public class MenuActivity extends Activity {
         }
     }
 
+    /**
+     *  For all 3 categories : seperate comparators of Update nrs
+     */
     private static void compareUpdateNrsDoc(){
         System.out.println("updatedoclocal : "+ MyVars.updatedoclocal);
         System.out.println("updatedocserver : "+ MyVars.updatedocserver);
@@ -422,6 +430,8 @@ public class MenuActivity extends Activity {
     }
 
     public static void displayUpdateButton(){
+        // Depending on user type check the available updates
+        // And depending on available updates display the update button (or not)
         if(MyVars.usertype.equalsIgnoreCase("0")){
             if (newUpdatesDoc){
                 System.out.println(newUpdatesDoc + " " + newUpdatesCom);
@@ -511,6 +521,9 @@ public class MenuActivity extends Activity {
 
     }
 
+    /**
+     *  Actual updating of the 3 categories (with async tasks)
+     */
     public void updateDoc(){
 
         if (newUpdatesDoc)
@@ -600,6 +613,9 @@ public class MenuActivity extends Activity {
 
     }
 
+    /**
+     * Upon completion of update download set the local update nrs = to server update nrs
+     */
     private static void setUpdatenrDoc(Context context){
         System.out.println("setting the update nr ..");
         SharedPreferences sharedPref = context.getSharedPreferences("USERINFO", Context.MODE_PRIVATE);
@@ -637,6 +653,9 @@ public class MenuActivity extends Activity {
 //        Toast.makeText(context , "Updates finished" , Toast.LENGTH_LONG).show();
     }
 
+    /**
+     *  Building and showing the list of files for each category
+     */
     public static void buildDownloadListDoc(){
         System.out.println("buildDownloadList");
 
@@ -860,8 +879,16 @@ public class MenuActivity extends Activity {
     //endregion
 
     //region Internal Async tasks
-    class AsyncUpdatesDocumentsDownloadDL extends AsyncTask<String, Integer, String> {
 
+    /**
+     *  Downloading the updates for all 3 categories using async tasks
+     *  Note : many FTP functions were internalised for use with a progress display
+     *  The progress display showing individual file names was later removed and replaced
+     *  with an unpassable progressdialog to ensure all files were correctly downloaded before continuing
+     *  But all internalised mechanism were retained (this can be made more DRY , but has been changed so code
+     *  can be recycled if need be)
+     */
+    class AsyncUpdatesDocumentsDownloadDL extends AsyncTask<String, Integer, String> {
 
 
         boolean status = false;
@@ -882,13 +909,10 @@ public class MenuActivity extends Activity {
 
 
             pd = new ProgressDialog(MenuActivity.this);
-//            pd.setTitle("Downloading update documents");
-//            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//            pd.setMax(listUpdateFiles.size());
-//            pd.setProgress(0);
-//            pd.show();
             pd = ProgressDialog.show(MenuActivity.this, "", "Getting Document Files...",
                     true, false);
+
+            // block the screen from changing orientation
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         }
@@ -900,17 +924,14 @@ public class MenuActivity extends Activity {
             stopTime = System.currentTimeMillis();
             elapsedTime = (stopTime - startTime) /1000  ;
             Toast.makeText(MenuActivity.this, "Updates FINISHED\n" + listUpdateFilesDoc.size() + " updates downloaded\nin " + elapsedTime + " seconds", Toast.LENGTH_LONG).show();
-            System.out.println("Time downloading " + listUpdateFilesDoc.size() + " updates : " + elapsedTime + " seconds.");
 
-            //pd.setProgress(listUpdateFiles.size());
+            // allowing screen rotation
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
             pd.dismiss();
 
-            System.out.println("finished AsyncUpdates download");
-
-            for(int i=0; i<1000 ;i++) {
+            //for(int i=0; i<1000 ;i++) {
                 MyStats.logEntry("UPDATE", "DOC-" + MyVars.updatedocserver);
-            }
 
             if (userType.equalsIgnoreCase("1")){
                 strUserType = "Admin";
@@ -918,7 +939,7 @@ public class MenuActivity extends Activity {
             }
 
             if (status == true) {
-
+                // only if download was succes set the update nr (local)
                 setUpdatenrDoc(cntx);
                 compareUpdateNrsDoc();
             }
@@ -974,55 +995,35 @@ public class MenuActivity extends Activity {
             boolean status = false;
             String[] fileList = null;
             int iNot5 = 0;
-            System.out.println("downloadUpdateFile in FTPfunctions");
-            System.out.println("dir_path : " + dir_path);
             try {
                 FTPFile[] ftpFiles = mFTPClient.listFiles(dir_path);
                 int length = ftpFiles.length;
-                System.out.println("length : " + length);
                 fileList = new String[length];
                 for (int i = 0; i < length; i++) {
                     String name = ftpFiles[i].getName();
                     boolean isFile = ftpFiles[i].isFile();
-                    //Log.d("DD", "/David/Documents/" + name);
 
                     if (isFile) {
                         fileList[i] = "File :: " + name;
 
 
                         System.out.println("looping through the arraylist");
-                        //MenuActivity.AsyncUpdatesDownloadDL.publishProgress();
-                        System.out.println("listUpdateFiles.length : " + listUpdateFilesDoc.size());
                         for (String cu : listUpdateFilesDoc) {
-                            //System.out.println("list Update entry : " + cu);
                             if (cu.equalsIgnoreCase(name)){
-                                //iCount +=1;
-                                System.out.println("iCount = " +iCount);
-                                System.out.println("found this file in update list");
-                                System.out.println(">file : " + name);
-                                System.out.println(">cu   : " + cu);
-                                System.out.println("function bulk ftpDownload updates :");
-                                System.out.println(">file : " + name);
 
                                 downloadedFile = name;
-                                //publishProgress(iCount);
 
+                                // download both the pdf & png file
                                 status = ftpDownload(MyVars.FOLDER_DOCUMENTS + name,
                                         Environment.getExternalStorageDirectory() + MyVars.FOLDER_DOCUMENTS + name);
 
-
-
-
                                 String imgName = name.replace(".pdf", ".PNG");
                                 downloadedFile = imgName;
-                                //publishProgress(iCount);
+
                                 ftpDownload(MyVars.FOLDER_DOCUMENTS + imgName,
                                         Environment.getExternalStorageDirectory() + MyVars.FOLDER_DOCUMENTS + imgName);
 
-
-
-
-
+                                // old test to see how many fields were in the file name (used by Ardovlam to give structure to it's documents)
                                 String CurrentString = cu;
                                 String[] separated = CurrentString.split("-");
                                 int iSplit = 0;
@@ -1036,24 +1037,15 @@ public class MenuActivity extends Activity {
                                 }
 
 
+
                             }
                         }
-//                    System.out.println("function bulk ftpDownload updates :");
-//                    System.out.println(">file : " + name);
-//                    status = ftpDownload(FOLDER_DATA_DOCUMENTS_ALL + name,
-//                            Environment.getExternalStorageDirectory() + FOLDER_DATA_DOCUMENTS_ALL + name);
-
-
-                        System.out.println(">Status bulk ftpDownload: " + status);
 
                     } else {
                         fileList[i] = "Directory :: " + name;
                     }
 
                 }
-
-                System.out.println("iNot5 : " + iNot5);
-
 
                 return status;
             } catch (Exception e) {
@@ -1104,14 +1096,8 @@ public class MenuActivity extends Activity {
             try {
                 FileOutputStream desFileStream = new FileOutputStream(desFilePath);
 
-                System.out.println("function ftpDownload :");
-                System.out.println(">srcFilePath : " + srcFilePath);
-                System.out.println(">desFilePath : " + desFilePath);
                 status = mFTPClient.retrieveFile(srcFilePath, desFileStream);
                 desFileStream.close();
-                System.out.println(">Status ftpDownload: " + status);
-
-
 
                 // this because there is no other check on the validity of the file
                 // if file doesn't exist it creates an empty file that needs to be deleted
@@ -1140,26 +1126,14 @@ public class MenuActivity extends Activity {
             return status;
         }
 
-
-
-
-
-
     }
-
     class AsyncUpdatesCommercialDownloadDL extends AsyncTask<String, String, String> {
 
 
         private FTPfunctions ftpclient = null;
-
         ProgressDialog pd;
-
-
         boolean status = false;
 
-        long startTime ;
-        long stopTime ;
-        long elapsedTime ;
         int iCount =0;
         int progress = 0;
         String downloadedFile = "" ;
@@ -1181,10 +1155,12 @@ public class MenuActivity extends Activity {
             super.onPostExecute(s);
 
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
             pd.dismiss();
-            for(int i=0; i<1000 ;i++) {
+
+            //for(int i=0; i<1000 ;i++) {
                 MyStats.logEntry("UPDATE", "COM-" + MyVars.updatecomserver);
-            }
+            //}
 
             if (userType.equalsIgnoreCase("1")){
                 strUserType = "Admin";
@@ -1192,7 +1168,6 @@ public class MenuActivity extends Activity {
             }
 
             if (status == true) {
-
                 setUpdatenrCom(cntx);
                 compareUpdateNrsCom();
             }
@@ -1206,8 +1181,6 @@ public class MenuActivity extends Activity {
             ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
 
             status = downloadUpdateFilesCom(MyVars.FOLDER_COMMERCIAL);
-            System.out.println(MyVars.FOLDER_COMMERCIAL + " status : " + status);
-
 
             if (status == true) {
                 System.out.println("Download success");
@@ -1238,55 +1211,33 @@ public class MenuActivity extends Activity {
             boolean status = false;
             String[] fileList = null;
             int iNot5 = 0;
-            System.out.println("downloadUpdateFileCom in FTPfunctions");
-            System.out.println("dir_path : " + dir_path);
             try {
                 FTPFile[] ftpFiles = mFTPClient.listFiles(dir_path);
                 int length = ftpFiles.length;
-                System.out.println("length : " + length);
                 fileList = new String[length];
                 for (int i = 0; i < length; i++) {
                     String name = ftpFiles[i].getName();
                     boolean isFile = ftpFiles[i].isFile();
-                    //Log.d("DD", "/David/Documents/" + name);
 
                     if (isFile) {
                         fileList[i] = "File :: " + name;
 
-
-                        System.out.println("looping through the arraylist");
-                        //MenuActivity.AsyncUpdatesDownloadDL.publishProgress();
-                        System.out.println("listUpdateFiles.length : " + listUpdateFilesCom.size());
                         for (String cu : listUpdateFilesCom) {
-                            //System.out.println("list Update entry : " + cu);
                             if (cu.equalsIgnoreCase(name)){
-                                //iCount +=1;
-                                System.out.println("iCount = " +iCount);
-                                System.out.println("found this file in update list");
-                                System.out.println(">file : " + name);
-                                System.out.println(">cu   : " + cu);
-                                System.out.println("function bulk ftpDownload updates :");
-                                System.out.println(">file : " + name);
 
                                 downloadedFile = name;
-                                //publishProgress(iCount);
 
+                                // download both the pdf and png file
                                 status = ftpDownload(MyVars.FOLDER_COMMERCIAL + name,
                                         Environment.getExternalStorageDirectory() + MyVars.FOLDER_COMMERCIAL + name);
 
-
-
-
                                 String imgName = name.replace(".pdf", ".PNG");
                                 downloadedFile = imgName;
-                                //publishProgress(iCount);
+
                                 ftpDownload(MyVars.FOLDER_COMMERCIAL + imgName,
                                         Environment.getExternalStorageDirectory() + MyVars.FOLDER_COMMERCIAL + imgName);
 
-
-
-
-
+                                // old test for ardovlm file structure
                                 String CurrentString = cu;
                                 String[] separated = CurrentString.split("-");
                                 int iSplit = 0;
@@ -1299,25 +1250,14 @@ public class MenuActivity extends Activity {
                                     System.out.println("WARNING iNot5 !!!!!!!!!!!!!!!!!!!!");
                                 }
 
-
                             }
                         }
-//                    System.out.println("function bulk ftpDownload updates :");
-//                    System.out.println(">file : " + name);
-//                    status = ftpDownload(FOLDER_DATA_DOCUMENTS_ALL + name,
-//                            Environment.getExternalStorageDirectory() + FOLDER_DATA_DOCUMENTS_ALL + name);
-
-
-                        System.out.println(">Status bulk ftpDownload: " + status);
 
                     } else {
                         fileList[i] = "Directory :: " + name;
                     }
 
                 }
-
-                System.out.println("iNot5 : " + iNot5);
-
 
                 return status;
             } catch (Exception e) {
@@ -1368,20 +1308,13 @@ public class MenuActivity extends Activity {
             try {
                 FileOutputStream desFileStream = new FileOutputStream(desFilePath);
 
-                System.out.println("function ftpDownload :");
-                System.out.println(">srcFilePath : " + srcFilePath);
-                System.out.println(">desFilePath : " + desFilePath);
                 status = mFTPClient.retrieveFile(srcFilePath, desFileStream);
                 desFileStream.close();
-                System.out.println(">Status ftpDownload: " + status);
-
-
 
                 // this because there is no other check on the validity of the file
                 // if file doesn't exist it creates an empty file that needs to be deleted
                 if (!status)
                 {
-                    //File dir = Environment.getExternalStorageDirectory();
                     File file = new File(desFilePath);
                     boolean deleted = file.delete();
                 }
@@ -1391,10 +1324,8 @@ public class MenuActivity extends Activity {
                     if (!isImage){
                         iCount +=1;
                         progress = iCount;
-                        //publishProgress(progress);
                     }
                 }
-
 
                 return status;
             } catch (Exception e) {
@@ -1407,19 +1338,12 @@ public class MenuActivity extends Activity {
 
 
     }
-
     class AsyncUpdatesTechnicalDownloadDL extends AsyncTask<String, String, String> {
 
         boolean status = false;
         private FTPfunctions ftpclient = null;
-
         ProgressDialog pd;
 
-
-
-        long startTime ;
-        long stopTime ;
-        long elapsedTime ;
         int iCount =0;
         int progress = 0;
         String downloadedFile = "" ;
@@ -1441,10 +1365,11 @@ public class MenuActivity extends Activity {
             super.onPostExecute(s);
 
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
             pd.dismiss();
-            for(int i=0; i<100 ;i++) {
+            //for(int i=0; i<100 ;i++) {
                 MyStats.logEntry("UPDATE", "TEC-" + MyVars.updatetecserver);
-            }
+            //}
             if (status == true) {
 
                 setUpdatenrTec(cntx);
