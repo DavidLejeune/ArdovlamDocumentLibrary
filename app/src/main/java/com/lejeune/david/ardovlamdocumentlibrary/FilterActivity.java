@@ -118,15 +118,15 @@ public class FilterActivity extends Activity {
         btnShowFilteredDocs.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(docTypeFilter.length()<1){
-                    for(int i=0; i<1000 ;i++) {
+                    //for(int i=0; i<1000 ;i++) {
                         MyStats.logEntry("SEARCH", filterID + "-x");
-                    }
+                    //}
                 }
                 else
                 {
-                    for(int i=0; i<100 ;i++) {
+                    //for(int i=0; i<100 ;i++) {
                         MyStats.logEntry("SEARCH", filterID + "-" + docTypeFilter);
-                    }
+                    //}
                 }
                 resetTxtResult();
                 showFilteredResult();

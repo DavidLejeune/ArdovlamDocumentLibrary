@@ -80,9 +80,9 @@ public class ListDocsActivity extends Activity {
 
         if (pdfFile.exists()) //Checking for the file is exist or not
         {
-            for(int i=0; i<1000 ;i++) {
+            //for(int i=0; i<1000 ;i++) {
                 MyStats.logEntry("READ", docSelected);
-            }
+            //}
             Uri path = Uri.fromFile(pdfFile);
             Intent objIntent = new Intent(Intent.ACTION_VIEW);
             objIntent.setDataAndType(path, "application/pdf");
