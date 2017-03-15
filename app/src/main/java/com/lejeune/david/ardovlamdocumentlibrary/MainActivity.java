@@ -33,9 +33,9 @@ import java.nio.channels.FileChannel;
 public class MainActivity extends Activity {
 
     //region Declarations
-    public TextView tvTitleLogin ,txtResultMain ;
+    private TextView tvTitleLogin ,txtResultMain ;
 
-    public static String connectionType ;
+    private static String connectionType ;
     private MyTools myTools= null;
     private Context cntx;
     private MyTimer timeActivity;
@@ -55,6 +55,7 @@ public class MainActivity extends Activity {
 
         //making sure the correct folder structure exists
         myTools.createFolders();
+        //retrieving the shared preferences
         myTools.retrieveSharedPref(cntx);
         //endregion
 
@@ -74,9 +75,6 @@ public class MainActivity extends Activity {
         tvTitleLogin.setVisibility(View.VISIBLE);
         //endregion
 
-
-
-
         //region Download actions based on connection status (and type)
         // Checknetworkstatus , if on wifi this will allow data folder download
         connectionType = MyTools.checkNetworkStatus(cntx);
@@ -95,6 +93,7 @@ public class MainActivity extends Activity {
         //endregion
 
         //region Misc actions
+        //refresh display variables will be used later for gridview image dimensions
         refreshDisplayVariables();
         System.out.println("Height:" + MyVars.screenHeight + " Width:" + MyVars.screenWidth);
         //endregion
@@ -110,6 +109,7 @@ public class MainActivity extends Activity {
     }
 
     private void refreshDisplayVariables(){
+        //display variables will be used later for gridview image dimensions
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         MyVars.screenHeight = displayMetrics.heightPixels;
@@ -125,9 +125,22 @@ public class MainActivity extends Activity {
     }
     //endregion
 
-
-
     //region Internal Async Tasks
+
+    /** Async tasks work as following :
+     * If NOT on Wifi :
+     *    simply continue to login screen
+     * If on Wifi :
+     *    - Download data folder from ftp server
+     *    - Upload personal stat file to ftp server
+     * If on Wifi AND admin then also :
+     *    - Download stat files from ftp server
+     *    - Merge all individual stat files into 1 big stat file
+    */
+
+    /**
+     *  Downloading the complete data folder
+     */
     public class AsyncDataDownloadDL extends AsyncTask<String, String, String> {
 
 
@@ -142,7 +155,6 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
             new AsyncUploadStatDL().execute();
         }
 
@@ -171,6 +183,9 @@ public class MainActivity extends Activity {
 
     }
 
+    /**
+     *  Uploading the users personal stat file
+     */
     public class AsyncUploadStatDL extends AsyncTask<String, String, String> {
 
 
@@ -179,13 +194,14 @@ public class MainActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             setTxtResultMain("Uploading user stat file");
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            // if admin continue with stat download and big stat creation
+            // else just continue to login
             if(MyVars.usertype.equalsIgnoreCase("1")){
                 new AsyncStatsDownloadDL().execute();
             }
@@ -225,6 +241,9 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     *  Admins wil download all user stat files
+     */
     public class AsyncStatsDownloadDL extends AsyncTask<String, String, String> {
 
 
@@ -277,6 +296,9 @@ public class MainActivity extends Activity {
 
     }
 
+    /**
+     *  Admin will combine all user stat files into 1 big stat file
+     */
     public class AsyncBigStatsCreateDL extends AsyncTask<String, String, String> {
 
 
@@ -370,121 +392,3 @@ public class MainActivity extends Activity {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public void showTable(){
-//        try{
-//            mydb = openOrCreateDatabase("Documents.db", Context.MODE_PRIVATE,null);
-//            Cursor allrows  = mydb.rawQuery("SELECT * FROM "+  "documents_table", null);
-//            System.out.println("COUNT : " + allrows.getCount());
-//            Integer cindex = allrows.getColumnIndex("folder");
-//            Integer cindex1 = allrows.getColumnIndex("document");
-//            Integer cindex2 = allrows.getColumnIndex("update");
-//
-//
-//            if(allrows.moveToFirst()){
-//                do{
-//
-//                    final String ID = allrows.getString(0);
-//                    String FOLDER= allrows.getString(1);
-//                    String DOCUMENT= allrows.getString(2);
-//                    String UPDATE= allrows.getString(3);
-//
-//
-//                    System.out.println(allrows.getString(cindex) + " "+ allrows.getString(cindex1)+ " "+ allrows.getString(cindex2));
-//
-//                }
-//                while(allrows.moveToNext());
-//            }
-//            mydb.close();
-//        }catch(Exception e){
-//            Toast.makeText(getApplicationContext(), "Error encountered."+e.toString(), Toast.LENGTH_LONG).show();
-//        }
-//
-////        InputStreamReader is = ;
-////        StringBuilder sb = new StringBuilder();
-////        try {
-////            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-////            String line = null;
-////            while ((line = reader.readLine()) != null) {
-////                sb.append(line).append("\n");
-////            }
-////            is.close();
-////        } catch(OutOfMemoryError om) {
-////            om.printStackTrace();
-////        } catch(Exception ex) {
-////            ex.printStackTrace();
-////        }
-////        String result = sb.toString();
-//
-////        BufferedReader reader = null;
-////        try {
-////            Context context = getApplicationContext();
-////            reader = new BufferedReader( new InputStreamReader(context.openFileInput(Environment.getExternalStorageDirectory() + "/Users.csv"))) ;
-////            reader.readLine(); // Ignores the first line
-////            String data;
-////            while ((data = reader.readLine()) != null) { // Gets a whole line
-////                String[] line = data.split(","); // Splits the line up into a string array
-////                if (line.length > 1) {
-////                    // Do stuff, e.g:
-////                    String value = line[1];
-////                    System.out.println(value);
-////                }
-////            }
-////        } catch (IOException e) {
-////            e.printStackTrace();
-////        } finally {
-////            if (reader != null) {
-////                try {
-////                    reader.close();
-////                } catch (IOException e) {
-////                    e.printStackTrace();
-////                }
-////            }
-////        }
-//
-////        CSVReader reader = new CSVReader(new FileReader(Environment.getExternalStorageDirectory() + "/Users.csv"));
-////        String [] nextLine;
-////        while ((nextLine = reader.readNext()) != null) {
-////            // nextLine[] is an array of values from the line
-////            System.out.println(nextLine[0] + nextLine[1] + "etc...");
-////        }
-//
-////https://www.youtube.com/watch?v=BALgSGrsXH8
-//
-//
-//
-//
-//    }
-
-//    public void autoLaunchActivity(){
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-//                final Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
-//
-//                if(MyVars.registereduser.equalsIgnoreCase("1")){
-//
-//                    MainActivity.this.startActivity(menuIntent);
-//                    MainActivity.this.finish();
-//                }
-//              else
-//                {
-//                    MainActivity.this.startActivity(loginIntent);
-//                    MainActivity.this.finish();
-//                }
-//            }
-//        }, 1977);
-//    }
