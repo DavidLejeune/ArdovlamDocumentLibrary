@@ -53,24 +53,26 @@ public class GraphActivity extends Activity {
 
     TextView txtResultGraph;
     //endregion
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-        txtResultGraph = (TextView) findViewById(R.id.txtResultGraph);
-
+        //region Initialisations
         barChart = (BarChart) findViewById(R.id.barChart);
         lineChart = (LineChart) findViewById(R.id.lineChart);
 
         initActivity();
+        //endregion
 
-
+        //region txtResultGraph
+        txtResultGraph = (TextView) findViewById(R.id.txtResultGraph);
         txtResultGraph.setText("");
         txtResultGraph.setVisibility(View.INVISIBLE);
         txtResultGraph.setGravity(Gravity.LEFT);
-
-
+        //endregion
+        
     }
 
 
@@ -572,6 +574,9 @@ public class GraphActivity extends Activity {
 
     //region Internal classes
 
+    /**
+     *  Recreate the stat if new type / year   (not months)
+     */
     public class AsyncCreateStatsDL extends AsyncTask<String, String, String> {
 
 
@@ -602,11 +607,6 @@ public class GraphActivity extends Activity {
 
             return null;
         }
-
-
-
-
-
 
     }
 
