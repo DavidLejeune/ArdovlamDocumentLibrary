@@ -61,7 +61,9 @@ public class MainActivity extends Activity {
         //region UI elements
         txtResultMain = (TextView) findViewById(R.id.txtResultMain);
         txtResultMain.setVisibility(View.VISIBLE);
-        txtResultMain.setText("");
+        txtResultMain.setText("System startup .... \n\n");
+//        txtResultMain.setBackgroundResource(android.R.color.darker_gray);
+//        txtResultMain.setBackgroundResource(R.color.almostBlack);
 
         setTxtResultMain("Checking folders");
 
@@ -102,9 +104,9 @@ public class MainActivity extends Activity {
     //region Misc methods
     private void setTxtResultMain(String message){
         // all output in sequence
-        //txtResultMain.setText(txtResultMain.getText() + message + "\n");
+        txtResultMain.setText(txtResultMain.getText() + message + "\n");
         // only 1 output shown
-        txtResultMain.setText(message + "\n");
+        //txtResultMain.setText(message + "\n");
     }
 
     private void refreshDisplayVariables(){
