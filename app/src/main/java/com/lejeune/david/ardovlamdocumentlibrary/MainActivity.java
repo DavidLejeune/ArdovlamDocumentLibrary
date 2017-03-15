@@ -101,7 +101,10 @@ public class MainActivity extends Activity {
 
     //region Misc methods
     private void setTxtResultMain(String message){
-        txtResultMain.setText(txtResultMain.getText() + message + "\n");
+        // all output in sequence
+        //txtResultMain.setText(txtResultMain.getText() + message + "\n");
+        // only 1 output shown
+        txtResultMain.setText(message + "\n");
     }
 
     private void refreshDisplayVariables(){
