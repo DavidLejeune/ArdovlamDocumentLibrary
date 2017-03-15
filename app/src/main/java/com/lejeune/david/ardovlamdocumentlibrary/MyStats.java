@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Lucian on 2/23/2017.
@@ -233,9 +234,15 @@ public class MyStats {
     public static void filterBigStatFiles(String filterStatYear , String filterStatType){
 
         MyVars.totalStatRecords = 0;
+
+//        MyVars.arrListUsers = new ArrayList<String>();
+//        MyVars.arrListUsers.add("");
+
+
         File dir = Environment.getExternalStorageDirectory();
         File file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
         MyTimer myTimer = new MyTimer("filterBigStatFiles");
+
         String line = "";
         int iCount=0;
         if (file.exists()) {
@@ -251,6 +258,15 @@ public class MyStats {
                             MyVars.totalStatRecords += 1;
                             String strID = str[0].toLowerCase();
                             String strUser = str[0].toLowerCase();
+
+//                            if (MyVars.arrListUsers.contains(strUser)) {
+//                                System.out.println("Account found");
+//                            } else {
+//                                System.out.println("Account not found");
+//                                MyVars.arrListUsers.add(strUser);
+//                            }
+
+
                             String strDate = str[1].toLowerCase();
                             String strTime = str[2].toLowerCase();
                             String strType = str[3].toLowerCase();
@@ -345,6 +361,47 @@ public class MyStats {
         {
         }
 
+    }
+
+    public static void buildArrayStatUser(){
+        File dir = Environment.getExternalStorageDirectory();
+        File file = new File(dir, MyVars.FOLDER_DATA + "all_users.txt");
+        MyTimer myTimer = new MyTimer("buildArrayStatUser");
+        MyVars.arrListUsers = new ArrayList<String>();
+        MyVars.arrListUsers.add("");
+        String line = "";
+        int iCount=0;
+        if (file.exists()) {
+            StringBuilder text = new StringBuilder();
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                while ((line = br.readLine()) != null) {
+                    if (line.length() > 0)
+                    {
+                        String[] str = line.split(",");
+                        iCount+=1;
+                        //System.out.println(iCount + " " + line);
+                        //String strID = str[0].toLowerCase();
+                        String strUser = str[0];
+                        if (MyVars.arrListUsers.contains(strUser)) {
+                            //System.out.println("Account found");
+                        } else {
+                            System.out.println("Account not found , user " + strUser + " added to arraylist");
+                            MyVars.arrListUsers.add(strUser);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //System.out.println("file export");
+            myTimer.getElapsedTime();
+            //viewAllDataSQLite();
+        }
+        else
+        {
+            System.out.println("File documents doc not found");
+        }
     }
 
     public static void resetStatVars(){

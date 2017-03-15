@@ -43,10 +43,12 @@ public class GraphActivity extends Activity {
     Spinner spinnerMonth;
     Spinner spinnerYear;
     Spinner spinnerType;
+    Spinner spinnerUser;
 
     ArrayAdapter<String> adapterMonth;
     ArrayAdapter<String> adapterYear;
     ArrayAdapter<String> adapterType;
+    ArrayAdapter<String> adapterUser;
 
     String selectedMonth , selectedYear , selectedType;
     ProgressDialog pd;
@@ -256,6 +258,7 @@ public class GraphActivity extends Activity {
         initSpinnerType();
         initSpinnerYear();
         initSpinnerMonth();
+        initSpinnerUser();
     }
     private void initSpinnerType(){
         String[] types = getResources().getStringArray(R.array.logTypes);
@@ -568,6 +571,49 @@ public class GraphActivity extends Activity {
         int spinnerPositionMonth = myAdapMonth.getPosition(MyVars.filterStatMonth);
         //set the default according to value
         spinnerMonth.setSelection(spinnerPositionMonth);
+    }
+    private void initSpinnerUser(){
+        //String[] arrayUsers = MyVars.arrListUsers.toArray(new String[MyVars.arrListUsers.size()]);
+        String[] users = MyVars.arrListUsers.toArray(new String[MyVars.arrListUsers.size()]);
+        spinnerUser = (Spinner) findViewById(R.id.spinnerUser);
+
+        adapterUser = new ArrayAdapter(this, android.R.layout.simple_spinner_item, users);
+        adapterUser.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerUser.setAdapter(adapterUser);
+
+//        //set spinner to current year
+//        //the value you want the position for
+//        ArrayAdapter myAdap = (ArrayAdapter) spinnerYear.getAdapter(); //cast to an ArrayAdapter
+//        int spinnerPosition = myAdap.getPosition(MyVars.filterStatYear);
+//        //set the default according to value
+//        spinnerYear.setSelection(spinnerPosition);
+
+//        spinnerUser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                selectedYear = parent.getItemAtPosition(position).toString();
+//                System.out.println("selectedYear " + selectedYear);
+//                if(selectedYear.equalsIgnoreCase(MyVars.filterStatYear)){
+//
+//                }
+//                else
+//                {
+//                    txtResultGraph.setText("Processing ..");
+//                    txtResultGraph.setGravity(Gravity.CENTER);
+//                    txtResultGraph.setVisibility(View.VISIBLE);
+//                    MyVars.filterStatYear = selectedYear;
+//                    new AsyncCreateStatsDL().execute();
+//                }
+//
+//            }
+//
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
     }
     //endregion
 

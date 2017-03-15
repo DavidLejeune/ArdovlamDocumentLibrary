@@ -1,5 +1,7 @@
 package com.lejeune.david.ardovlamdocumentlibrary;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lucian on 2/23/2017.
  */
@@ -61,5 +63,6 @@ public class MyVars {
 
     public static int totalStatRecords;
 
-
+    public static String [] arrUsers;
+    public static ArrayList<String> arrListUsers;
 }
