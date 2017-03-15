@@ -63,6 +63,8 @@ public class ListDocsActivity extends Activity {
 
     public void openPDFFile() {
         File pdfFile = null;
+
+        // folder choice is based on category (chbx checked)
         if(!FilterActivity.chkCommercial.isChecked() && FilterActivity.chkDocuments.isChecked() && !FilterActivity.chkTechnical.isChecked() ){
             pdfFile = new File(Environment.getExternalStorageDirectory(),MyVars.FOLDER_DOCUMENTS + docSelected);//File path
         }
@@ -74,6 +76,8 @@ public class ListDocsActivity extends Activity {
         if(!FilterActivity.chkCommercial.isChecked() && !FilterActivity.chkDocuments.isChecked() && FilterActivity.chkTechnical.isChecked() ){
             pdfFile = new File(Environment.getExternalStorageDirectory(),MyVars.FOLDER_TECHNICAL + docSelected);//File path
         }
+
+
         if (pdfFile.exists()) //Checking for the file is exist or not
         {
             for(int i=0; i<1000 ;i++) {

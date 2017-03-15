@@ -72,9 +72,8 @@ public class GraphActivity extends Activity {
         txtResultGraph.setVisibility(View.INVISIBLE);
         txtResultGraph.setGravity(Gravity.LEFT);
         //endregion
-        
-    }
 
+    }
 
     //region Activity functions
     private void createLineChart(){
