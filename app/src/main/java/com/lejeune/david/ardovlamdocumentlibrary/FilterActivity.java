@@ -51,7 +51,7 @@ public class FilterActivity extends Activity {
         ProgressDialog pd = ProgressDialog.show(FilterActivity.this, "", "Searching ...",
                 true, false);
 
-
+        //region Initialisations
         txtResultFilter = (TextView) findViewById(R.id.txtResultFilter);
         txtDepartment = (TextView) findViewById(R.id.txtDepartment);
 
@@ -64,7 +64,9 @@ public class FilterActivity extends Activity {
         chkTechnical = (CheckBox) findViewById(R.id.chkTechnical);
         chkTechnical.setVisibility(View.INVISIBLE);
         chkTechnical.setChecked(false);
+        //endregion
 
+        //region chkDocuments
         chkDocuments.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                     @Override
                                                     public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
@@ -85,8 +87,9 @@ public class FilterActivity extends Activity {
                                                     }
                                                 }
         );
+        //endregion
 
-
+        //region chkCommercial
         chkCommercial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                      @Override
                                                      public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
@@ -108,7 +111,9 @@ public class FilterActivity extends Activity {
                                                      }
                                                  }
         );
+        //endregion
 
+        //region btnShowFilteredDocs
         btnShowFilteredDocs = (Button) findViewById(R.id.btnShowFilteredDocs);
         btnShowFilteredDocs.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -127,16 +132,17 @@ public class FilterActivity extends Activity {
                 showFilteredResult();
             }
         });
+        //endregion
 
+        //region Misc actions
         setViewOfFilter();
-
 
         MyFilter.buildVariableTypeDocList();
         showArrayListDocType();
         countOccurencesOnDocType();
+        //endregion
 
-
-
+        //region Spinner Doc Type
         lblDocType = (TextView) findViewById(R.id.lblDocType);
         spinDocType = (Spinner) findViewById(R.id.spinDocType);
         adapterSpinner = new ArrayAdapter(this, android.R.layout.simple_spinner_item,listTypeDocNames);
@@ -156,14 +162,12 @@ public class FilterActivity extends Activity {
 
             }
         });
-
+        //endregion
 
         showArrayListTempDocType();
-
         pd.dismiss();
 
-
-
+        //region chktechnical
         chkTechnical.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                     @Override
                                                     public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
@@ -190,13 +194,12 @@ public class FilterActivity extends Activity {
                                                     }
                                                 }
         );
+        //endregion
 
     }
 
-
+    //region Misc methods
     private void countOccurencesOnDocType(){
-
-
 
         tempDocType = new ArrayList<>();
         for (String cu : listTypeDocNames) {
@@ -211,9 +214,6 @@ public class FilterActivity extends Activity {
         }
         listTypeDocNames = tempDocType;
         docTypeFilter = "";
-
-
-
 
     }
 
@@ -238,6 +238,7 @@ public class FilterActivity extends Activity {
         txtResultFilter.setText(result);
     }
     private void setViewOfFilter(){
+        // Depending on usertype show certin UI elements
         txtDepartment.setText(filterID);
         userType = MyVars.usertype;
         String result = "";
@@ -264,6 +265,8 @@ public class FilterActivity extends Activity {
             result = "You have installer rights";
         }
         if(userType.equalsIgnoreCase("3")){
+            chkDocuments.setVisibility(View.INVISIBLE);
+            chkCommercial.setVisibility(View.INVISIBLE);
             chkTechnical.setVisibility(View.VISIBLE);
             chkTechnical.setChecked(true);
             result = "You have technician rights";
@@ -272,6 +275,7 @@ public class FilterActivity extends Activity {
     }
 
     private void showFilteredResult(){
+        // a checkbox must be checked or no result will be found
         if(!chkDocuments.isChecked() && !chkCommercial.isChecked() && !chkTechnical.isChecked())
         {
             Toast.makeText(FilterActivity.this , "you need to check which type",Toast.LENGTH_LONG).show();
@@ -283,6 +287,17 @@ public class FilterActivity extends Activity {
         }
     }
 
+    private void gotoListDocs(){
+        final Intent listDocs = new Intent(FilterActivity.this, ListDocsActivity.class);
+        FilterActivity.this.startActivity(listDocs);
+
+        if(userType.equalsIgnoreCase("2")){
+            FilterActivity.this.finish();
+        }
+    }
+    //endregion
+
+    //region Filtering
     private void getFilteredDocuments(){
         getDepartmentTag();
         if(chkDocuments.isChecked()) getFilteredDocumentList();
@@ -293,7 +308,6 @@ public class FilterActivity extends Activity {
         departmentTag = MyFilter.findVariableDepartment(filterID);
         System.out.println("departmentTag : " +departmentTag );
     }
-
 
     private void getFilteredTechnicalList(){
 
@@ -327,7 +341,7 @@ public class FilterActivity extends Activity {
 
                         if( docTypeFilter.length()>0)
                         {
-                            Boolean docTypeFound = strFile.contains("-" + docTypeFilter);
+                            Boolean docTypeFound = strFile.contains("-" + docTypeFilter + "-");
                             if(docTypeFound)
                             {
                                 iCountOccurence += 1 ;
@@ -388,7 +402,7 @@ public class FilterActivity extends Activity {
 
                         if( docTypeFilter.length()>0)
                         {
-                            Boolean docTypeFound = strFile.contains("-" + docTypeFilter);
+                            Boolean docTypeFound = strFile.contains("-" + docTypeFilter + "-");
                             if(docTypeFound)
                             {
                                 iCountOccurence += 1 ;
@@ -452,7 +466,7 @@ public class FilterActivity extends Activity {
 
                         if( docTypeFilter.length()>0)
                         {
-                            Boolean docTypeFound = strFile.contains("-" + docTypeFilter);
+                            Boolean docTypeFound = strFile.contains("-" + docTypeFilter + "-");
                             if(docTypeFound)
                             {
                                 iCountOccurence += 1 ;
@@ -484,17 +498,6 @@ public class FilterActivity extends Activity {
 
     }
 
-
-    private void gotoListDocs(){
-        final Intent listDocs = new Intent(FilterActivity.this, ListDocsActivity.class);
-        FilterActivity.this.startActivity(listDocs);
-
-        if(userType.equalsIgnoreCase("2")){
-            FilterActivity.this.finish();
-        }
-    }
-
-
     public void showArrayListDocType(){
 
         System.out.println("looping through the arraylist var type");
@@ -502,7 +505,6 @@ public class FilterActivity extends Activity {
             System.out.println("list doc type entry : " + cu);
         }
     }
-
     public void showArrayListTempDocType(){
 
         System.out.println("looping through the temp arraylist var type");
@@ -510,4 +512,6 @@ public class FilterActivity extends Activity {
             System.out.println("list doc type entry : " + cu);
         }
     }
+    //endregion
+
 }

@@ -23,19 +23,6 @@ import java.io.FileOutputStream;
 public class FTPfunctions {
 
     //region Declarations
-    com.lejeune.david.ardovlamdocumentlibrary.MenuActivity.AsyncUpdatesDocumentsDownloadDL mThreadReference = null;
-
-    private static final String TEMP_FILENAME = "DiscreteSystemsandSignalProcessing.pdf";
-    private static final String FOLDER_DATA = "/DocLib/Data/";
-    private static final String FOLDER_DATA_USERS = FOLDER_DATA + "Users/";
-    private static final String FOLDER_DATA_DOCUMENTS = FOLDER_DATA + "Documents/";
-    private static final String FOLDER_DATA_DOCUMENTS_ALL = FOLDER_DATA + "Documents/ALL/";
-    private  static  final String FOLDER_DOCUMENTS = "/DocLib/Documents/";
-
-    private static final String TEMP_FOLDERNAME_STORAGE = "DocLib";
-    private static final String TEMP_FOLDERNAME_FTP = "DocLib";
-    private static final String DOC_FOLDERNAME_STORAGE = TEMP_FOLDERNAME_STORAGE + "/DOCUMENTS";
-    private static final String DOC_FOLDERNAME_FTP = TEMP_FOLDERNAME_FTP + "/DOCUMENTS";
 
     private static final String TAG = "MyFTPClientFunctions";
     public FTPClient mFTPClient = null;
@@ -77,7 +64,6 @@ public class FTPfunctions {
     }
 
     // Method to disconnect from FTP server:
-
     public boolean ftpDisconnect() {
         try {
             mFTPClient.logout();
@@ -91,7 +77,6 @@ public class FTPfunctions {
     }
 
     // Method to get current working directory:
-
     public String ftpGetCurrentWorkingDirectory() {
         try {
             String workingDir = mFTPClient.printWorkingDirectory();
@@ -104,7 +89,6 @@ public class FTPfunctions {
     }
 
     // Method to change working directory:
-
     public boolean ftpChangeDirectory(String directory_path) {
         try {
             mFTPClient.changeWorkingDirectory(directory_path);
@@ -140,7 +124,6 @@ public class FTPfunctions {
             return fileList;
         }
     }
-
 
 
     public boolean downloadDataFiles(String dir_path) {
@@ -215,7 +198,6 @@ public class FTPfunctions {
             return status;
         }
     }
-
     public boolean downloadStatsFiles(String dir_path) {
         boolean status = false;
         String[] fileList = null;
@@ -253,9 +235,7 @@ public class FTPfunctions {
         }
     }
 
-
     // Method to create new directory:
-
     public boolean ftpMakeDirectory(String new_dir_path) {
         try {
             boolean status = mFTPClient.makeDirectory(new_dir_path);
@@ -269,7 +249,6 @@ public class FTPfunctions {
     }
 
     // Method to delete/remove a directory:
-
     public boolean ftpRemoveDirectory(String dir_path) {
         try {
             boolean status = mFTPClient.removeDirectory(dir_path);
@@ -282,7 +261,6 @@ public class FTPfunctions {
     }
 
     // Method to delete a file:
-
     public boolean ftpRemoveFile(String filePath) {
         try {
             boolean status = mFTPClient.deleteFile(filePath);
@@ -295,7 +273,6 @@ public class FTPfunctions {
     }
 
     // Method to rename a file:
-
     public boolean ftpRenameFile(String from, String to) {
         try {
             boolean status = mFTPClient.rename(from, to);
@@ -308,7 +285,6 @@ public class FTPfunctions {
     }
 
     // Method to download a file from FTP server:
-
     /**
      * mFTPClient: FTP client connection object (see FTP connection example)
      * srcFilePath: path to the source file in FTP server desFilePath: path to
@@ -347,7 +323,6 @@ public class FTPfunctions {
     }
 
     // Method to upload a file to FTP server:
-
     /**
      * mFTPClient: FTP client connection object (see FTP connection example)
      * srcFilePath: source file path in sdcard desFileName: file name to be
@@ -381,8 +356,6 @@ public class FTPfunctions {
 
         return status;
     }
-
-
-
+    
 
 }
