@@ -15,6 +15,10 @@ import java.io.IOException;
 
 public class MyStats {
 
+    //region Adding to user stat file
+    /**
+     *  Add an entry to the logfile , can be used for all types of lo entries
+     */
     public static void logEntry(String entryType , String entryMessage) {
 
         if(entryMessage.length()<1)
@@ -58,7 +62,12 @@ public class MyStats {
         }
 
     }
+    //endregion
 
+    //region Big stat file
+    /**
+     *  Combine all individual user stat files into 1 single big file
+     */
     public static void createBigLogFile() {
         File dir = Environment.getExternalStorageDirectory();
         File file = null;
@@ -83,7 +92,6 @@ public class MyStats {
             }
         }
     }
-
 
     public static void logStatEntryToBigLogFile(String logMessage){
 
@@ -110,7 +118,12 @@ public class MyStats {
         }
 
     }
+    //endregion
 
+    //region Filtering the Big stat file
+    /**
+     *  Creating the arrays for both Menth and Hourly stats
+     */
     public static void createMonthArrays(){
 
 
@@ -178,8 +191,6 @@ public class MyStats {
 
 
     }
-
-
     public static void createMonthHourArrays(){
 
 
@@ -216,7 +227,9 @@ public class MyStats {
     }
 
 
-
+    /**
+     *  Search the big stat file and filter based on year and stat type
+     */
     public static void filterBigStatFiles(String filterStatYear , String filterStatType){
 
         MyVars.totalStatRecords = 0;
@@ -332,11 +345,7 @@ public class MyStats {
         {
         }
 
-
     }
-
-
-
 
     public static void resetStatVars(){
 
@@ -344,6 +353,7 @@ public class MyStats {
         MyVars.filterStatYear = "";
         MyVars.filterStatMonth = "";
     }
+    //endregion
 
 }
 

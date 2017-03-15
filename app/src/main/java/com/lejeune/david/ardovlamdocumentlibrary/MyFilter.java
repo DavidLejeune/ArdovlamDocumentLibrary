@@ -56,7 +56,6 @@ public class MyFilter {
         return departmentTag;
     }
 
-
     public static String findVariableTypeDoc(String doctype) {
 
         String typeDocFilter = "";
@@ -97,7 +96,9 @@ public class MyFilter {
         return typeDocFilter;
     }
 
-
+    /**
+     *  Builds an array list of available doctype for the department
+     */
     public static void buildVariableTypeDocList() {
         listTypeDocNames = new ArrayList<>();
         listTypeDocNames.add("");
