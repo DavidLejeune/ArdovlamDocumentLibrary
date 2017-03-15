@@ -333,17 +333,7 @@ public class MainActivity extends Activity {
 
             myTimer.getElapsedTime();
 
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    setTxtResultMain("Creating array list of users in stat file");
-                    MyStats.buildArrayStatUser();
-                    for (String cu : MyVars.arrListUsers) {
-                        System.out.println("cu : " + cu);
-                    }
-                }
-            };
-            thread.start();
+
 
 
             gotoLogin();

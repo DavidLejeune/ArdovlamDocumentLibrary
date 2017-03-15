@@ -71,6 +71,20 @@ public class LoginActivity extends Activity {
         displaySharedPref();
         // this deletes for all 3 sections the files that are NOT in their csv file
         new AsyncRemoveOldFilesDL().execute();
+
+        // Creating the arraylist of users in stat file (not done at main because big stat needs to be created first
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                MyStats.buildArrayStatUser();
+                for (String cu : MyVars.arrListUsers) {
+                    System.out.println("cu : " + cu);
+                }
+            }
+        };
+        thread.start();
+
+
         //endregion
 
         //region Determining profile image
