@@ -40,7 +40,6 @@ public class MainActivity extends Activity {
     private Context cntx;
     private MyTimer timeActivity;
 
-//    SQLiteDatabase mydb;
     //endregion
 
     @Override
@@ -64,8 +63,7 @@ public class MainActivity extends Activity {
         txtResultMain.setVisibility(View.VISIBLE);
         txtResultMain.setText("");
 
-
-        txtResultMain.setText(txtResultMain.getText() + "Checking folders \n");
+        setTxtResultMain("Checking folders");
 
         // Central screen advertisement
         ImageView imgLogo = (ImageView) findViewById(R.id.imgLogoTitle);
@@ -82,14 +80,14 @@ public class MainActivity extends Activity {
         connectionType = MyTools.checkNetworkStatus(cntx);
         System.out.println("connectionType : " + connectionType);
         if (connectionType.equalsIgnoreCase("wifi")){
-            txtResultMain.setText(txtResultMain.getText() + "WiFi detected \n");
-            System.out.println("on wifi , so downloading data folder");
-            txtResultMain.setText(txtResultMain.getText() + "Downloading data folder \n");
+            setTxtResultMain("WiFi detected");
+            setTxtResultMain("Downloading data folder");
             new AsyncDataDownloadDL().execute();
         }
         else
         {
-            txtResultMain.setText(txtResultMain.getText() + "NO WiFi detected \n");
+
+            setTxtResultMain("NO WiFi detected");
             gotoLogin();
         }
         //endregion
@@ -102,6 +100,10 @@ public class MainActivity extends Activity {
     }
 
     //region Misc methods
+    private void setTxtResultMain(String message){
+        txtResultMain.setText(txtResultMain.getText() + message + "\n");
+    }
+
     private void refreshDisplayVariables(){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -111,7 +113,7 @@ public class MainActivity extends Activity {
 
     private void gotoLogin(){
 
-        txtResultMain.setText(txtResultMain.getText() + "Launching login \n");
+        setTxtResultMain("Launching login");
                 final Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     MainActivity.this.startActivity(loginIntent);
                     MainActivity.this.finish();
@@ -173,7 +175,7 @@ public class MainActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            txtResultMain.setText(txtResultMain.getText() + "Uploading user stat file \n");
+            setTxtResultMain("Uploading user stat file");
         }
 
         @Override
@@ -231,7 +233,7 @@ public class MainActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            txtResultMain.setText(txtResultMain.getText() + "Downloading all user stat files \n");
+            setTxtResultMain("Downloading all user stat files");
             myTimer = new MyTimer("AsyncStatsDownloadDL");
         }
 
@@ -288,7 +290,7 @@ public class MainActivity extends Activity {
             dir = Environment.getExternalStorageDirectory();
             file = new File(dir, MyVars.FOLDER_STATS);
 
-            txtResultMain.setText(txtResultMain.getText() + "Creating big stat file (all users) \n");
+            setTxtResultMain("Creating big stat file (all users)");
 
             myTimer = new MyTimer("AsyncBigStatsCreateDL");
             MyStats.createBigLogFile();
