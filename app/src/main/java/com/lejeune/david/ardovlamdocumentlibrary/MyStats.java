@@ -289,56 +289,118 @@ public class MyStats {
                                 if (filterStatType.length()>0){
                                     if(filterStatType.equalsIgnoreCase(strType))
                                     {
-                                        // logging the days
-                                        switch(strMonth) {
-                                            case "01":
-                                                MyVars.arrJanuary[iDay - 1] = MyVars.arrJanuary[iDay - 1] +1;
-                                                MyVars.arrJanuaryHour[iHour] = MyVars.arrJanuaryHour[iHour] +1;
-                                                break;
-                                            case "02":
-                                                MyVars.arrFebruary[iDay - 1] = MyVars.arrFebruary[iDay - 1] +1;
-                                                MyVars.arrFebruaryHour[iHour] = MyVars.arrFebruaryHour[iHour] +1;
-                                                break;
-                                            case "03":
-                                                MyVars.arrMarch[iDay - 1] = MyVars.arrMarch[iDay - 1] +1;
-                                                MyVars.arrMarchHour[iHour] = MyVars.arrMarchHour[iHour] +1;
-                                                break;
-                                            case "04":
-                                                MyVars.arrApril[iDay - 1] = MyVars.arrApril[iDay - 1] +1;
-                                                MyVars.arrAprilHour[iHour] = MyVars.arrAprilHour[iHour] +1;
-                                                break;
-                                            case "05":
-                                                MyVars.arrMay[iDay - 1] = MyVars.arrMay[iDay - 1] +1;
-                                                MyVars.arrMayHour[iHour] = MyVars.arrMayHour[iHour] +1;
-                                                break;
-                                            case "06":
-                                                MyVars.arrJune[iDay - 1] = MyVars.arrJune[iDay - 1] +1;
-                                                MyVars.arrJuneHour[iHour] = MyVars.arrJuneHour[iHour] +1;
-                                                break;
-                                            case "07":
-                                                MyVars.arrJuly[iDay - 1] = MyVars.arrJuly[iDay - 1] +1;
-                                                MyVars.arrJulyHour[iHour] = MyVars.arrJulyHour[iHour] +1;
-                                                break;
-                                            case "08":
-                                                MyVars.arrAugustus[iDay - 1] = MyVars.arrAugustus[iDay - 1] +1;
-                                                MyVars.arrAugustusHour[iHour] = MyVars.arrAugustusHour[iHour] +1;
-                                                break;
-                                            case "09":
-                                                MyVars.arrSeptember[iDay - 1] = MyVars.arrSeptember[iDay - 1] +1;
-                                                MyVars.arrSeptemberHour[iHour] = MyVars.arrSeptemberHour[iHour] +1;
-                                                break;
-                                            case "10":
-                                                MyVars.arrOctober[iDay - 1] = MyVars.arrOctober[iDay - 1] +1;
-                                                MyVars.arrOctoberHour[iHour] = MyVars.arrOctoberHour[iHour] +1;
-                                                break;
-                                            case "11":
-                                                MyVars.arrNovember[iDay - 1] = MyVars.arrNovember[iDay - 1] +1;
-                                                MyVars.arrNovemberHour[iHour] = MyVars.arrNovemberHour[iHour] +1;
-                                                break;
-                                            case "12":
-                                                MyVars.arrDecember[iDay - 1] = MyVars.arrDecember[iDay - 1] +1;
-                                                MyVars.arrDecemberHour[iHour] = MyVars.arrDecemberHour[iHour] +1;
-                                                break;
+//                                        if(MyVars.filterStatUser==null){
+//                                            MyVars.filterStatUser = "";
+//                                        }
+                                        if(MyVars.filterStatUser.length()>0){
+                                            if(MyVars.filterStatUser.equalsIgnoreCase(strUser)){
+                                                // logging the days
+                                                switch (strMonth) {
+                                                    case "01":
+                                                        MyVars.arrJanuary[iDay - 1] = MyVars.arrJanuary[iDay - 1] + 1;
+                                                        MyVars.arrJanuaryHour[iHour] = MyVars.arrJanuaryHour[iHour] + 1;
+                                                        break;
+                                                    case "02":
+                                                        MyVars.arrFebruary[iDay - 1] = MyVars.arrFebruary[iDay - 1] + 1;
+                                                        MyVars.arrFebruaryHour[iHour] = MyVars.arrFebruaryHour[iHour] + 1;
+                                                        break;
+                                                    case "03":
+                                                        MyVars.arrMarch[iDay - 1] = MyVars.arrMarch[iDay - 1] + 1;
+                                                        MyVars.arrMarchHour[iHour] = MyVars.arrMarchHour[iHour] + 1;
+                                                        break;
+                                                    case "04":
+                                                        MyVars.arrApril[iDay - 1] = MyVars.arrApril[iDay - 1] + 1;
+                                                        MyVars.arrAprilHour[iHour] = MyVars.arrAprilHour[iHour] + 1;
+                                                        break;
+                                                    case "05":
+                                                        MyVars.arrMay[iDay - 1] = MyVars.arrMay[iDay - 1] + 1;
+                                                        MyVars.arrMayHour[iHour] = MyVars.arrMayHour[iHour] + 1;
+                                                        break;
+                                                    case "06":
+                                                        MyVars.arrJune[iDay - 1] = MyVars.arrJune[iDay - 1] + 1;
+                                                        MyVars.arrJuneHour[iHour] = MyVars.arrJuneHour[iHour] + 1;
+                                                        break;
+                                                    case "07":
+                                                        MyVars.arrJuly[iDay - 1] = MyVars.arrJuly[iDay - 1] + 1;
+                                                        MyVars.arrJulyHour[iHour] = MyVars.arrJulyHour[iHour] + 1;
+                                                        break;
+                                                    case "08":
+                                                        MyVars.arrAugustus[iDay - 1] = MyVars.arrAugustus[iDay - 1] + 1;
+                                                        MyVars.arrAugustusHour[iHour] = MyVars.arrAugustusHour[iHour] + 1;
+                                                        break;
+                                                    case "09":
+                                                        MyVars.arrSeptember[iDay - 1] = MyVars.arrSeptember[iDay - 1] + 1;
+                                                        MyVars.arrSeptemberHour[iHour] = MyVars.arrSeptemberHour[iHour] + 1;
+                                                        break;
+                                                    case "10":
+                                                        MyVars.arrOctober[iDay - 1] = MyVars.arrOctober[iDay - 1] + 1;
+                                                        MyVars.arrOctoberHour[iHour] = MyVars.arrOctoberHour[iHour] + 1;
+                                                        break;
+                                                    case "11":
+                                                        MyVars.arrNovember[iDay - 1] = MyVars.arrNovember[iDay - 1] + 1;
+                                                        MyVars.arrNovemberHour[iHour] = MyVars.arrNovemberHour[iHour] + 1;
+                                                        break;
+                                                    case "12":
+                                                        MyVars.arrDecember[iDay - 1] = MyVars.arrDecember[iDay - 1] + 1;
+                                                        MyVars.arrDecemberHour[iHour] = MyVars.arrDecemberHour[iHour] + 1;
+                                                        break;
+                                                }
+
+                                            }
+
+                                        }
+                                        else {
+                                            // logging the days
+                                            switch (strMonth) {
+                                                case "01":
+                                                    MyVars.arrJanuary[iDay - 1] = MyVars.arrJanuary[iDay - 1] + 1;
+                                                    MyVars.arrJanuaryHour[iHour] = MyVars.arrJanuaryHour[iHour] + 1;
+                                                    break;
+                                                case "02":
+                                                    MyVars.arrFebruary[iDay - 1] = MyVars.arrFebruary[iDay - 1] + 1;
+                                                    MyVars.arrFebruaryHour[iHour] = MyVars.arrFebruaryHour[iHour] + 1;
+                                                    break;
+                                                case "03":
+                                                    MyVars.arrMarch[iDay - 1] = MyVars.arrMarch[iDay - 1] + 1;
+                                                    MyVars.arrMarchHour[iHour] = MyVars.arrMarchHour[iHour] + 1;
+                                                    break;
+                                                case "04":
+                                                    MyVars.arrApril[iDay - 1] = MyVars.arrApril[iDay - 1] + 1;
+                                                    MyVars.arrAprilHour[iHour] = MyVars.arrAprilHour[iHour] + 1;
+                                                    break;
+                                                case "05":
+                                                    MyVars.arrMay[iDay - 1] = MyVars.arrMay[iDay - 1] + 1;
+                                                    MyVars.arrMayHour[iHour] = MyVars.arrMayHour[iHour] + 1;
+                                                    break;
+                                                case "06":
+                                                    MyVars.arrJune[iDay - 1] = MyVars.arrJune[iDay - 1] + 1;
+                                                    MyVars.arrJuneHour[iHour] = MyVars.arrJuneHour[iHour] + 1;
+                                                    break;
+                                                case "07":
+                                                    MyVars.arrJuly[iDay - 1] = MyVars.arrJuly[iDay - 1] + 1;
+                                                    MyVars.arrJulyHour[iHour] = MyVars.arrJulyHour[iHour] + 1;
+                                                    break;
+                                                case "08":
+                                                    MyVars.arrAugustus[iDay - 1] = MyVars.arrAugustus[iDay - 1] + 1;
+                                                    MyVars.arrAugustusHour[iHour] = MyVars.arrAugustusHour[iHour] + 1;
+                                                    break;
+                                                case "09":
+                                                    MyVars.arrSeptember[iDay - 1] = MyVars.arrSeptember[iDay - 1] + 1;
+                                                    MyVars.arrSeptemberHour[iHour] = MyVars.arrSeptemberHour[iHour] + 1;
+                                                    break;
+                                                case "10":
+                                                    MyVars.arrOctober[iDay - 1] = MyVars.arrOctober[iDay - 1] + 1;
+                                                    MyVars.arrOctoberHour[iHour] = MyVars.arrOctoberHour[iHour] + 1;
+                                                    break;
+                                                case "11":
+                                                    MyVars.arrNovember[iDay - 1] = MyVars.arrNovember[iDay - 1] + 1;
+                                                    MyVars.arrNovemberHour[iHour] = MyVars.arrNovemberHour[iHour] + 1;
+                                                    break;
+                                                case "12":
+                                                    MyVars.arrDecember[iDay - 1] = MyVars.arrDecember[iDay - 1] + 1;
+                                                    MyVars.arrDecemberHour[iHour] = MyVars.arrDecemberHour[iHour] + 1;
+                                                    break;
+                                            }
                                         }
 
 

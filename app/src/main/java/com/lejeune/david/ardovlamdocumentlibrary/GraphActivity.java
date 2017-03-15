@@ -50,7 +50,7 @@ public class GraphActivity extends Activity {
     ArrayAdapter<String> adapterType;
     ArrayAdapter<String> adapterUser;
 
-    String selectedMonth , selectedYear , selectedType;
+    String selectedMonth , selectedYear , selectedType , selectedUser;
     ProgressDialog pd;
 
     TextView txtResultGraph;
@@ -582,38 +582,38 @@ public class GraphActivity extends Activity {
 
         spinnerUser.setAdapter(adapterUser);
 
-//        //set spinner to current year
-//        //the value you want the position for
-//        ArrayAdapter myAdap = (ArrayAdapter) spinnerYear.getAdapter(); //cast to an ArrayAdapter
-//        int spinnerPosition = myAdap.getPosition(MyVars.filterStatYear);
-//        //set the default according to value
-//        spinnerYear.setSelection(spinnerPosition);
+        //set spinner to current year
+        //the value you want the position for
+        ArrayAdapter myAdap = (ArrayAdapter) spinnerUser.getAdapter(); //cast to an ArrayAdapter
+        int spinnerPosition = myAdap.getPosition(MyVars.filterStatUser);
+        //set the default according to value
+        spinnerUser.setSelection(spinnerPosition);
 
-//        spinnerUser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                selectedYear = parent.getItemAtPosition(position).toString();
-//                System.out.println("selectedYear " + selectedYear);
-//                if(selectedYear.equalsIgnoreCase(MyVars.filterStatYear)){
-//
-//                }
-//                else
-//                {
-//                    txtResultGraph.setText("Processing ..");
-//                    txtResultGraph.setGravity(Gravity.CENTER);
-//                    txtResultGraph.setVisibility(View.VISIBLE);
-//                    MyVars.filterStatYear = selectedYear;
-//                    new AsyncCreateStatsDL().execute();
-//                }
-//
-//            }
-//
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        spinnerUser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedUser = parent.getItemAtPosition(position).toString();
+                System.out.println("selectedUser " + selectedUser);
+                if(selectedUser.equalsIgnoreCase(MyVars.filterStatUser)){
+
+                }
+                else
+                {
+                    txtResultGraph.setText("Processing ..");
+                    txtResultGraph.setGravity(Gravity.CENTER);
+                    txtResultGraph.setVisibility(View.VISIBLE);
+                    MyVars.filterStatUser = selectedUser;
+                    new AsyncCreateStatsDL().execute();
+                }
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
     //endregion
 

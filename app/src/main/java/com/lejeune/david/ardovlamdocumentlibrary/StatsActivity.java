@@ -52,6 +52,9 @@ public class StatsActivity extends Activity {
         if (MyVars.filterStatType.equalsIgnoreCase("")){
             MyVars.filterStatType = "ENTRY";
         }
+        if (MyVars.filterStatUser==null){
+            MyVars.filterStatUser = "";
+        }
         //endregion
 
         // old btnShowGraph
@@ -105,8 +108,6 @@ public class StatsActivity extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-
-
             MyStats.filterBigStatFiles(MyVars.filterStatYear, MyVars.filterStatType);
 
             return null;
