@@ -288,9 +288,7 @@ public class GraphActivity extends Activity {
                 else
                 {
 
-                    txtResultGraph.setText("Processing ..");
-                    txtResultGraph.setGravity(Gravity.CENTER);
-                    txtResultGraph.setVisibility(View.VISIBLE);
+                    setSearchingFor(selectedType);
                     MyVars.filterStatType = selectedType;
                     new AsyncCreateStatsDL().execute();
                 }
@@ -331,9 +329,7 @@ public class GraphActivity extends Activity {
                 }
                 else
                 {
-                    txtResultGraph.setText("Processing ..");
-                    txtResultGraph.setGravity(Gravity.CENTER);
-                    txtResultGraph.setVisibility(View.VISIBLE);
+                    setSearchingFor(selectedYear);
                     MyVars.filterStatYear = selectedYear;
                     new AsyncCreateStatsDL().execute();
                 }
@@ -540,11 +536,13 @@ public class GraphActivity extends Activity {
                     sum += d;
                 txtResultGraph.setVisibility(View.VISIBLE);
                 txtResultGraph.setText("");
-                txtResultGraph.setText(txtResultGraph.getText() + "Total log records in stat file : " + MyVars.totalStatRecords + "\n");
-                txtResultGraph.setText(txtResultGraph.getText() + "Total records with filter : " + sum + "\n");
+                txtResultGraph.setTextSize(13);
+                txtResultGraph.setTextColor(Color.BLUE);
+                txtResultGraph.setText(txtResultGraph.getText() + "Total log records : " + MyVars.totalStatRecords + "\n");
+                txtResultGraph.setText(txtResultGraph.getText() + "Matching filter : " + sum + "\n");
                 Double percent = 0.0;
                 percent = (sum * 1.0/  MyVars.totalStatRecords) * 100;
-                txtResultGraph.setText(txtResultGraph.getText() + "Percentage of total : " + String.format("%.2f", percent) + "%");
+                txtResultGraph.setText(txtResultGraph.getText() + "Result percentage : " + String.format("%.2f", percent) + "%");
 
 
 
@@ -599,9 +597,7 @@ public class GraphActivity extends Activity {
                 }
                 else
                 {
-                    txtResultGraph.setText("Processing ..");
-                    txtResultGraph.setGravity(Gravity.CENTER);
-                    txtResultGraph.setVisibility(View.VISIBLE);
+                    setSearchingFor(selectedUser);
                     MyVars.filterStatUser = selectedUser;
                     new AsyncCreateStatsDL().execute();
                 }
@@ -616,6 +612,17 @@ public class GraphActivity extends Activity {
         });
     }
     //endregion
+
+
+    private void setSearchingFor(String filter){
+
+        txtResultGraph.setTextSize(17);
+        txtResultGraph.setTextColor(Color.YELLOW);
+        txtResultGraph.setText("Searching for " + filter + " ...");
+        txtResultGraph.setGravity(Gravity.CENTER);
+        txtResultGraph.setVisibility(View.VISIBLE);
+    }
+
 
     //region Internal classes
 

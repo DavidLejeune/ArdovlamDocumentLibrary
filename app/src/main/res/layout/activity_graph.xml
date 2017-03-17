@@ -19,14 +19,6 @@
         android:layout_alignParentStart="true"
         android:id="@+id/lblChooseType" />
 
-    <Spinner
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerType"
-        android:layout_below="@+id/lblChooseType"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_width="100sp" />
-
     <TextView
         android:text="@string/lblUser"
         android:layout_width="wrap_content"
@@ -47,15 +39,6 @@
         android:layout_toStartOf="@+id/lblChooseYear"
         android:layout_width="200sp" />
 
-    <Spinner
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerYear"
-        android:layout_width="100sp"
-        android:layout_alignBaseline="@+id/spinnerMonth"
-        android:layout_alignBottom="@+id/spinnerMonth"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <TextView
         android:text="@string/lbl_year"
         android:layout_width="wrap_content"
@@ -64,25 +47,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/spinnerYear"
         android:layout_alignStart="@+id/spinnerYear" />
-
-    <TextView
-        android:text="@string/lbl_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblChooseMoonth"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/spinnerType"
-        android:layout_toEndOf="@+id/spinnerType"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp" />
-
-    <Spinner
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerMonth"
-        android:layout_width="100sp"
-        android:layout_below="@+id/lblChooseMoonth"
-        android:layout_alignLeft="@+id/lblChooseMoonth"
-        android:layout_alignStart="@+id/lblChooseMoonth" />
 
     <TextView
         android:text="@string/txt_result_graph"
@@ -115,4 +79,41 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/lbl_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblChooseMoonth"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/spinnerMonth"
+        android:layout_alignStart="@+id/spinnerMonth" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerType"
+        android:layout_below="@+id/lblChooseType"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_width="90sp" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerMonth"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_below="@+id/lblChooseMoonth"
+        android:layout_toRightOf="@+id/spinnerType"
+        android:layout_toEndOf="@+id/spinnerType"
+        android:layout_width="90sp" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerYear"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_below="@+id/lblChooseYear"
+        android:layout_toRightOf="@+id/spinnerMonth"
+        android:layout_toEndOf="@+id/spinnerMonth"
+        android:layout_width="90sp" />
 </RelativeLayout>
