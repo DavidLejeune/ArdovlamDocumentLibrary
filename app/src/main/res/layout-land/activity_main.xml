@@ -18,7 +18,7 @@
         android:id="@+id/tvTitleLogin"
         tools:text="@string/strTitleLogin"
         android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-        android:textSize="36sp"
+        android:textSize="20sp"
         android:fontFamily="sans-serif-condensed"
         android:typeface="monospace"
         android:textAllCaps="false"
@@ -29,17 +29,6 @@
         android:visibility="visible"
         android:textColor="@color/colorPrimary" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        app:srcCompat="@drawable/logo"
-        android:id="@+id/imgLogoTitle"
-        tools:ignore="ContentDescription"
-        android:layout_height="100dp"
-        android:layout_marginTop="112dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <TextView
         android:text="TextView"
         android:id="@+id/txtResultMain"
@@ -49,5 +38,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp"
         android:layout_width="200dp"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        app:srcCompat="@drawable/logo"
+        android:id="@+id/imgLogoTitle"
+        tools:ignore="ContentDescription"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="80dp" />
 </RelativeLayout>

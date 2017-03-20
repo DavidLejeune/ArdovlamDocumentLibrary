@@ -12,7 +12,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
+import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -67,6 +69,8 @@ public class MenuActivity extends Activity {
     static String updateTecFile  = "Update_technical.txt";
 
     ImageView imgProfile;
+
+    GridView gridview;
     //endregion
 
     @Override
@@ -81,7 +85,7 @@ public class MenuActivity extends Activity {
         //endregion
 
         //region Gridview
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -203,7 +207,31 @@ public class MenuActivity extends Activity {
         myTools.retrieveSharedPref(cntx);
         //endregion
 
+        MyVars.currentOrientation = getRotation(cntx);
+//        switch (MyVars.currentOrientation) {
+//            case "landscape":
+//                gridview.setRowCount(1);
+//            case "reverse landscape":
+//                gridview.setRowCount(1);
+//        }
     }
+
+    public String getRotation(Context context){
+        final int rotation = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                return "portrait";
+            case Surface.ROTATION_90:
+                //gridView.setRowCount(1);
+                return "landscape";
+            case Surface.ROTATION_180:
+                return "reverse portrait";
+            default:
+                //gridView.setRowCount(1);
+                return "reverse landscape";
+        }
+    }
+
 
     //region Misc
     private void init(){
@@ -224,6 +252,8 @@ public class MenuActivity extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         MyVars.screenHeight = displayMetrics.heightPixels;
         MyVars.screenWidth = displayMetrics.widthPixels;
+        System.out.println("Height " + MyVars.screenHeight);
+        System.out.println("Width " + MyVars.screenWidth);
     }
 
     private void gotoStats(){

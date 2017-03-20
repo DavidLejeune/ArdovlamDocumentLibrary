@@ -65,4 +65,6 @@ public class MyVars {
 
     public static String [] arrUsers;
     public static ArrayList<String> arrListUsers;
+
+    public static String currentOrientation;
 }
