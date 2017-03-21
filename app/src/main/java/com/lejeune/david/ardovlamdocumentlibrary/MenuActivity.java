@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -71,6 +72,11 @@ public class MenuActivity extends Activity {
     ImageView imgProfile;
 
     GridView gridview;
+
+
+    private GridView gridView;
+    private GridViewAdapter gridAdapter;
+
     //endregion
 
     @Override
@@ -85,39 +91,61 @@ public class MenuActivity extends Activity {
         //endregion
 
         //region Gridview
-        gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
 
-                switch (position) {
+        gridView = (GridView) findViewById(R.id.gridView);
+        gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, getData());
+        gridView.setAdapter(gridAdapter);
 
-                    case 0:
-                        filterID = "Inbraakdetectie";
-                        break;
-                    case 1:
-                        filterID = "Branddetectie";
-                        break;
-                    case 2:
-                        filterID = "Gasdetectie";
-                        break;
-                    case 3:
-                        filterID = "Camerabewaking";
-                        break;
-                    case 4:
-                        filterID = "Toegangscontrole";
-                        break;
-                    case 5:
-                        filterID = "Geintegreerde bewaking";
-                        break;
-                }
-
-                Toast.makeText(MenuActivity.this, "Please wait ...", Toast.LENGTH_SHORT).show();
-                new AsyncShowMeDL().execute();
-
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+//                ImageItem item = (ImageItem) parent.getItemAtPosition(position);
+                System.out.println("position : "+ position);
+//                //Create intent
+//                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+//                intent.putExtra("title", item.getTitle());
+//                intent.putExtra("image", item.getImage());
+//
+//                //Start details activity
+//                startActivity(intent);
             }
         });
+
+//        gridview = (GridView) findViewById(R.id.gridview);
+//        gridview.setAdapter(new ImageAdapter(this));
+//        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View v,
+//                                    int position, long id) {
+//
+//                switch (position) {
+//
+//                    case 0:
+//                        filterID = "Inbraakdetectie";
+//                        break;
+//                    case 1:
+//                        filterID = "Branddetectie";
+//                        break;
+//                    case 2:
+//                        filterID = "Gasdetectie";
+//                        break;
+//                    case 3:
+//                        filterID = "Camerabewaking";
+//                        break;
+//                    case 4:
+//                        filterID = "Toegangscontrole";
+//                        break;
+//                    case 5:
+//                        filterID = "Geintegreerde bewaking";
+//                        break;
+//                }
+//
+//                Toast.makeText(MenuActivity.this, "Please wait ...", Toast.LENGTH_SHORT).show();
+//                new AsyncShowMeDL().execute();
+//
+//            }
+//        });
+
+
+
         //endregion
 
         //region Textfields
@@ -215,6 +243,18 @@ public class MenuActivity extends Activity {
 //                gridview.setRowCount(1);
 //        }
     }
+
+
+        private ArrayList<ImageItem> getData() {
+            final ArrayList<ImageItem> imageItems = new ArrayList<>();
+            TypedArray imgs = getResources().obtainTypedArray(R.array.image_ids);
+            for (int i = 0; i < imgs.length(); i++) {
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));
+                imageItems.add(new ImageItem(bitmap, "Image#" + i));
+            }
+            return imageItems;
+        }
+
 
     public String getRotation(Context context){
         final int rotation = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();

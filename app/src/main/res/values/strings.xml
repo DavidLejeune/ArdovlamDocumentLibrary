@@ -77,6 +77,13 @@
         <item>UPDATE</item>
     </string-array>
 
-
+    <string-array name="image_ids">
+        <item>@drawable/inbraak</item>
+        <item>@drawable/branddetectie</item>
+        <item>@drawable/gasdetectie</item>
+        <item>@drawable/camera</item>
+        <item>@drawable/toegang</item>
+        <item>@drawable/geintegreerd</item>
+    </string-array>
 
 </resources>
