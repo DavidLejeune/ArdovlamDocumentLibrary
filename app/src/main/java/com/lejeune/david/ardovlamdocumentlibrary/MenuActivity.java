@@ -107,6 +107,34 @@ public class MenuActivity extends Activity {
 //
 //                //Start details activity
 //                startActivity(intent);
+
+
+                switch (position) {
+
+                    case 0:
+                        filterID = "Inbraakdetectie";
+                        break;
+                    case 1:
+                        filterID = "Branddetectie";
+                        break;
+                    case 2:
+                        filterID = "Gasdetectie";
+                        break;
+                    case 3:
+                        filterID = "Camerabewaking";
+                        break;
+                    case 4:
+                        filterID = "Toegangscontrole";
+                        break;
+                    case 5:
+                        filterID = "Geintegreerde bewaking";
+                        break;
+                }
+
+                Toast.makeText(MenuActivity.this, "Please wait ...", Toast.LENGTH_SHORT).show();
+                new AsyncShowMeDL().execute();
+
+
             }
         });
 
@@ -250,7 +278,7 @@ public class MenuActivity extends Activity {
             TypedArray imgs = getResources().obtainTypedArray(R.array.image_ids);
             for (int i = 0; i < imgs.length(); i++) {
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));
-                imageItems.add(new ImageItem(bitmap, "Image#" + i));
+                imageItems.add(new ImageItem(bitmap, ""));
             }
             return imageItems;
         }
