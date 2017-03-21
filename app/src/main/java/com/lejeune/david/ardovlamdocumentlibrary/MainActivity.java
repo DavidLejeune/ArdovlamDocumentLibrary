@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
         //region UI elements
         txtResultMain = (TextView) findViewById(R.id.txtResultMain);
         txtResultMain.setVisibility(View.VISIBLE);
-        txtResultMain.setText("System startup .... \n\n");
+        txtResultMain.setText("");
 //        txtResultMain.setBackgroundResource(android.R.color.darker_gray);
 //        txtResultMain.setBackgroundResource(R.color.almostBlack);
 

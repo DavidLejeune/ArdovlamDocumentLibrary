@@ -13,8 +13,8 @@
 
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:srcCompat="@drawable/avatar_1"
         android:id="@+id/imgProfile"
         android:layout_alignParentTop="true"
@@ -83,17 +83,16 @@
         android:id="@+id/gridView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:columnWidth="80dp"
+        android:columnWidth="100dp"
         android:drawSelectorOnTop="true"
         android:gravity="center"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp"
+        android:verticalSpacing="5dp"
         android:focusable="true"
         android:clickable="true"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="1dp"
-        android:layout_below="@+id/txtUserType" />
+        android:layout_below="@+id/txtUserType"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>
