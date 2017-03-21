@@ -21,7 +21,8 @@
         android:id="@+id/btnStats"
         android:layout_height="70dp"
         android:scaleType="centerInside"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@color/blue"
+        android:layout_marginLeft="5dp" />
 
     <ImageButton
         android:layout_width="70dp"
@@ -29,7 +30,7 @@
         app:srcCompat="@drawable/update"
         android:id="@+id/btnUpdates"
         android:scaleType="centerInside"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/blue"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/btnStats"
         android:layout_toStartOf="@+id/btnStats" />

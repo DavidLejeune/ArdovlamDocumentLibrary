@@ -57,28 +57,6 @@
         android:textSize="10sp"
         tools:ignore="SmallSp" />
 
-    <ImageButton
-        android:layout_width="70dp"
-        app:srcCompat="@drawable/stats"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/btnStats"
-        android:layout_height="70dp"
-        android:scaleType="centerInside"
-        android:background="@color/colorPrimaryDark" />
-
-    <ImageButton
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        app:srcCompat="@drawable/update"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/btnUpdates"
-        android:scaleType="centerInside"
-        android:background="@color/colorPrimaryDark" />
-
     <GridView
         android:id="@+id/gridView"
         android:layout_width="fill_parent"
@@ -94,5 +72,27 @@
         android:layout_below="@+id/txtUserType"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
+
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:srcCompat="@drawable/update"
+        android:id="@+id/btnUpdates"
+        android:scaleType="centerInside"
+        android:background="@color/blue"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="70dp"
+        app:srcCompat="@drawable/stats"
+        android:id="@+id/btnStats"
+        android:layout_height="70dp"
+        android:scaleType="centerInside"
+        android:background="@color/blue"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
