@@ -235,21 +235,21 @@ public class MenuActivity extends Activity {
             btnStats.setVisibility(View.VISIBLE);
         }
         else if (userType.equalsIgnoreCase("2")){
-            strUserType = "Projectleider";
+            strUserType = "Project manager";
             checkUpdatesAvailable(updateComFile);
 
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.INVISIBLE);
         }
         else if (userType.equalsIgnoreCase("0")){
-            strUserType = "Installateur";
+            strUserType = "Electrician";
             checkUpdatesAvailable(updateDocFile);
 
             txtUserType.setText(strUserType);
             btnStats.setVisibility(View.INVISIBLE);
         }
         else if (userType.equalsIgnoreCase("3")){
-            strUserType = "Technieker";
+            strUserType = "Service Engineer";
             checkUpdatesAvailable(updateTecFile);
 
             txtUserType.setText(strUserType);
@@ -392,15 +392,15 @@ public class MenuActivity extends Activity {
             if(!newUpdatesCom) updateTec();
         }
         else if (userType.equalsIgnoreCase("2")){
-            strUserType = "Projectleider";
+            strUserType = "Project manager";
             updateCom();
         }
         else if (userType.equalsIgnoreCase("0")){
-            strUserType = "Installateur";
+            strUserType = "Electrician";
             updateDoc();
         }
         else if (userType.equalsIgnoreCase("3")){
-            strUserType = "Technieker";
+            strUserType = "Service engineer";
             updateTec();
         }
     }

@@ -229,11 +229,15 @@ public class FilterActivity extends Activity {
         if(userType.equalsIgnoreCase("2")){
             chkCommercial.setVisibility(View.VISIBLE);
             getFilteredDocuments();
-            result = "You have projectleader rights";
+            result = "You have project manager rights";
         }
         if(userType.equalsIgnoreCase("0")){
             chkDocuments.setVisibility(View.VISIBLE);
-            result = "You have installer rights";
+            result = "You have electrician rights";
+        }
+        if(userType.equalsIgnoreCase("3")){
+            chkTechnical.setVisibility(View.VISIBLE);
+            result = "You have service engineer rights";
         }
         txtResultFilter.setText(result);
     }
@@ -262,14 +266,14 @@ public class FilterActivity extends Activity {
             chkTechnical.setVisibility(View.INVISIBLE);
             chkCommercial.setVisibility(View.INVISIBLE);
             chkDocuments.setChecked(true);
-            result = "You have installer rights";
+            result = "You have electrician rights";
         }
         if(userType.equalsIgnoreCase("3")){
             chkDocuments.setVisibility(View.INVISIBLE);
             chkCommercial.setVisibility(View.INVISIBLE);
             chkTechnical.setVisibility(View.VISIBLE);
             chkTechnical.setChecked(true);
-            result = "You have technician rights";
+            result = "You have service engineer rights";
         }
         txtResultFilter.setText(result);
     }
