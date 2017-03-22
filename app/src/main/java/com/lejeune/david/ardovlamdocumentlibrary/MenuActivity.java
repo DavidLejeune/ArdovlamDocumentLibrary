@@ -61,7 +61,7 @@ public class MenuActivity extends Activity {
     public static String connectionType ;
     MyTools myTools= null;
     public FTPClient mFTPClient = null;
-    public String FOLDER_UPDATE_DOCUMENTS = "/DocLib/Documents/";
+    public String FOLDER_UPDATE_DOCUMENTS = MyVars.FOLDER_DOCUMENTS;
 
     String userType ;
     static String strUserType ;

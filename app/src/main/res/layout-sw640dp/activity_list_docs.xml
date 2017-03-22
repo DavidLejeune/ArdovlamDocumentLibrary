@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.vives.david.ardovlamdoclib.ListDocsActivity">
+    tools:context="com.lejeune.david.ardovlamdocumentlibrary.ListDocsActivity">
 
     <TextView
         android:text="@string/txt_txtresultlistdocs"
