@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -95,9 +96,11 @@ public class MainActivity extends Activity {
         //refresh display variables will be used later for gridview image dimensions
         refreshDisplayVariables();
         System.out.println("Height:" + MyVars.screenHeight + " Width:" + MyVars.screenWidth);
+        System.out.println("DP : " + getResources().getDisplayMetrics().density);
         //endregion
 
     }
+
 
     //region Misc methods
     private void setTxtResultMain(String message){

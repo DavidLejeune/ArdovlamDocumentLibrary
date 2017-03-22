@@ -359,7 +359,7 @@ public class MenuActivity extends Activity {
     }
     private void getProfileImg(){
         File dir = Environment.getExternalStorageDirectory();
-        File file = new File(dir,"/DocLib/IMG/profile.jpg");
+        File file = new File(dir,MyVars.FOLDER_IMG + "profile.jpg");
         long length = file.length();
         System.out.println("length:"+length);
 

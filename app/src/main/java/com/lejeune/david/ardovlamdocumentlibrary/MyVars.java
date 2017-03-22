@@ -10,12 +10,12 @@ import java.util.ArrayList;
 public class MyVars {
 
     public final static String ROOT_FOLDER = "/DocLib/";
-    public final static String FOLDER_DATA = ROOT_FOLDER + "Data/";
+    public final static String FOLDER_DATA = ROOT_FOLDER + ".Data/";
     public final static String FOLDER_STATS = FOLDER_DATA + "Stats/";
-    public final static String FOLDER_DOCUMENTS = ROOT_FOLDER + "Documents/";
-    public final static String FOLDER_IMG = ROOT_FOLDER + "IMG/";
-    public final static String FOLDER_COMMERCIAL = ROOT_FOLDER + "Commercial/";
-    public final static String FOLDER_TECHNICAL = ROOT_FOLDER + "Technical/";
+    public final static String FOLDER_DOCUMENTS = ROOT_FOLDER + ".Documents/";
+    public final static String FOLDER_IMG = ROOT_FOLDER + ".IMG/";
+    public final static String FOLDER_COMMERCIAL = ROOT_FOLDER + ".Commercial/";
+    public final static String FOLDER_TECHNICAL = ROOT_FOLDER + ".Technical/";
 
 
     public static String firstname, lastname, birthdate, registereduser, usertype, fullname , updatedoclocal , updatedocserver , updatecomlocal, updatecomserver , updateteclocal, updatetecserver;

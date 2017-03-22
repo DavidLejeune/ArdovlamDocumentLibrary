@@ -178,7 +178,7 @@ public class LoginActivity extends Activity {
     private void setProfileImg() {
         //every users profile image will get the same name
         File dir = Environment.getExternalStorageDirectory();
-        File file = new File(dir, "/DocLib/IMG/profile.jpg");
+        File file = new File(dir, MyVars.FOLDER_IMG + "profile.jpg");
         long length = file.length();
 
         if (length > 1) {
@@ -440,11 +440,11 @@ public class LoginActivity extends Activity {
             ftpclient = new FTPfunctions();
             ftpclient.ftpConnect(MyVars.HOST, MyVars.USERNAME, MyVars.PASSWORD, 21);
 
-            final String strFile = "/DocLib/IMG/" + MyVars.fullname + ".jpg";
+            final String strFile = MyVars.FOLDER_IMG + MyVars.fullname + ".jpg";
                     boolean status = false;
 
             ftpclient.ftpDownload(strFile, Environment.getExternalStorageDirectory()
-                            + "/DocLib/IMG/profile.jpg");
+                            + MyVars.FOLDER_IMG + "profile.jpg");
 
             ftpclient.ftpDisconnect();
             return null;
@@ -467,7 +467,7 @@ public class LoginActivity extends Activity {
             pd.dismiss();
 
             File dir = Environment.getExternalStorageDirectory();
-            File file = new File(dir,"/DocLib/IMG/profile.jpg");
+            File file = new File(dir,MyVars.FOLDER_IMG + "profile.jpg");
             long length = file.length();
             setProfileImg();
             if (LoginActivity.loginOK)
