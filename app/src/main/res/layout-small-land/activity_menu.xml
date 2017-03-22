@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.vives.david.ardovlamdoclib.MenuActivity">
+
+
+    <ImageButton
+        android:layout_width="70dp"
+        app:srcCompat="@drawable/stats"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btnStats"
+        android:layout_height="70dp"
+        android:scaleType="centerInside"
+        android:background="@color/blue"
+        android:layout_marginLeft="5dp" />
+
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:srcCompat="@drawable/update"
+        android:id="@+id/btnUpdates"
+        android:scaleType="centerInside"
+        android:background="@color/blue"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnStats"
+        android:layout_toStartOf="@+id/btnStats" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/avatar_1"
+        android:id="@+id/imgProfile"
+        tools:ignore="ContentDescription"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/txt_full_name"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtFullName"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_below="@+id/txtTitle"
+        android:layout_toRightOf="@+id/imgProfile"
+        android:layout_toEndOf="@+id/imgProfile" />
+
+    <TextView
+        android:text="@string/txt_type_enduser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtUserType"
+        android:textAlignment="center"
+        android:textSize="10sp"
+        tools:ignore="SmallSp"
+        android:layout_below="@+id/txtFullName"
+        android:layout_toRightOf="@+id/imgProfile"
+        android:layout_alignRight="@+id/txtFullName"
+        android:layout_alignEnd="@+id/txtFullName" />
+
+    <TextView
+        android:text="@string/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTitle"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imgProfile"
+        android:layout_alignRight="@+id/txtFullName"
+        android:layout_alignEnd="@+id/txtFullName"
+        android:textAlignment="center" />
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="100dp"
+        android:drawSelectorOnTop="true"
+        android:gravity="center"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imgProfile"
+        android:layout_marginTop="10dp" />
+
+</RelativeLayout>
