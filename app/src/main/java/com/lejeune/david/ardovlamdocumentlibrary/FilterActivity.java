@@ -91,8 +91,10 @@ public class FilterActivity extends Activity {
                                                             }
                                                         }
                                                         resetTxtResult();
-                                                        getFilteredDocuments();
+                                                        getFilteredFiles();
+                                                        MyFilter.buildVariableTypeDocList();
                                                         countOccurencesOnDocType();
+                                                        initSpinner();
                                                     }
                                                 }
         );
@@ -115,8 +117,10 @@ public class FilterActivity extends Activity {
                                                                  lblDocType.setVisibility(View.VISIBLE);
                                                              }
                                                              resetTxtResult();
-                                                             getFilteredDocuments();
+                                                             getFilteredFiles();
+                                                             MyFilter.buildVariableTypeDocList();
                                                              countOccurencesOnDocType();
+                                                             initSpinner();
                                                          }
                                                      }
                                                  }
@@ -149,31 +153,12 @@ public class FilterActivity extends Activity {
 
 
         //region Spinner Doc Type
-        lblDocType = (TextView) findViewById(R.id.lblDocType);
-        spinDocType = (Spinner) findViewById(R.id.spinDocType);
-        adapterSpinner = new ArrayAdapter(this, android.R.layout.simple_spinner_item,listTypeDocNames);
-        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinDocType.setAdapter(adapterSpinner);
-        spinDocType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedDocType = parent.getItemAtPosition(position).toString();
-                docTypeFilter = MyFilter.findVariableTypeDoc(selectedDocType);
-                //setViewOfFilter();
-                resetTxtResult();
-                getFilteredDocuments();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+       initSpinner();
         //endregion
+
 
         showArrayListTempDocType();
         pd.dismiss();
-
         //region chktechnical
         chkTechnical.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                     @Override
@@ -195,8 +180,10 @@ public class FilterActivity extends Activity {
                                                             }
 
                                                             resetTxtResult();
-                                                            getFilteredDocuments();
+                                                            getFilteredFiles();
+                                                            MyFilter.buildVariableTypeDocList();
                                                             countOccurencesOnDocType();
+                                                            initSpinner();
                                                         }
                                                     }
                                                 }
@@ -207,6 +194,9 @@ public class FilterActivity extends Activity {
 
     //region Misc methods
     private void countOccurencesOnDocType(){
+
+        ProgressDialog pd = ProgressDialog.show(FilterActivity.this, "", "Searching ...",
+                true, false);
         System.out.println("listTypeDocNames.size() " + listTypeDocNames.size());
         tempDocType = new ArrayList<>();
         for (String cu : listTypeDocNames) {
@@ -230,9 +220,34 @@ public class FilterActivity extends Activity {
         }
         listTypeDocNames = tempDocType;
         docTypeFilter = "";
+        pd.dismiss();
 
     }
+private void initSpinner(){
 
+    //region Spinner Doc Type
+    lblDocType = (TextView) findViewById(R.id.lblDocType);
+    spinDocType = (Spinner) findViewById(R.id.spinDocType);
+    adapterSpinner = new ArrayAdapter(this, android.R.layout.simple_spinner_item,listTypeDocNames);
+    adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinDocType.setAdapter(adapterSpinner);
+    spinDocType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String selectedDocType = parent.getItemAtPosition(position).toString();
+            docTypeFilter = MyFilter.findVariableTypeDoc(selectedDocType);
+            //setViewOfFilter();
+            resetTxtResult();
+            getFilteredFiles();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    });
+    //endregion
+}
     private void resetTxtResult(){
         txtDepartment.setText(filterID);
         userType = MyVars.usertype;
@@ -244,15 +259,17 @@ public class FilterActivity extends Activity {
         }
         if(userType.equalsIgnoreCase("2")){
             chkCommercial.setVisibility(View.VISIBLE);
-            getFilteredDocuments();
+            getFilteredFiles();
             result = "You have project manager rights";
         }
         if(userType.equalsIgnoreCase("0")){
             chkDocuments.setVisibility(View.VISIBLE);
+            getFilteredFiles();
             result = "You have electrician rights";
         }
         if(userType.equalsIgnoreCase("3")){
             chkTechnical.setVisibility(View.VISIBLE);
+            getFilteredFiles();
             result = "You have service engineer rights";
         }
         txtResultFilter.setText(result);
@@ -268,13 +285,14 @@ public class FilterActivity extends Activity {
             chkTechnical.setVisibility(View.VISIBLE);
             chkDocuments.setChecked(true);
             result = "You have admin rights";
+            getFilteredFiles();
         }
         if(userType.equalsIgnoreCase("2")){
             chkDocuments.setVisibility(View.INVISIBLE);
             chkTechnical.setVisibility(View.INVISIBLE);
             chkCommercial.setVisibility(View.VISIBLE);
             chkCommercial.setChecked(true);
-            getFilteredDocuments();
+            getFilteredFiles();
             result = "You have projectleader rights";
         }
         if(userType.equalsIgnoreCase("0")){
@@ -282,6 +300,7 @@ public class FilterActivity extends Activity {
             chkTechnical.setVisibility(View.INVISIBLE);
             chkCommercial.setVisibility(View.INVISIBLE);
             chkDocuments.setChecked(true);
+            getFilteredFiles();
             result = "You have electrician rights";
         }
         if(userType.equalsIgnoreCase("3")){
@@ -289,6 +308,7 @@ public class FilterActivity extends Activity {
             chkCommercial.setVisibility(View.INVISIBLE);
             chkTechnical.setVisibility(View.VISIBLE);
             chkTechnical.setChecked(true);
+            getFilteredFiles();
             result = "You have service engineer rights";
         }
         txtResultFilter.setText(result);
@@ -302,7 +322,8 @@ public class FilterActivity extends Activity {
         }
         if(chkDocuments.isChecked() || chkCommercial.isChecked() || chkTechnical.isChecked() )
         {
-            getFilteredDocuments();
+
+            getFilteredFiles();
             gotoListDocs();
         }
     }
@@ -318,7 +339,7 @@ public class FilterActivity extends Activity {
     //endregion
 
     //region Filtering
-    private void getFilteredDocuments(){
+    private void getFilteredFiles(){
         getDepartmentTag();
         if(chkDocuments.isChecked()) getFilteredDocumentList();
         if(chkCommercial.isChecked())  getFilteredCommercialList();
