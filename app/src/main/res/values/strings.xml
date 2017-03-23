@@ -9,9 +9,9 @@
     <string name="txt_full_name">David Lejeune</string>
     <string name="txt_title">Welcome</string>
     <string name="txt_txtresultlistdocs">txtResultListDocs</string>
-    <string name="chk_commercial">Commercial</string>
+    <string name="chk_commercial">Project manager</string>
     <string name="lbl_department">Department</string>
-    <string name="chk_documents">Documents</string>
+    <string name="chk_documents">Technician</string>
     <string name="btn_show">SHOW</string>
     <string name="lbl_doc_type">Select the type of document</string>
     <string name="btn_show_graph">Show Graph</string>
@@ -21,6 +21,7 @@
     <string name="txt_textview">TextView</string>
     <string name="lblUser">User :</string>
     <string name="txt_result_graph">TxtResult</string>
+    <string name="chkbox_technical">Service engineer</string>
 
 
     <string-array name="monthsArray">

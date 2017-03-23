@@ -32,15 +32,6 @@
         android:layout_toEndOf="@+id/lblDepartment"
         android:textColor="@android:color/holo_green_light" />
 
-    <CheckBox
-        android:text="Technical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chkCommercial"
-        android:layout_alignLeft="@+id/chkCommercial"
-        android:layout_alignStart="@+id/chkCommercial"
-        android:id="@+id/chkTechnical" />
-
     <TextView
         android:text="@string/txt_textview"
         android:layout_width="wrap_content"
@@ -97,4 +88,13 @@
         android:layout_below="@+id/lblDocType"
         android:layout_alignLeft="@+id/lblDocType"
         android:layout_alignStart="@+id/lblDocType" />
+
+    <CheckBox
+        android:text="@string/chkbox_technical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkTechnical"
+        android:layout_below="@+id/chkCommercial"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

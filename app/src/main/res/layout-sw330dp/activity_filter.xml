@@ -95,7 +95,7 @@
         android:layout_alignParentStart="true" />
 
     <CheckBox
-        android:text="Technical"
+        android:text="@string/chkbox_technical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/chkCommercial"

@@ -3,8 +3,11 @@ package com.lejeune.david.ardovlamdocumentlibrary;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,7 +28,7 @@ import static com.lejeune.david.ardovlamdocumentlibrary.MyFilter.listTypeDocName
 public class FilterActivity extends Activity {
 
     //region Declarations
-    TextView txtResultFilter, txtDepartment;
+    public TextView txtResultFilter, txtDepartment;
     public static CheckBox chkDocuments , chkCommercial , chkTechnical;
     Button btnShowFilteredDocs;
     String departmentTag = "";
@@ -38,6 +41,8 @@ public class FilterActivity extends Activity {
     ArrayAdapter<String> adapterSpinner;
     TextView lblDocType;
     ArrayList<String> tempDocType;
+
+    String section;
 
     int iCountOccurence;
     //endregion
@@ -90,11 +95,7 @@ public class FilterActivity extends Activity {
                                                                 lblDocType.setVisibility(View.VISIBLE);
                                                             }
                                                         }
-                                                        resetTxtResult();
-                                                        getFilteredFiles();
-                                                        MyFilter.buildVariableTypeDocList();
-                                                        countOccurencesOnDocType();
-                                                        initSpinner();
+                                                        resetUI();
                                                     }
                                                 }
         );
@@ -116,12 +117,8 @@ public class FilterActivity extends Activity {
                                                                  spinDocType.setVisibility(View.VISIBLE);
                                                                  lblDocType.setVisibility(View.VISIBLE);
                                                              }
-                                                             resetTxtResult();
-                                                             getFilteredFiles();
-                                                             MyFilter.buildVariableTypeDocList();
-                                                             countOccurencesOnDocType();
-                                                             initSpinner();
                                                          }
+                                                         resetUI();
                                                      }
                                                  }
         );
@@ -178,12 +175,7 @@ public class FilterActivity extends Activity {
                                                                 spinDocType.setVisibility(View.VISIBLE);
                                                                 lblDocType.setVisibility(View.VISIBLE);
                                                             }
-
-                                                            resetTxtResult();
-                                                            getFilteredFiles();
-                                                            MyFilter.buildVariableTypeDocList();
-                                                            countOccurencesOnDocType();
-                                                            initSpinner();
+                                                            resetUI();
                                                         }
                                                     }
                                                 }
@@ -193,14 +185,63 @@ public class FilterActivity extends Activity {
     }
 
     //region Misc methods
+    private void resetUI(){
+        if (chkTechnical.isChecked()) section = "Service engineer";
+        if (chkCommercial.isChecked()) section = "Project manager";
+        if (chkDocuments.isChecked()) section = "Technician";
+
+            setSearchingFor(section);
+
+//
+//        MyFilter.buildVariableTypeDocList();
+//        countOccurencesOnDocType();
+//        resetTxtResult();
+//        getFilteredFiles();
+//        initSpinner();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    synchronized (this) {
+                        wait(50);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                MyFilter.buildVariableTypeDocList();
+                                countOccurencesOnDocType();
+                                resetTxtResult();
+                                getFilteredFiles();
+                                initSpinner();
+                            }
+                        });
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            };
+        };
+        thread.start();
+
+
+
+
+    }
+    private void setSearchingFor(String filter){
+
+        txtResultFilter.setTextSize(17);
+        txtResultFilter.setTextColor(Color.YELLOW);
+        txtResultFilter.setText("Searching for " + filter + " ...");
+        txtResultFilter.setGravity(Gravity.CENTER);
+        txtResultFilter.setVisibility(View.VISIBLE);
+    }
     private void countOccurencesOnDocType(){
 
-        ProgressDialog pd = ProgressDialog.show(FilterActivity.this, "", "Searching ...",
-                true, false);
-        System.out.println("listTypeDocNames.size() " + listTypeDocNames.size());
+        //System.out.println("listTypeDocNames.size() " + listTypeDocNames.size());
         tempDocType = new ArrayList<>();
         for (String cu : listTypeDocNames) {
-            System.out.println("cu : " +cu);
+            //System.out.println("cu : " +cu);
             if (chkDocuments.isChecked()) {
                 docTypeFilter = MyFilter.findVariableTypeDoc(cu);
                 getDepartmentTag();
@@ -220,10 +261,9 @@ public class FilterActivity extends Activity {
         }
         listTypeDocNames = tempDocType;
         docTypeFilter = "";
-        pd.dismiss();
 
     }
-private void initSpinner(){
+    private void initSpinner(){
 
     //region Spinner Doc Type
     lblDocType = (TextView) findViewById(R.id.lblDocType);
@@ -249,6 +289,9 @@ private void initSpinner(){
     //endregion
 }
     private void resetTxtResult(){
+        txtResultFilter.setTextSize(13);
+        txtResultFilter.setTextColor(Color.BLUE);
+        txtResultFilter.setGravity(Gravity.LEFT);
         txtDepartment.setText(filterID);
         userType = MyVars.usertype;
         String result = "";
@@ -259,22 +302,25 @@ private void initSpinner(){
         }
         if(userType.equalsIgnoreCase("2")){
             chkCommercial.setVisibility(View.VISIBLE);
-            getFilteredFiles();
+            //getFilteredFiles();
             result = "You have project manager rights";
         }
         if(userType.equalsIgnoreCase("0")){
             chkDocuments.setVisibility(View.VISIBLE);
-            getFilteredFiles();
+            //getFilteredFiles();
             result = "You have electrician rights";
         }
         if(userType.equalsIgnoreCase("3")){
             chkTechnical.setVisibility(View.VISIBLE);
-            getFilteredFiles();
+            //getFilteredFiles();
             result = "You have service engineer rights";
         }
         txtResultFilter.setText(result);
     }
     private void setViewOfFilter(){
+        txtResultFilter.setTextSize(13);
+        txtResultFilter.setTextColor(Color.BLUE);
+        txtResultFilter.setGravity(Gravity.LEFT);
         // Depending on usertype show certin UI elements
         txtDepartment.setText(filterID);
         userType = MyVars.usertype;
@@ -285,14 +331,14 @@ private void initSpinner(){
             chkTechnical.setVisibility(View.VISIBLE);
             chkDocuments.setChecked(true);
             result = "You have admin rights";
-            getFilteredFiles();
+            //getFilteredFiles();
         }
         if(userType.equalsIgnoreCase("2")){
             chkDocuments.setVisibility(View.INVISIBLE);
             chkTechnical.setVisibility(View.INVISIBLE);
             chkCommercial.setVisibility(View.VISIBLE);
             chkCommercial.setChecked(true);
-            getFilteredFiles();
+            //getFilteredFiles();
             result = "You have projectleader rights";
         }
         if(userType.equalsIgnoreCase("0")){
@@ -300,7 +346,7 @@ private void initSpinner(){
             chkTechnical.setVisibility(View.INVISIBLE);
             chkCommercial.setVisibility(View.INVISIBLE);
             chkDocuments.setChecked(true);
-            getFilteredFiles();
+            //getFilteredFiles();
             result = "You have electrician rights";
         }
         if(userType.equalsIgnoreCase("3")){
@@ -308,7 +354,7 @@ private void initSpinner(){
             chkCommercial.setVisibility(View.INVISIBLE);
             chkTechnical.setVisibility(View.VISIBLE);
             chkTechnical.setChecked(true);
-            getFilteredFiles();
+            //getFilteredFiles();
             result = "You have service engineer rights";
         }
         txtResultFilter.setText(result);
@@ -340,14 +386,16 @@ private void initSpinner(){
 
     //region Filtering
     private void getFilteredFiles(){
+        MyTimer myTimer = new MyTimer("getFilteredFiles");
         getDepartmentTag();
         if(chkDocuments.isChecked()) getFilteredDocumentList();
         if(chkCommercial.isChecked())  getFilteredCommercialList();
         if(chkTechnical.isChecked())  getFilteredTechnicalList();
+        myTimer.getElapsedTime();
     }
     private void getDepartmentTag(){
         departmentTag = MyFilter.findVariableDepartment(filterID);
-        System.out.println("departmentTag : " +departmentTag );
+        //System.out.println("departmentTag : " +departmentTag );
     }
 
     private void getFilteredTechnicalList(){
@@ -361,7 +409,7 @@ private void initSpinner(){
         String path = Environment.getExternalStorageDirectory().toString()+ MyVars.FOLDER_TECHNICAL;
         File directory = new File(path);
         File[] files = directory.listFiles();
-        System.out.println("#files : "+ files.length);
+        //ln("#files : "+ files.length);
         for (int i = 0; i < files.length; i++)
         {
             boolean isFile = files[i].isFile();
@@ -375,8 +423,8 @@ private void initSpinner(){
                     iCountTotalDocs += 1 ;
                 }
 
-                System.out.println("strFile " + strFile);
-                System.out.println("docTypeFilter" + docTypeFilter);
+                //System.out.println("strFile " + strFile);
+                //System.out.println("docTypeFilter" + docTypeFilter);
                 if (departmentID.equalsIgnoreCase(departmentTag))
                 {
                     if (!isImage){
@@ -423,7 +471,7 @@ private void initSpinner(){
         String path = Environment.getExternalStorageDirectory().toString()+ MyVars.FOLDER_DOCUMENTS;
         File directory = new File(path);
         File[] files = directory.listFiles();
-        System.out.println("#files : "+ files.length);
+        //System.out.println("#files : "+ files.length);
         for (int i = 0; i < files.length; i++)
         {
             boolean isFile = files[i].isFile();
@@ -474,8 +522,8 @@ private void initSpinner(){
             txtResultFilter.setText(txtResultFilter.getText() +"\nNumber of files matching filter(s) : " + iCountOccurence);
 
         }
-        System.out.println("Total files in folder : " + iCountTotalDocs);
-        System.out.println("# files with same filter : " + iCountOccurence);
+        //System.out.println("Total files in folder : " + iCountTotalDocs);
+        //System.out.println("# files with same filter : " + iCountOccurence);
     }
     private void getFilteredCommercialList(){
         iCountTotalDocs=0;
@@ -487,7 +535,7 @@ private void initSpinner(){
         String path = Environment.getExternalStorageDirectory().toString()+ MyVars.FOLDER_COMMERCIAL;
         File directory = new File(path);
         File[] files = directory.listFiles();
-        System.out.println("#files : "+ files.length);
+        //System.out.println("#files : "+ files.length);
         for (int i = 0; i < files.length; i++)
         {
             boolean isFile = files[i].isFile();
@@ -542,18 +590,65 @@ private void initSpinner(){
 
     public void showArrayListDocType(){
 
-        System.out.println("looping through the arraylist var type");
+        //System.out.println("looping through the arraylist var type");
         for (String cu : listTypeDocNames) {
-            System.out.println("showArrayListDocType doc type entry : " + cu);
+            //System.out.println("showArrayListDocType doc type entry : " + cu);
         }
     }
     public void showArrayListTempDocType(){
 
-        System.out.println("looping through the temp arraylist var type");
+        //System.out.println("looping through the temp arraylist var type");
         for (String cu : tempDocType) {
-            System.out.println("showArrayListTempDocType doc type entry : " + cu);
+            //System.out.println("showArrayListTempDocType doc type entry : " + cu);
         }
     }
     //endregion
+
+
+
+
+    public class AsyncRefreshUIDL extends AsyncTask<String, String, String> {
+        ProgressDialog pd;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pd = ProgressDialog.show(FilterActivity.this, "", "Searching ...",
+                    true, false);
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+//stuff that updates ui
+
+                    resetTxtResult();
+                    getFilteredFiles();
+                    initSpinner();
+                }
+            });
+            pd.dismiss();
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            MyFilter.buildVariableTypeDocList();
+            countOccurencesOnDocType();
+
+            return null;
+        }
+
+    }
+
+
 
 }

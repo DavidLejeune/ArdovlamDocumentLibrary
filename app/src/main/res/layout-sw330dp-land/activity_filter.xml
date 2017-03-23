@@ -33,7 +33,7 @@
         android:textColor="@android:color/holo_green_light" />
 
     <CheckBox
-        android:text="Technical"
+        android:text="@string/chkbox_technical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/chkCommercial"
