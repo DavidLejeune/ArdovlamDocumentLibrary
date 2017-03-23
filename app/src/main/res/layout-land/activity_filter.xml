@@ -42,18 +42,6 @@
         android:id="@+id/chkTechnical" />
 
     <TextView
-        android:text="@string/txt_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtResultFilter"
-        android:textColor="@android:color/holo_blue_light"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/txtDepartment"
-        android:layout_toEndOf="@+id/txtDepartment"
-        android:layout_marginLeft="71dp"
-        android:layout_marginStart="71dp" />
-
-    <TextView
         android:text="@string/lbl_department"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,4 +85,16 @@
         android:layout_below="@+id/lblDocType"
         android:layout_alignLeft="@+id/lblDocType"
         android:layout_alignStart="@+id/lblDocType" />
+
+    <TextView
+        android:text="@string/txt_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/txtResultFilter"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/btnShowFilteredDocs"
+        android:layout_alignEnd="@+id/btnShowFilteredDocs"
+        android:layout_marginRight="46dp"
+        android:layout_marginEnd="46dp" />
 </RelativeLayout>
