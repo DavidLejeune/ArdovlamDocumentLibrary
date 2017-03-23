@@ -73,13 +73,14 @@ public class MyFilter {
                     if (line.length() > 0) {
                         {
                             String[] str = line.split(",");
-
+                            System.out.println(line);
                             String typeDocID = str[0].toUpperCase();
                             String typeDocName = str[1].toUpperCase();
 
                             if(doctype.equalsIgnoreCase(typeDocName)){
 
                                 typeDocFilter = typeDocID;
+                                System.out.println("typeDocFilter " + typeDocFilter);
                             }
                         }
 
@@ -124,6 +125,7 @@ public class MyFilter {
 
                             typeDoc = typeDocName;
                             listTypeDocNames.add(typeDoc);
+                            System.out.println("typeDoc " + typeDoc);
 //                            }
                         }
 

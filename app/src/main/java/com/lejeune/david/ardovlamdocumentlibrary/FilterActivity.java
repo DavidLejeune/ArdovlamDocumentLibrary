@@ -66,6 +66,14 @@ public class FilterActivity extends Activity {
         chkTechnical.setChecked(false);
         //endregion
 
+        //region Misc actions
+        setViewOfFilter();
+        MyFilter.buildVariableTypeDocList();
+        showArrayListDocType();
+        countOccurencesOnDocType();
+        //endregion
+
+
         //region chkDocuments
         chkDocuments.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                     @Override
@@ -84,6 +92,7 @@ public class FilterActivity extends Activity {
                                                         }
                                                         resetTxtResult();
                                                         getFilteredDocuments();
+                                                        countOccurencesOnDocType();
                                                     }
                                                 }
         );
@@ -97,16 +106,17 @@ public class FilterActivity extends Activity {
                                                              if (chkDocuments.isChecked()){
                                                                  chkDocuments.setChecked(false);
                                                                  docTypeFilter = "" ;
-                                                                 spinDocType.setVisibility(View.INVISIBLE);
-                                                                 lblDocType.setVisibility(View.INVISIBLE);
+                                                                 spinDocType.setVisibility(View.VISIBLE);
+                                                                 lblDocType.setVisibility(View.VISIBLE);
                                                              }
                                                              if (chkTechnical.isChecked()){
                                                                  chkTechnical.setChecked(false);
-                                                                 spinDocType.setVisibility(View.INVISIBLE);
-                                                                 lblDocType.setVisibility(View.INVISIBLE);
+                                                                 spinDocType.setVisibility(View.VISIBLE);
+                                                                 lblDocType.setVisibility(View.VISIBLE);
                                                              }
                                                              resetTxtResult();
                                                              getFilteredDocuments();
+                                                             countOccurencesOnDocType();
                                                          }
                                                      }
                                                  }
@@ -134,13 +144,9 @@ public class FilterActivity extends Activity {
         });
         //endregion
 
-        //region Misc actions
-        setViewOfFilter();
 
-        MyFilter.buildVariableTypeDocList();
-        showArrayListDocType();
-        countOccurencesOnDocType();
-        //endregion
+
+
 
         //region Spinner Doc Type
         lblDocType = (TextView) findViewById(R.id.lblDocType);
@@ -153,7 +159,8 @@ public class FilterActivity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedDocType = parent.getItemAtPosition(position).toString();
                 docTypeFilter = MyFilter.findVariableTypeDoc(selectedDocType);
-                setViewOfFilter();
+                //setViewOfFilter();
+                resetTxtResult();
                 getFilteredDocuments();
             }
 
@@ -176,20 +183,20 @@ public class FilterActivity extends Activity {
                                                             if (chkDocuments.isChecked()){
                                                                 chkDocuments.setChecked(false);
                                                                 docTypeFilter = "" ;
-                                                                spinDocType.setVisibility(View.INVISIBLE);
-                                                                lblDocType.setVisibility(View.INVISIBLE);
+                                                                spinDocType.setVisibility(View.VISIBLE);
+                                                                lblDocType.setVisibility(View.VISIBLE);
                                                             }
 
 
                                                             if (chkCommercial.isChecked()){
                                                                 chkCommercial.setChecked(false);
-                                                                spinDocType.setVisibility(View.INVISIBLE);
-                                                                lblDocType.setVisibility(View.INVISIBLE);
+                                                                spinDocType.setVisibility(View.VISIBLE);
+                                                                lblDocType.setVisibility(View.VISIBLE);
                                                             }
-
 
                                                             resetTxtResult();
                                                             getFilteredDocuments();
+                                                            countOccurencesOnDocType();
                                                         }
                                                     }
                                                 }
@@ -200,13 +207,22 @@ public class FilterActivity extends Activity {
 
     //region Misc methods
     private void countOccurencesOnDocType(){
-
+        System.out.println("listTypeDocNames.size() " + listTypeDocNames.size());
         tempDocType = new ArrayList<>();
         for (String cu : listTypeDocNames) {
+            System.out.println("cu : " +cu);
             if (chkDocuments.isChecked()) {
                 docTypeFilter = MyFilter.findVariableTypeDoc(cu);
                 getDepartmentTag();
                 getFilteredDocumentList();
+                if (iCountOccurence>0){
+                    tempDocType.add(cu);
+                }
+            }
+            if (chkTechnical.isChecked()) {
+                docTypeFilter = MyFilter.findVariableTypeDoc(cu);
+                getDepartmentTag();
+                getFilteredTechnicalList();
                 if (iCountOccurence>0){
                     tempDocType.add(cu);
                 }
@@ -338,7 +354,8 @@ public class FilterActivity extends Activity {
                     iCountTotalDocs += 1 ;
                 }
 
-
+                System.out.println("strFile " + strFile);
+                System.out.println("docTypeFilter" + docTypeFilter);
                 if (departmentID.equalsIgnoreCase(departmentTag))
                 {
                     if (!isImage){
@@ -506,14 +523,14 @@ public class FilterActivity extends Activity {
 
         System.out.println("looping through the arraylist var type");
         for (String cu : listTypeDocNames) {
-            System.out.println("list doc type entry : " + cu);
+            System.out.println("showArrayListDocType doc type entry : " + cu);
         }
     }
     public void showArrayListTempDocType(){
 
         System.out.println("looping through the temp arraylist var type");
         for (String cu : tempDocType) {
-            System.out.println("list doc type entry : " + cu);
+            System.out.println("showArrayListTempDocType doc type entry : " + cu);
         }
     }
     //endregion
