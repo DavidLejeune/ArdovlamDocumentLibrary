@@ -86,13 +86,9 @@ public class FilterActivity extends Activity {
                                                         if(isChecked){
                                                             if (chkCommercial.isChecked()){
                                                                 chkCommercial.setChecked(false);
-                                                                spinDocType.setVisibility(View.VISIBLE);
-                                                                lblDocType.setVisibility(View.VISIBLE);
                                                             }
                                                             if (chkTechnical.isChecked()){
                                                                 chkTechnical.setChecked(false);
-                                                                spinDocType.setVisibility(View.VISIBLE);
-                                                                lblDocType.setVisibility(View.VISIBLE);
                                                             }
                                                         }
                                                         resetUI();
@@ -108,14 +104,9 @@ public class FilterActivity extends Activity {
                                                          if(isChecked){
                                                              if (chkDocuments.isChecked()){
                                                                  chkDocuments.setChecked(false);
-                                                                 docTypeFilter = "" ;
-                                                                 spinDocType.setVisibility(View.VISIBLE);
-                                                                 lblDocType.setVisibility(View.VISIBLE);
                                                              }
                                                              if (chkTechnical.isChecked()){
                                                                  chkTechnical.setChecked(false);
-                                                                 spinDocType.setVisibility(View.VISIBLE);
-                                                                 lblDocType.setVisibility(View.VISIBLE);
                                                              }
                                                          }
                                                          resetUI();
@@ -164,16 +155,11 @@ public class FilterActivity extends Activity {
 
                                                             if (chkDocuments.isChecked()){
                                                                 chkDocuments.setChecked(false);
-                                                                docTypeFilter = "" ;
-                                                                spinDocType.setVisibility(View.VISIBLE);
-                                                                lblDocType.setVisibility(View.VISIBLE);
                                                             }
 
 
                                                             if (chkCommercial.isChecked()){
                                                                 chkCommercial.setChecked(false);
-                                                                spinDocType.setVisibility(View.VISIBLE);
-                                                                lblDocType.setVisibility(View.VISIBLE);
                                                             }
                                                             resetUI();
                                                         }
@@ -198,12 +184,28 @@ public class FilterActivity extends Activity {
 //        resetTxtResult();
 //        getFilteredFiles();
 //        initSpinner();
+
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+////stuff that updates ui
+//                System.out.println("doing the thread thing");
+//                MyFilter.buildVariableTypeDocList();
+//                countOccurencesOnDocType();
+//                resetTxtResult();
+//                //getFilteredFiles();
+//                initSpinner();
+//            }
+//        });
+
+
         Thread thread = new Thread(){
             @Override
             public void run() {
                 try {
                     synchronized (this) {
-                        wait(50);
+                        wait(5);
 
                         runOnUiThread(new Runnable() {
                             @Override
@@ -212,7 +214,7 @@ public class FilterActivity extends Activity {
                                 MyFilter.buildVariableTypeDocList();
                                 countOccurencesOnDocType();
                                 resetTxtResult();
-                                getFilteredFiles();
+                                //getFilteredFiles();
                                 initSpinner();
                             }
                         });
@@ -231,10 +233,10 @@ public class FilterActivity extends Activity {
     }
     private void setSearchingFor(String filter){
 
-        txtResultFilter.setTextSize(17);
+        //txtResultFilter.setTextSize(17);
         txtResultFilter.setTextColor(Color.YELLOW);
-        txtResultFilter.setText("Searching for " + filter + " ...");
-        txtResultFilter.setGravity(Gravity.CENTER);
+        txtResultFilter.setText("Searching for " + filter + " ...\n");
+        //txtResultFilter.setGravity(Gravity.CENTER);
         txtResultFilter.setVisibility(View.VISIBLE);
     }
     private void countOccurencesOnDocType(){
