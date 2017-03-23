@@ -261,6 +261,14 @@ public class FilterActivity extends Activity {
                     tempDocType.add(cu);
                 }
             }
+            if (chkCommercial.isChecked()) {
+                docTypeFilter = MyFilter.findVariableTypeDoc(cu);
+                getDepartmentTag();
+                getFilteredCommercialList();
+                if (iCountOccurence>0){
+                    tempDocType.add(cu);
+                }
+            }
         }
         listTypeDocNames = tempDocType;
         docTypeFilter = "";
