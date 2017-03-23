@@ -208,6 +208,7 @@ public class FilterActivity extends Activity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                System.out.println("doing the thread thing");
                                 MyFilter.buildVariableTypeDocList();
                                 countOccurencesOnDocType();
                                 resetTxtResult();
@@ -603,51 +604,6 @@ public class FilterActivity extends Activity {
         }
     }
     //endregion
-
-
-
-
-    public class AsyncRefreshUIDL extends AsyncTask<String, String, String> {
-        ProgressDialog pd;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            pd = ProgressDialog.show(FilterActivity.this, "", "Searching ...",
-                    true, false);
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-//stuff that updates ui
-
-                    resetTxtResult();
-                    getFilteredFiles();
-                    initSpinner();
-                }
-            });
-            pd.dismiss();
-        }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-
-
-            MyFilter.buildVariableTypeDocList();
-            countOccurencesOnDocType();
-
-            return null;
-        }
-
-    }
 
 
 
