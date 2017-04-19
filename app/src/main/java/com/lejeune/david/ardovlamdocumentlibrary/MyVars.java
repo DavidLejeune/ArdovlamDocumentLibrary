@@ -11,7 +11,7 @@ public class MyVars {
 
     public final static String ROOT_FOLDER = "/DocLib/";
     public final static String FOLDER_DATA = ROOT_FOLDER + ".Data/";
-    public final static String FOLDER_STATS = FOLDER_DATA + "Stats/";
+    public final static String FOLDER_STATS = FOLDER_DATA + ".Stats/";
     public final static String FOLDER_DOCUMENTS = ROOT_FOLDER + ".Documents/";
     public final static String FOLDER_IMG = ROOT_FOLDER + ".IMG/";
     public final static String FOLDER_COMMERCIAL = ROOT_FOLDER + ".Commercial/";

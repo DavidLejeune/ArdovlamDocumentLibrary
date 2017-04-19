@@ -70,7 +70,6 @@ public class MyTools {
 
     public void retrieveSharedPref(Context cntx){
 
-
         MyVars.firstname = SharedPrefHelper.getInstance().getValue(cntx, "firstname");
         MyVars.lastname = SharedPrefHelper.getInstance().getValue(cntx, "lastname");
         MyVars.birthdate = SharedPrefHelper.getInstance().getValue(cntx, "date");
@@ -83,7 +82,6 @@ public class MyTools {
         MyVars.updatecomserver = SharedPrefHelper.getInstance().getValue(cntx, "updatecomserver");
         MyVars.updateteclocal = SharedPrefHelper.getInstance().getValue(cntx, "updateteclocal");
         MyVars.updatetecserver = SharedPrefHelper.getInstance().getValue(cntx, "updatetecserver");
-
 
     }
 

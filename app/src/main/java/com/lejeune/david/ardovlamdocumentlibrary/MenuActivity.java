@@ -274,15 +274,6 @@ public class MenuActivity extends Activity {
     }
 
 
-        private ArrayList<ImageItem> getData() {
-            final ArrayList<ImageItem> imageItems = new ArrayList<>();
-            TypedArray imgs = getResources().obtainTypedArray(R.array.image_ids);
-            for (int i = 0; i < imgs.length(); i++) {
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));
-                imageItems.add(new ImageItem(bitmap, ""));
-            }
-            return imageItems;
-        }
 
 
     public String getRotation(Context context){
@@ -351,6 +342,18 @@ public class MenuActivity extends Activity {
         MenuActivity.this.startActivity(filterActivity);
 
     }
+
+
+    private ArrayList<ImageItem> getData() {
+        final ArrayList<ImageItem> imageItems = new ArrayList<>();
+        TypedArray imgs = getResources().obtainTypedArray(R.array.image_ids);
+        for (int i = 0; i < imgs.length(); i++) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));
+            imageItems.add(new ImageItem(bitmap, ""));
+        }
+        return imageItems;
+    }
+
     //endregion
 
     //region User
