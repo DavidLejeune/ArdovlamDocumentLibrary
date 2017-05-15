@@ -11,7 +11,7 @@
     <string name="txt_txtresultlistdocs">txtResultListDocs</string>
     <string name="chk_commercial">Project manager</string>
     <string name="lbl_department">Department</string>
-    <string name="chk_documents">Technician</string>
+    <string name="chk_documents">Electrician</string>
     <string name="btn_show">SHOW</string>
     <string name="lbl_doc_type">Select the type of document</string>
     <string name="btn_show_graph">Show Graph</string>

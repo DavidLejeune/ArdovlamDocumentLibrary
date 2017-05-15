@@ -2,6 +2,7 @@ package com.lejeune.david.ardovlamdocumentlibrary;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,6 +31,7 @@ public class ListDocsActivity extends Activity {
 
 
         txtResultListDocs = (TextView) findViewById(R.id.txtResultListDocs);
+        txtResultListDocs.setTextColor(Color.BLUE);
         setResult();
         //getActionBar().setTitle(MenuActivity.filterID + " documenten :");
 

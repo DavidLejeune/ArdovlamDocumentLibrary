@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
@@ -64,6 +65,7 @@ public class MainActivity extends Activity {
         txtResultMain = (TextView) findViewById(R.id.txtResultMain);
         txtResultMain.setVisibility(View.VISIBLE);
         txtResultMain.setText("");
+        txtResultMain.setTextColor(Color.BLUE);
 //        txtResultMain.setBackgroundResource(android.R.color.darker_gray);
 //        txtResultMain.setBackgroundResource(R.color.almostBlack);
 

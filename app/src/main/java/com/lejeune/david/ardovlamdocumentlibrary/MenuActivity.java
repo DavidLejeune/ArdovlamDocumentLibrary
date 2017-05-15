@@ -1016,7 +1016,7 @@ public class MenuActivity extends Activity {
                     true, false);
 
             // block the screen from changing orientation
-            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         }
 
@@ -1029,7 +1029,7 @@ public class MenuActivity extends Activity {
             Toast.makeText(MenuActivity.this, "Updates FINISHED\n" + listUpdateFilesDoc.size() + " updates downloaded\nin " + elapsedTime + " seconds", Toast.LENGTH_LONG).show();
 
             // allowing screen rotation
-            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
             pd.dismiss();
 
@@ -1249,7 +1249,7 @@ public class MenuActivity extends Activity {
             pd = ProgressDialog.show(MenuActivity.this, "", "Getting Commercial Files...",
                     true, false);
 
-            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         }
 
@@ -1257,7 +1257,7 @@ public class MenuActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
             pd.dismiss();
 
@@ -1459,7 +1459,7 @@ public class MenuActivity extends Activity {
             pd = ProgressDialog.show(MenuActivity.this, "", "Getting Technical Files...",
                     true, false);
 
-            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         }
 
@@ -1467,7 +1467,7 @@ public class MenuActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
             pd.dismiss();
             //for(int i=0; i<100 ;i++) {
